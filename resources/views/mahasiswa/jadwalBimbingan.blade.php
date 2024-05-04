@@ -4,7 +4,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">
-                                        <h5 class="card-title mb-0">Daftar Dosen Pembimbing</h5>
+                                        <h5 class="card-title mb-0">Jadwal Bimbingan</h5>
                                     </div>
                 <div class="card-body">
 
@@ -33,14 +33,18 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">Nama Dosen Pembimbing</h5>
+                                        <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
                                     </td>
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">NIDN</h5>
+                                        <h5 class="text-dark font-size-14 m-0">Kategori</h5>
                                     </td>
 
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">Kategori</h5>
+                                        <h5 class="text-dark font-size-14 m-0">Nama Dosen</h5>
+                                    </td>
+
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Tanggal</h5>
                                     </td>
 
                                     <td>
@@ -50,21 +54,26 @@
                                 
                                 <tr>
                                     <td>
-                                        <p class="mb-0">Fiqih Syaid Hermawan, S.Kom, M.Kom, MPTI</p>
+                                        <p class="mb-0">Hackathon UI/UX</p>
                                     </td>
                                     <td>
-                                        <p class="mb-0">3175939392</p>
+                                        <p class="mb-0">UI/UX</p>
                                     </td>
 
                                     <td>
-                                        <p class="mb-0">UI/UX</p>
+                                        <p class="mb-0">Fiqih Syaid Hermawan, S.Kom, M.Kom, MPTI</p>
+                                    </td>
+
+                                    <td>
+                                        <p class="mb-0">20-07-2024</p>
                                     </td>
 
                                     <td class="ps-2">
                                         <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" >Lihat Detail</button>
                                     </td>
                                 </tr>
-                                
+
+
                             </tbody>
                         </table>
                     </div>

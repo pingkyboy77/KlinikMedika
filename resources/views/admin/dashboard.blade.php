@@ -16,7 +16,7 @@
                                     </div>
 
                                     <div class="flex-grow-1 ms-3">
-                                        <h6 class="mb-0 font-size-15">User</h6>
+                                        <h6 class="mb-0 font-size-15">User Management</h6>
                                     </div>
                                 </div>
 

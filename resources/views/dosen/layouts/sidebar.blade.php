@@ -42,33 +42,27 @@
         <ul class="metismenu list-unstyled" id="side-menu">
 
             <li>
-                <a href="{{ route('mahasiswa.beranda') }}">
+                <a href="{{ route('dosen.beranda') }}">
                     <i class="bx bx-home-alt icon nav-icon"></i>
                     <span class="menu-item" data-key="t-dashboard">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('mahasiswa.daftarDosenPembimbing') }}">
-                    <i class="bx bx-user-circle icon nav-icon"></i>
-                    <span class="menu-item" data-key="t-dashboard">Daftar Dosen Pembimbing</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('mahasiswa.daftarPerlombaan') }}">
+                <a href="{{ route('dosen.daftarBimbingan') }}">
                     <i class="bx bx-calendar-event icon nav-icon"></i>
-                    <span class="menu-item" data-key="t-dashboard">Daftar Perlombaan</span>
+                    <span class="menu-item" data-key="t-dashboard">Daftar Bimbingan</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('mahasiswa.history') }}">
-                    <i class="bx bx-history icon nav-icon"></i>
-                    <span class="menu-item" data-key="t-dashboard">History</span>
+                <a href="{{ route('dosen.pengajuanLomba') }}">
+                    <i class="bx bx-user-circle icon nav-icon"></i>
+                    <span class="menu-item" data-key="t-dashboard">Pengajuan Lomba</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('mahasiswa.jadwalBimbingan') }}">
-                    <i class="bx bx-calendar icon nav-icon"></i>
-                    <span class="menu-item" data-key="t-dashboard">Jadwal Bimbingan</span>
+                <a href="{{ route('dosen.jadwalBimbingan') }}">
+                    <i class="bx bx-user-circle icon nav-icon"></i>
+                    <span class="menu-item" data-key="t-dashboard">Pengajuan Bimbingan</span>
                 </a>
             </li>
 

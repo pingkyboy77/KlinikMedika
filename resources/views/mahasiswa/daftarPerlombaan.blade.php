@@ -4,7 +4,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">
-                                        <h5 class="card-title mb-0">Daftar Perlombaan</h5>
+                                        <h5 class="card-title mb-0">Daftar Lomba</h5>
                                     </div>
                 <div class="card-body">
 
@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-xl-9 col-md-12">
                                 <div class="text-sm-end">
-                                    {{-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".create-task"><i class="mdi mdi-plus me-1"></i> Create Task</button> --}}
+                                    {{-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".create-task"><i class="mdi mdi-plus me-1"></i> Daftar Lomba</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -33,20 +33,43 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <h5 class="text-truncate font-size-14 m-0"><a href="javascript: void(0);"
-                                                class="text-dark">Nama Perlombaan</a></h5>
+                                        <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
                                     </td>
                                     <td>
-                                        <p class="mb-0">Jurusan</p>
+                                        <h5 class="text-dark font-size-14 m-0">Kategori</h5>
                                     </td>
 
                                     <td>
-                                        <p class="mb-0">Tanggal</p>
+                                        <h5 class="text-dark font-size-14 m-0">Tempat</h5>
+                                    </td>
+
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Tanggal</h5>
+                                    </td>
+
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Action</h5>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                        <p class="mb-0">Hackathon UI/UX</p>
                                     </td>
                                     <td>
-                                        <div class="text-sm-end">
-                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" >Daftar Form</button>
-                                </div>
+                                        <p class="mb-0">UI/UX</p>
+                                    </td>
+
+                                    <td>
+                                        <p class="mb-0">Gedung Aula Universitas Mercubuana Lt.7</p>
+                                    </td>
+
+                                    <td>
+                                        <p class="mb-0">20-07-2024</p>
+                                    </td>
+
+                                    <td class="ps-2">
+                                        <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" >Daftar</button>
                                     </td>
                                 </tr>
 
