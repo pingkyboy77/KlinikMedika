@@ -1,10 +1,10 @@
-@extends('mahasiswa.layouts.app')
+@extends('dosen.layouts.app')
 @section('content')
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">
-                                        <h5 class="card-title mb-0">Daftar Dosen Pembimbing</h5>
+                                        <h5 class="card-title mb-0">Daftar Pengajuan Bimbingan Lomba</h5>
                                     </div>
                 <div class="card-body">
 
@@ -32,39 +32,47 @@
                         <table class="table table-nowrap align-middle mb-0">
                             <tbody>
                                 <tr>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Nama Dosen Pembimbing</h5>
-                                    </td>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">NIDN</h5>
-                                    </td>
-
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Kategori</h5>
-                                    </td>
-
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Action</h5>
-                                    </td>
+                                    <th>
+                                        <h5 class="text-truncate font-size-14 m-0"><a href="javascript: void(0);"
+                                                class="text-dark">Nama Mahasiswa</a></h5>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0">Nama Perlombaan</p>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0">Kategori</p>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0">Tanggal</p>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0">Action</p>
+                                    </th>
                                 </tr>
-                                
+
                                 <tr>
                                     <td>
-                                        <p class="mb-0">Fiqih Syaid Hermawan, S.Kom, M.Kom, MPTI</p>
+                                        <p class="mb-0">Arwaa Althifal Suhermanja</p>
                                     </td>
                                     <td>
-                                        <p class="mb-0">3175939392</p>
+                                        <p class="mb-0">Lomba UI/UX</p>
                                     </td>
-
                                     <td>
                                         <p class="mb-0">UI/UX</p>
                                     </td>
 
-                                    <td class="ps-2">
-                                        <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" >Lihat Detail</button>
+                                    <td>
+                                        <p class="mb-0">20-07-2024</p>
+                                    </td>
+                                    <td class="d-flex gap-2 ps-2">
+                                            <button type="button" class="d-flex align-items-center btn btn-success btn-rounded waves-effect waves-light" >
+                                                <i class="bx bx-check fw-bold"></i> Accept</button>
+                                                <button type="button" class="d-flex align-items-center btn btn-danger btn-rounded waves-effect waves-light" >
+                                                    <i class="bx bx-x fw-bold"></i> Decline</button>
                                     </td>
                                 </tr>
-                                
+
+
                             </tbody>
                         </table>
                     </div>

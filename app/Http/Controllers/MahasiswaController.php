@@ -22,4 +22,15 @@ class MahasiswaController extends Controller
         $user_role = "Mahasiswa";
         return view('mahasiswa.daftarPerlombaan',compact('user_role'));
     }
+    public function history()
+    {
+        $user_role = "Mahasiswa";
+        return view('mahasiswa.history',compact('user_role'));
+    }
+    public function jadwalBimbingan()
+    {
+        $user_role = "Mahasiswa";
+        return view('mahasiswa.jadwalBimbingan',compact('user_role'));
+    }
 }
+
