@@ -22,12 +22,12 @@
                                     <p class="text-muted">Bimbingan Lomba UPN Website</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form action="">
-        
+                                    <form action="{{ route('proses.login') }}" method="POST">
+                                        @csrf
                                         <div class="mb-3">
-                                            <label class="form-label" for="username">Username</label>
+                                            <label class="form-label" for="username">IDENTITAS NUMBER</label>
                                             <div class="position-relative input-custom-icon">
-                                                <input type="text" class="form-control" id="username" placeholder="Enter username">
+                                                <input type="text" class="form-control" id="username" name="identitas" placeholder="Enter Identitas Number">
                                                  <span class="bx bx-user"></span>
                                             </div>
                                         </div>
@@ -36,10 +36,10 @@
                                             <div class="float-end">
                                                 {{-- <a href="auth-recoverpw.html" class="text-muted text-decoration-underline">Forgot password?</a> --}}
                                             </div>
-                                            <label class="form-label" for="password-input">Password</label>
+                                            <label class="form-label" for="password-input">PASSWORD</label>
                                             <div class="position-relative auth-pass-inputgroup input-custom-icon">
                                                 <span class="bx bx-lock-alt"></span>
-                                                <input type="password" class="form-control" id="password-input" placeholder="Enter password">
+                                                <input type="password" class="form-control" id="password-input" name="password" placeholder="Enter password">
                                                 <button type="button" class="btn btn-link position-absolute h-100 end-0 top-0" id="password-addon">
                                                     <i class="mdi mdi-eye-outline font-size-18 text-muted"></i>
                                                 </button>
