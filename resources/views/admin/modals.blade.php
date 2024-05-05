@@ -28,13 +28,6 @@
                          </div>
                          <div class="col-md-6">
                              <div class="mb-3">
-                                 <label class="form-label" for="CreateTask-Team-Member">Username</label>
-                                 <input type="text" name="username" class="form-control"
-                                     placeholder="Enter Team Member" id="CreateTask-Team-Member">
-                             </div>
-                         </div>
-                         <div class="col-md-6">
-                             <div class="mb-3">
                                  <label class="form-label" for="CreateTask-Team-Member">Password</label>
                                  <input type="password" name="password" class="form-control"
                                      placeholder="Enter Team Member" id="CreateTask-Team-Member">
