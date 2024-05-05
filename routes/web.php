@@ -10,7 +10,7 @@ use App\Http\Controllers\MahasiswaController;
 //     ->name('login')
 //     ->middleware('guest');
 Route::get('/', [AdminAuthController::class, 'index']);
-Route::post('/dashboard', [AdminAuthController::class, 'doLogin'])->name('proses.login');
+Route::post('/beranda', [AdminAuthController::class, 'doLogin'])->name('proses.login');
 
 Route::prefix('/beranda')
     ->middleware(['auth'])
@@ -35,7 +35,9 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('beranda', [AdminController::class, 'beranda'])->name('beranda');
         Route::get('user-Management', [AdminController::class, 'userManagement'])->name('user-Management');
-        Route::post('user-Management', [AdminController::class, 'store'])->name('user-Management.store');
+        Route::post('user-Management', [AdminController::class, 'storeUser'])->name('user-Management.store');
+        Route::get('/user/{id}/edit', [AdminController::class, 'editUser'])->name('user-Management.edit');
+        Route::put('/user/{id}', [AdminController::class, 'updateUser'])->name('user.update');
     });
 
 Route::prefix('dosen')

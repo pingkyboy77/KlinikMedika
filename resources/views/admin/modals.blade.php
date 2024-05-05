@@ -1,5 +1,5 @@
  <form action="{{ route('admin.user-Management.store') }}" method="POST">
-    @csrf
+     @csrf
      <div class="modal fade create-user" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
          aria-hidden="true">
          <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -72,31 +72,5 @@
                          </div>
                      </div>
  </form>
- <script>
-     document.getElementById('role').addEventListener('change', function() {
-         var role = this.value;
-         var kategoriDropdown = document.getElementById('kategori');
-         kategoriDropdown.innerHTML = '';
 
-         if (role === 'mahasiswa') {
-             var option = document.createElement('option');
-             option.text = 'Mahasiswa';
-             kategoriDropdown.add(option);
-         } else if (role === 'dosen') {
-             var options = ['UI/UX', 'Jaringan', 'Website'];
-             options.forEach(function(optionValue) {
-                 var option = document.createElement('option');
-                 option.text = optionValue;
-                 kategoriDropdown.add(option);
-             });
-         }
-         else if (role === 'admin') {
-             var options = ['Super Admin'];
-             options.forEach(function(optionValue) {
-                 var option = document.createElement('option');
-                 option.text = optionValue;
-                 kategoriDropdown.add(option);
-             });
-         }
-     });
- </script>
+
