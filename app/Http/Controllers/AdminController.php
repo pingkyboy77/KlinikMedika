@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Kategori;
+use App\Models\Lomba;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,6 +21,19 @@ class AdminController extends Controller
         $data_users = User::get();
         $user_role = 'Super Admin';
         return view('admin.userManagement', compact('user_role', 'data_users'));
+    }
+    public function lombaManagement()
+    {
+        $user_role = 'Super Admin';
+        $lomba = Lomba::orderBy('created_at', 'desc')->get();
+        // dd($lomba);
+        return view('admin.lombaManagement', compact('user_role', 'lomba'));
+    }
+    public function kategoriManagement()
+    {
+        $user_role = 'Super Admin';
+        $kategori = Kategori::orderBy('created_at', 'desc')->get();
+        return view('admin.kategoriManagement', compact('user_role', 'kategori'));
     }
 
     public function storeUser(Request $request)
@@ -52,6 +68,29 @@ class AdminController extends Controller
         // Tambahkan bidang lain jika perlu di sini
         $user->save();
         return response()->json(['success' => true]);
+    }
+
+    public function storelomba(Request $request)
+    {
+        $data = request()->validate([
+            'nama_lomba' => 'required',
+            'kategori' => 'required',
+            'lokasi' => 'required',
+            'tanggal' => 'required'
+        ]);
+        Lomba::create($data);
+        $user_role = 'Super Admin';
+        return view('admin.lombaManagement', compact('user_role'));
+    }
+
+    public function storeKategori(Request $request)
+    {
+        $data = request()->validate([
+            'kategori' => 'required'
+        ]);
+        Kategori::create($data);
+        $user_role = 'User Admin';
+        return view('admin.kategoriManagement', compact('user_role'));
     }
     
 }

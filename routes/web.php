@@ -17,7 +17,7 @@ Route::prefix('/beranda')
     ->group(function () {
         Route::get('/logout', [AdminAuthController::class, 'logout']);
         Route::resource('/user', AdminAuthController::class);
-        
+
     });
 
 Route::prefix('mahasiswa')
@@ -38,6 +38,10 @@ Route::prefix('admin')
         Route::post('user-Management', [AdminController::class, 'storeUser'])->name('user-Management.store');
         Route::get('/user/{id}/edit', [AdminController::class, 'editUser'])->name('user-Management.edit');
         Route::put('/user/{id}', [AdminController::class, 'updateUser'])->name('user.update');
+        Route::get('lomba-Management', [AdminController::class, 'lombaManagement'])->name('lomba-Management');
+        Route::post('lomba-Management', [AdminController::class, 'storelomba'])->name('lomba-Management.store');
+        Route::get('kategori-Management', [AdminController::class, 'kategoriManagement'])->name('kategori-Management');
+        Route::post('kategori-Management', [AdminController::class, 'storekategori'])->name('kategori-Management.store');
     });
 
 Route::prefix('dosen')
