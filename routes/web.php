@@ -26,6 +26,7 @@ Route::prefix('mahasiswa')
         Route::get('beranda', [MahasiswaController::class, 'beranda'])->name('beranda');
         Route::get('daftarDosenPembimbing', [MahasiswaController::class, 'daftarDosenPembimbing'])->name('daftarDosenPembimbing');
         Route::get('daftarPerlombaan', [MahasiswaController::class, 'daftarPerlombaan'])->name('daftarPerlombaan');
+        Route::post('daftarPerlombaan', [MahasiswaController::class, 'store'])->name('daftarPerlombaan.store');
         Route::get('history', [MahasiswaController::class, 'history'])->name('history');
         Route::get('jadwalBimbingan', [MahasiswaController::class, 'jadwalBimbingan'])->name('jadwalBimbingan');
     });
@@ -34,6 +35,7 @@ Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
         Route::get('beranda', [AdminController::class, 'beranda'])->name('beranda');
+        Route::get('daftarPengajuanLomba', [AdminController::class, 'daftarPengajuanLomba'])->name('daftarPengajuanLomba');
         Route::get('user-Management', [AdminController::class, 'userManagement'])->name('user-Management');
         Route::post('user-Management', [AdminController::class, 'storeUser'])->name('user-Management.store');
         Route::get('/user/{id}/edit', [AdminController::class, 'editUser'])->name('user-Management.edit');

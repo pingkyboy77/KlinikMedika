@@ -69,7 +69,12 @@
                                     </td>
 
                                     <td class="ps-2">
-                                        <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" >Daftar</button>
+                                        <!-- Button untuk membuka modal -->
+                            <div>
+                                <button type="button"
+                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
+                                    onclick="openModal()"><i class="mdi mdi-plus me-1"></i> Daftar</button>
+                            </div>
                                     </td>
                                 </tr>
 
@@ -83,4 +88,45 @@
         </div>
 
     </div>
+
+
+    <!-- Modal -->
+    <form action="#" method="POST">
+        @csrf
+        <div class="modal fade create-daftarLomba" tabindex="-1" role="dialog" aria-labelledby="daftarLomba" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="daftarLomba">Tambah Lomba</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Isi formulir modal -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="kategori">Nama Kategori</label>
+                                    <input type="text" name="kategori" class="form-control" placeholder="Enter Name" id="kategori">
+                                </div>
+                            </div>
+                            <!-- Tambahkan input lainnya di sini -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal"><i class="bx bx-x me-1 align-middle"></i> Cancel</button>
+                        <button type="submit" class="btn btn-success"><i class="bx bx-check me-1 align-middle"></i> Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <script>
+        function openModal() {
+            var modal = document.querySelector('.create-daftarLomba');
+            var modalBootstrap = new bootstrap.Modal(modal);
+            modalBootstrap.show();
+        }
+    </script>
+    
 @endsection

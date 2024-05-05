@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class MahasiswaController extends Controller
 {
@@ -32,5 +33,6 @@ class MahasiswaController extends Controller
         $user_role = "Mahasiswa";
         return view('mahasiswa.jadwalBimbingan',compact('user_role'));
     }
+
 }
 

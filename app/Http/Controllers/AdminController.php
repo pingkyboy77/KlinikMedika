@@ -92,5 +92,5 @@ class AdminController extends Controller
         $user_role = 'User Admin';
         return view('admin.kategoriManagement', compact('user_role'));
     }
-    
+
 }
