@@ -38,6 +38,8 @@ Route::prefix('admin')
         Route::post('user-Management', [AdminController::class, 'store'])->name('user-Management.store');
         Route::get('lomba-Management', [AdminController::class, 'lombaManagement'])->name('lomba-Management');
         Route::post('lomba-Management', [AdminController::class, 'storelomba'])->name('lomba-Management.store');
+        Route::get('kategori-Management', [AdminController::class, 'kategoriManagement'])->name('kategori-Management');
+        Route::post('kategori-Management', [AdminController::class, 'storekategori'])->name('kategori-Management.store');
     });
 
 Route::prefix('dosen')

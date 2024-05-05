@@ -5,7 +5,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Perlombaan Management</h5>
+                    <h5 class="card-title mb-0">Kategori Management</h5>
                 </div>
                 <div class="card-body">
 
@@ -25,7 +25,7 @@
                             <div class="text-sm-end">
                                 <button type="button"
                                     class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
-                                    onclick="openModal()"><i class="mdi mdi-plus me-1"></i> Create Lomba</button>
+                                    onclick="openModal()"><i class="mdi mdi-plus me-1"></i> Create Kategori</button>
                             </div>
                         </div>
                     </div>
@@ -35,42 +35,25 @@
                             <thead>
                                 <tr>
                                     <td>
+                                        <h5 class="text-truncate font-size-14 m-0">No</h5>
+                                    </td>
+                                    <td>
                                         <h5 class="text-truncate font-size-14 m-0"><a href="javascript: void(0);"
-                                                class="text-dark">Nama Perlombaan</a></h5>
+                                                class="text-dark">Kategori</a></h5>
                                     </td>
                                     <td>
-                                        <p class="mb-0">Kategori</p>
+                                        Action
                                     </td>
-                                    <td>
-                                        <p class="mb-0">Lokasi</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">Tanggal</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">Action</p>
-                                    </td>
-                                    {{-- <td>
-                                        <div class="text-sm-end">
-                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" >Lihat Detail</button>
-                                </div>
-                                    </td> --}}
                                 </tr>
                             <tbody>
-                                @foreach ($lomba as $item)
+                                @foreach ($kategori as $item)
                                     <tr>
                                         <td>
                                             <h5 class="text-truncate font-size-14 m-0"><a href="javascript: void(0);"
-                                                    class="text-dark">{{ $item->nama_lomba }}</a></h5>
+                                                    class="text-dark">{{ $loop->iteration }}</a></h5>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{ $item->kategori }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->lokasi }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->tanggal }}</p>
                                         </td>
                                         <td>
                                             <button type="button"
@@ -93,13 +76,13 @@
     </div>
 
     <!-- Modal -->
-    <form action="{{ route('admin.lomba-Management.store') }}" method="POST">
+    <form action="{{ route('admin.kategori-Management.store') }}" method="POST">
         @csrf
-        <div class="modal fade create-lomba" tabindex="-1" role="dialog" aria-labelledby="modal_lomba" aria-hidden="true">
+        <div class="modal fade create-kategori" tabindex="-1" role="dialog" aria-labelledby="modal_kategori" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modal_lomba">Create User</h5>
+                        <h5 class="modal-title" id="modal_kategori">Create User</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -107,39 +90,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label" for="nama_lomba">Nama Perlombaan</label>
-                                    <input type="text" name="nama_lomba" class="form-control" placeholder="Enter Name"
-                                        id="nama_lomba">
+                                    <label class="form-label" for="kategori">Nama Kategori</label>
+                                    <input type="text" name="kategori" class="form-control" placeholder="Enter Name"
+                                        id="kategori">
                                 </div>
                             </div>
                             <!-- Tambahkan input lainnya di sini -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="CreateTask-Category">Kategori</label>
-                                    <select class="form-select" name="kategori" id="kategori">
-                                        <option selected disabled> Select Kategori </option>
-                                        <option value="UI/UX">UI/UX</option>
-                                        <option value="Jaringan">Jaringan</option>
-                                        <option value="Website">Website</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="lokasi">Lokasi</label>
-                                    <input type="text" name="lokasi" class="form-control" placeholder="Enter Place"
-                                        id="lokasi">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="tanggal">Tanggal</label>
-                                    <input type="date" name="tanggal" class="form-control" placeholder="Enter Place"
-                                        id="tanggal">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal"><i
                                 class="bx bx-x me-1 align-middle"></i> Cancel</button>
@@ -153,7 +109,7 @@
 
     <script>
         function openModal() {
-            var modal = document.querySelector('.create-lomba');
+            var modal = document.querySelector('.create-kategori');
             var modalBootstrap = new bootstrap.Modal(modal);
             modalBootstrap.show();
         }
