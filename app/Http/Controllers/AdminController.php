@@ -18,6 +18,16 @@ class AdminController extends Controller
         $user_role = 'Super Admin';
         return view('admin.userManagement', compact('user_role'));
     }
+    public function lombaManagement()
+    {
+        $user_role = 'Super Admin';
+        return view('admin.lombaManagement', compact('user_role'));
+    }
+    public function daftarPengajuanLomba()
+    {
+        $user_role = 'Super Admin';
+        return view('admin.daftarPengajuanLomba', compact('user_role'));
+    }
     
 
     public function store(Request $request)
