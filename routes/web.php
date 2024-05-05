@@ -17,7 +17,7 @@ Route::prefix('/beranda')
     ->group(function () {
         Route::get('/logout', [AdminAuthController::class, 'logout']);
         Route::resource('/user', AdminAuthController::class);
-        
+
     });
 
 Route::prefix('mahasiswa')
@@ -36,6 +36,8 @@ Route::prefix('admin')
         Route::get('beranda', [AdminController::class, 'beranda'])->name('beranda');
         Route::get('user-Management', [AdminController::class, 'userManagement'])->name('user-Management');
         Route::post('user-Management', [AdminController::class, 'store'])->name('user-Management.store');
+        Route::get('lomba-Management', [AdminController::class, 'lombaManagement'])->name('lomba-Management');
+        Route::post('lomba-Management', [AdminController::class, 'storelomba'])->name('lomba-Management.store');
     });
 
 Route::prefix('dosen')

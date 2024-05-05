@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('identitas')->unique();
-            // $table->string('username');
             $table->string('password');
             $table->string('role');
             $table->string('kategori');

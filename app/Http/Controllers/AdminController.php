@@ -18,13 +18,13 @@ class AdminController extends Controller
         $user_role = 'Super Admin';
         return view('admin.userManagement', compact('user_role'));
     }
+    
 
     public function store(Request $request)
     {
         $data = request()->validate([
             'nama' => 'required',
             'identitas' => 'required',
-            'username' => 'required',
             'password' => 'required',
             'role' => 'required',
             'kategori' => 'required',
