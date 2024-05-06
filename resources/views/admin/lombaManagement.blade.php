@@ -18,7 +18,7 @@
 
                     <div class="">
                         <div class="row mb-2">
-                            <div class="col-xl-3 col-md-12">
+                            {{-- <div class="col-xl-3 col-md-12">
                                 <div class="pb-3 pb-xl-0">
                                     <form class="email-search">
                                         <div class="position-relative">
@@ -27,7 +27,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- Button untuk membuka modal -->
                             <div class="text-sm-end">
                                 <button type="button"
@@ -38,9 +38,12 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-nowrap align-middle mb-0">
+                        <table id="myTable" class="table table-nowrap align-middle mb-0">
                             <thead>
                                 <tr>
+                                    <td class=" d-flex justify-content-center">
+                                        <h5 class="text-truncate font-size-14 m-0">No</h5>
+                                    </td>
                                     <td>
                                         <p class="mb-0">Nama Perlombaan</p>
                                     </td>
@@ -62,6 +65,9 @@
                                 @if ($lomba->isNotEmpty())
                                 @foreach ($lomba as $item)
                                     <tr>
+                                        <td class="d-flex justify-content-center">
+                                            <p class="mb-0">{{ $item->id }}</p>
+                                        </td>
                                         <td>
                                             <p class="mb-0">{{ $item->nama_lomba }}</p>
                                         </td>
@@ -165,6 +171,7 @@
             modalBootstrap.show();
         }
     </script>
+    
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
@@ -191,6 +198,20 @@
                     }
                 });
             });
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+   <script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": [5] } // Menonaktifkan sorting pada kolom 1 dan 3
+            ]
         });
     });
 </script>
