@@ -47,6 +47,24 @@
                     <span class="menu-item" data-key="t-dashboard">Dashboard</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.lomba-Management') }}">
+                    <i class="bx bx-home-alt icon nav-icon"></i>
+                    <span class="menu-item" data-key="t-dashboard">Lomba Management</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.kategori-Management') }}">
+                    <i class="bx bx-home-alt icon nav-icon"></i>
+                    <span class="menu-item" data-key="t-dashboard">Kategori Management</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.user-Management') }}">
+                    <i class="bx bx-home-alt icon nav-icon"></i>
+                    <span class="menu-item" data-key="t-dashboard">User Management</span>
+                </a>
+            </li>
 
 
         </ul>

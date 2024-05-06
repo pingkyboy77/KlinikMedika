@@ -17,7 +17,6 @@ Route::prefix('/beranda')
     ->group(function () {
         Route::get('/logout', [AdminAuthController::class, 'logout']);
         Route::resource('/user', AdminAuthController::class);
-
     });
 
 Route::prefix('mahasiswa')
@@ -36,10 +35,23 @@ Route::prefix('admin')
         Route::get('beranda', [AdminController::class, 'beranda'])->name('beranda');
         Route::get('user-Management', [AdminController::class, 'userManagement'])->name('user-Management');
         Route::post('user-Management', [AdminController::class, 'store'])->name('user-Management.store');
+        Route::delete('user-Management/{id}', [AdminController::class, 'destroyuser'])->name('user.delete');
+        Route::get('update-User/{id}/edit', [AdminController::class, 'updateUser'])->name('update-User');
+        Route::post('update-User/{id}/edit', [AdminController::class, 'updatedUser'])->name('updated-User');
         Route::get('lomba-Management', [AdminController::class, 'lombaManagement'])->name('lomba-Management');
         Route::post('lomba-Management', [AdminController::class, 'storelomba'])->name('lomba-Management.store');
+        Route::delete('lomba-Management/{id}', [AdminController::class, 'destroylomba'])->name('lomba.delete');
+        Route::get('update-Lomba/{id}/edit', [AdminController::class, 'updateLomba'])->name('update-Lomba');
+        Route::post('update-Lomba/{id}/edit', [AdminController::class, 'updatedLomba'])->name('updated-Lomba');
+        Route::get('lomba-Management', [AdminController::class, 'lombaManagement'])->name('lomba-Management');
         Route::get('kategori-Management', [AdminController::class, 'kategoriManagement'])->name('kategori-Management');
         Route::post('kategori-Management', [AdminController::class, 'storekategori'])->name('kategori-Management.store');
+        Route::delete('kategori-Management/{id}', [AdminController::class, 'destroykategori'])->name('kategori.delete');
+        Route::get('update-Kategori/{id}/edit', [AdminController::class, 'updateKategori'])->name('update-Kategori');
+        Route::post('update-Kategori/{id}/edit', [AdminController::class, 'updatedKategori'])->name('updated-Kategori');
+        // Route::put('update-Kategori/{id}', [AdminController::class, 'updatedKategori'])->name('Kategori.update');
+        // Route::delete('kategori-Management/{id}', [AdminController::class, 'updatekategori'])->name('lomba.update');
+
     });
 
 Route::prefix('dosen')
