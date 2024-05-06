@@ -30,18 +30,24 @@
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label" for="CreateTask-Category">Role</label>
-            <select class="form-select" name="role" id="role" >
-                <option selected disabled>Role Sebelumnya - {{ isset($user) ? $user->role : old('role') }}</option>
-                <option value="Admin">Admin</option>
-                <option value="Mahasiswa">Mahasiswa</option>
-                <option value="Dosen">Dosen</option>
+            <select class="form-select" name="role" id="role_update" >
+                {{-- <option selected disabled>Role Sebelumnya - {{ isset($user) ? $user->role : old('role') }}</option> --}}
+                <option value="admin" @if (isset($user) && $user->role == 'admin')
+                    selected
+                @endif>Admin</option>
+                <option value="mahasiswa" @if (isset($user) && $user->role == 'mahasiswa')
+                    selected
+                @endif>Mahasiswa</option>
+                <option value="dosen" @if (isset($user) && $user->role == 'dosen')
+                    selected
+                @endif>Dosen</option>
             </select>
         </div>
     </div>
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label" for="CreateTask-Category">Kategori</label>
-            <select class="form-select" name="kategori" id="kategori">
+            <select class="form-select" name="kategori" id="kategori_update">
                 <option selected disabled> Select Category </option>
             </select>
         </div>
@@ -50,9 +56,13 @@
         <div class="mb-3">
             <label class="form-label" for="CreateTask-Category">Status</label>
             <select class="form-select" name="status">
-                <option selected> Status Sebelumnya - {{ isset($user) ? $user->status : old('status') }}</option>
-                <option>Active</option>
-                <option>Non Active</option>
+                {{-- <option selected> Status Sebelumnya - {{ isset($user) ? $user->status : old('status') }}</option> --}}
+                <option value="active" @if (isset($user) && $user->status == 'active')
+                    selected
+                @endif>Active</option>
+                <option value="non active" @if (isset($user) && $user->status == 'non active')
+                    selected
+                @endif>Non Active</option>
             </select>
         </div>
     </div>
@@ -70,31 +80,33 @@
 
 
 <script>
-   document.getElementById('role').addEventListener('change', function() {
-       var role = this.value;
-       var kategoriDropdown = document.getElementById('kategori');
-       kategoriDropdown.innerHTML = '';
+     var kategori = @JSON($kategori);
+        document.getElementById('role_update').addEventListener('change', function() {
+            var role = this.value;
+            var kategoriDropdown = document.getElementById('kategori_update');
+            kategoriDropdown.innerHTML = '';
 
-       if (role === 'Mahasiswa') {
-           var option = document.createElement('option');
-           option.text = 'Mahasiswa';
-           kategoriDropdown.add(option);
-       } else if (role === 'Dosen') {
-           var options = ['UI/UX', 'Jaringan', 'Website'];
-           options.forEach(function(optionValue) {
-               var option = document.createElement('option');
-               option.text = optionValue;
-               kategoriDropdown.add(option);
-           });
-       } else if (role === 'Admin') {
-           var options = ['Super Admin'];
-           options.forEach(function(optionValue) {
-               var option = document.createElement('option');
-               option.text = optionValue;
-               kategoriDropdown.add(option);
-           });
-       }
-   });
+            if (role === 'mahasiswa') {
+                var option = document.createElement('option');
+                option.text = 'Mahasiswa';
+                kategoriDropdown.add(option);
+            } else if (role === 'dosen') {
+                var option_dosen = @JSON($kategori);
+                var options = option_dosen;
+                options.forEach(function(optionValue) {
+                    var option = document.createElement('option');
+                    option.text = optionValue;
+                    kategoriDropdown.add(option);
+                });
+            } else if (role === 'admin') {
+                var options = ['Super Admin'];
+                options.forEach(function(optionValue) {
+                    var option = document.createElement('option');
+                    option.text = optionValue;
+                    kategoriDropdown.add(option);
+                });
+            }
+        });
 </script>
 
 

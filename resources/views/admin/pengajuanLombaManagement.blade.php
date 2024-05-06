@@ -54,7 +54,7 @@
                                     </td>
                                     <td>
                                         <p class="mb-0">Kategori</p>
-                                    </td>=
+                                    </td>
                                     <td>
                                         <p class="mb-0">Status</p>
                                     </td>

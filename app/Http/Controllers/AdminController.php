@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Database\QueryException;
-use Illuminate\Console\View\Components\Alert;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
 {
@@ -85,7 +85,8 @@ class AdminController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $user = User::find($id);
-        return view('admin.updateUser', compact('nama', 'role', 'user'));
+        $kategori = Kategori::orderBy('created_at', 'desc')->pluck('kategori');
+        return view('admin.updateUser', compact('nama', 'role', 'user', 'kategori'));
     }
     public function updateLomba($id)
 {
@@ -94,6 +95,7 @@ class AdminController extends Controller
         $role = $user->role;
     $lomba = Lomba::find($id);
     $kategoriOptions = Kategori::pluck('kategori', 'id');
+    
 
     return view('admin.updateLomba', compact('nama', 'role', 'lomba', 'kategoriOptions'));
 }
@@ -285,7 +287,7 @@ class AdminController extends Controller
             'kategori' => $request->kategori,
             'status' => $request->status,
         ];
-
+        $data['password'] = Hash::make($data['password']);
         $user->update($data);
         $user_role = 'admin';
         $route = $user_role . '/user-Management';

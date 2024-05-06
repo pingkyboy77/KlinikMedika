@@ -125,36 +125,7 @@
     @include('admin.modals')
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        var kategori = @JSON($kategori);
-        console.log(kategori);
-        document.getElementById('role').addEventListener('change', function() {
-            var role = this.value;
-            var kategoriDropdown = document.getElementById('kategori');
-            kategoriDropdown.innerHTML = '';
-
-            if (role === 'mahasiswa') {
-                var option = document.createElement('option');
-                option.text = 'Mahasiswa';
-                kategoriDropdown.add(option);
-            } else if (role === 'dosen') {
-                var option_dosen = @JSON($kategori);
-                var options = option_dosen;
-                options.forEach(function(optionValue) {
-                    var option = document.createElement('option');
-                    option.text = optionValue;
-                    kategoriDropdown.add(option);
-                });
-            } else if (role === 'admin') {
-                var options = ['Super Admin'];
-                options.forEach(function(optionValue) {
-                    var option = document.createElement('option');
-                    option.text = optionValue;
-                    kategoriDropdown.add(option);
-                });
-            }
-        });
-    </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

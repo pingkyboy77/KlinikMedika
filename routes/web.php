@@ -9,7 +9,7 @@ use App\Http\Controllers\MahasiswaController;
 // Route::get('/login', [AdminAuthController::class, 'index'])
 //     ->name('login')
 //     ->middleware('guest');
-Route::get('/', [AdminAuthController::class, 'landing']);
+// Route::get('/', [AdminAuthController::class, 'landing']);
 
 
 // Route::prefix('/beranda')
@@ -19,7 +19,7 @@ Route::get('/', [AdminAuthController::class, 'landing']);
 //         Route::resource('/user', AdminAuthController::class);
 
 //     });
-Route::get('/login', [AdminAuthController::class, 'index'])->name('login');
+Route::get('/', [AdminAuthController::class, 'index'])->name('login');
 Route::post('/proses', [AdminAuthController::class, 'doLogin'])->name('proses.login');
 Route::get('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 // Route::get('user-Management', [AdminController::class, 'userManagement'])->name('user-Management');
@@ -50,7 +50,7 @@ Route::prefix('admin')
         Route::post('user-Management', [AdminController::class, 'storeUser'])->name('user-Management.store');
         // Route::get('/user/{id}/edit', [AdminController::class, 'editUser'])->name('user-Management.edit');
         Route::put('/user/{id}', [AdminController::class, 'updateUser'])->name('user.update');
-        Route::post('user-Management', [AdminController::class, 'store'])->name('user-Management.store');
+        // Route::post('user-Management', [AdminController::class, 'store'])->name('user-Management.store');
         Route::delete('user-Management/{id}', [AdminController::class, 'destroyuser'])->name('user.delete');
         Route::get('update-User/{id}/edit', [AdminController::class, 'updateUser'])->name('update-User');
         Route::post('update-User/{id}/edit', [AdminController::class, 'updatedUser'])->name('updated-User');
