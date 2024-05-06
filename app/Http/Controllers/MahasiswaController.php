@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\DaftarPengajuan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MahasiswaController extends Controller
 {
@@ -59,41 +61,70 @@ class MahasiswaController extends Controller
         $role = $user->role;
         return view('mahasiswa.jadwalBimbingan', compact('role', 'nama'));
     }
-    public function pengajuanLomba($nama_lomba, $nama_akun, $kategori)
+    public function pengajuanLomba($nama_lomba, $nama_akun, $id)
     {
+        // Check if the user has already submitted this competition
         $data_pengajuan = DaftarPengajuan::where('nama_lomba', $nama_lomba)->where('stored_by', $nama_akun)->first();
+
         if ($data_pengajuan != null) {
             return redirect()->back()->with('error', 'Anda sudah mengajukan lomba ini');
         } else {
+            // Get the authenticated user
             $user = Auth::user();
+
+            // Extract user details
             $nama = $user->nama;
             $role = $user->role;
-            $dospem = User::where('kategori', $kategori)->get();
-            // Gunakan parameter yang diterima dari route
-            $nama_lomba = $nama_lomba;
-            $nama_akun = $nama_akun;
-            $kategori = $kategori;
 
+            // Get competition category
+            $kategori = Lomba::where('id', $id)->pluck('kategori')->first();
+
+            // Get supervisors for the competition category
+            $dospem = User::where('kategori', $kategori)->get();
+
+            // Pass parameters to the view
             return view('mahasiswa.form-pengajuan-lomba', compact('role', 'nama', 'nama_lomba', 'nama_akun', 'kategori', 'dospem'));
         }
     }
+
     public function pengajuanLombaStore(Request $request)
     {
         try {
-            // dd('masuk');
-            $data = request()->validate([
+            // Validation rules
+            // dd($request->all());
+            $data = $request->validate([
                 'nama_ketua' => 'required',
                 'identitas_number_ketua' => 'required',
+                'email_ketua' => 'required',
+                'no_telp_ketua' => 'required',
                 'namadosen' => 'required',
+                'file_proposal_pengajuan' => 'required|file'
             ]);
+            // dd($data);
+            if ($request->hasFile('file_proposal_pengajuan')) {
+                $file_proposal_pengajuan = $request->file('file_proposal_pengajuan');
+                $file_name = time() . '-' . $file_proposal_pengajuan->getClientOriginalName();
+                
+                $storage = 'uploads/file_pengajuan/';
+                $file_proposal_pengajuan->move($storage, $file_name);
+                $data['file_proposal_pengajuan'] = $storage . $file_name;
+            } else {
+                $data['file_proposal_pengajuan'] = null;
+            }
+
+
+            
+            // Populate other data
             $data['stored_by'] = Auth::user()->nama;
             $data['jenis_pengajuan'] = 'Pengajuan Lomba';
             $data['kategori'] = $request->kategori;
             $data['nama_lomba'] = $request->nama_lomba;
             $data['status'] = 'Menunggu Persetujuan';
+            // Save data to database
             // dd($data);
+            Alert::success('Sukses', 'Data Berhasil Di Update');
             DaftarPengajuan::create($data);
-            
+
             return redirect()->route('mahasiswa.history')->with('success', 'Pengajuan berhasil disimpan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());

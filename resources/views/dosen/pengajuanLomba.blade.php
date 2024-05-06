@@ -57,6 +57,9 @@
                                         <p class="mb-0">Tanggal Pengajuan</p>
                                     </th>
                                     <th>
+                                        <p class="mb-0">File Proposal</p>
+                                    </th>
+                                    <th>
                                         <p class="mb-0">Action</p>
                                     </th>
                                 </tr>
@@ -79,6 +82,9 @@
                                         </td>
                                         <td>
                                             <p class="mb-0">{{ $item->created_at }}</p>
+                                        </td>
+                                        <td>
+                                            <a href="/{{ $item->file_proposal_pengajuan }}" download="{{ substr($item->file_proposal_pengajuan, 23) }}">{{ substr($item->file_proposal_pengajuan, 23) }}</a>
                                         </td>
                                         @if ($item->status == 'diterima')
                                             <td class="d-flex ps-2 align-items-center">

@@ -80,7 +80,7 @@
                                                 <!-- Button untuk membuka modal -->
                                                     <div>
                                                         <a
-                                                            href="{{ route('mahasiswa.pengajuan-lomba', ['nama_lomba' => $item->nama_lomba, 'nama_akun' => $nama, 'kategori' => $item->kategori]) }}">
+                                                            href="{{ route('mahasiswa.pengajuan-lomba', ['nama_lomba' => $item->nama_lomba, 'nama_akun' => $nama, 'id' => $item->id]) }}">
                                                             <button type="button"
                                                                 class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2">
                                                                 <i class="mdi mdi-plus me-1"></i> Daftar

@@ -58,6 +58,9 @@
                                     <td>
                                         <h5 class="text-dark font-size-14 m-0">Jenis Pengajuan</h5>
                                     </td>
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">File Proposal Pengajuan</h5>
+                                    </td>
 
                                     <td>
                                         <h5 class="text-dark font-size-14 m-0">Status</h5>
@@ -85,6 +88,11 @@
 
                                         <td>
                                             <p class="mb-0">{{ $item->jenis_pengajuan }}</p>
+                                        </td>
+                                        <td>
+                                            {{-- <p class="mb-0">{{ substr($item->file_proposal_pengajuan, 23) }}</p> --}}
+                                            <a href="/{{ $item->file_proposal_pengajuan }}" download="{{ substr($item->file_proposal_pengajuan, 23) }}">{{ substr($item->file_proposal_pengajuan, 23) }}</a>
+                                    
                                         </td>
 
                                         @if ($item->status == 'diterima')

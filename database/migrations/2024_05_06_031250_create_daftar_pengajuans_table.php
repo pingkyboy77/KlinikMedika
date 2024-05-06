@@ -16,8 +16,11 @@ return new class extends Migration
             $table->text('stored_by');
             $table->text('nama_ketua');
             $table->text('nama_lomba');
-            $table->integer('identitas_number_ketua');
+            $table->string('identitas_number_ketua');
             $table->string('jenis_pengajuan');
+            $table->string('email_ketua')->unique();
+            $table->string('no_telp_ketua');
+            $table->text('file_proposal_pengajuan');
             $table->string('kategori');
             $table->text('namadosen');
             $table->string('status');

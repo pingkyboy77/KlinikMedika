@@ -36,7 +36,7 @@ Route::prefix('mahasiswa')
         // Route::post('daftarPerlombaan', [MahasiswaController::class, 'store'])->name('daftarPerlombaan.store');
         Route::get('history', [MahasiswaController::class, 'history'])->name('history');
         Route::get('jadwalBimbingan', [MahasiswaController::class, 'jadwalBimbingan'])->name('jadwalBimbingan');
-        Route::get('pengajuan-lomba/{nama_lomba}/{nama_akun}/{kategori}', [MahasiswaController::class, 'pengajuanLomba'])->name('pengajuan-lomba');
+        Route::get('pengajuan-lomba/{nama_lomba}/{nama_akun}/{id}', [MahasiswaController::class, 'pengajuanLomba'])->name('pengajuan-lomba');
         Route::post('daftarPerlombaan', [MahasiswaController::class, 'pengajuanLombaStore'])->name('store.pengajuan-lomba');
     });
 
@@ -46,10 +46,13 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('beranda', [AdminController::class, 'beranda'])->name('beranda');
         Route::get('daftarPengajuanLomba', [AdminController::class, 'daftarPengajuanLomba'])->name('daftarPengajuanLomba');
+        Route::get('update-daftarPengajuanLomba/{id}/edit', [AdminController::class, 'updatedaftarPengajuanLomba'])->name('update.daftarPengajuanLomba');
+        Route::post('update-daftarPengajuanLomba/{id}/edit', [AdminController::class, 'updateddaftarPengajuanLomba'])->name('updated.daftarPengajuanLomba');
+        Route::delete('daftarPengajuanLomba/{id}', [AdminController::class, 'destroyDaftarPengajuanLomba'])->name('DaftarPengajuan.delete');
         Route::get('user-Management', [AdminController::class, 'userManagement'])->name('user-Management');
         Route::post('user-Management', [AdminController::class, 'storeUser'])->name('user-Management.store');
         // Route::get('/user/{id}/edit', [AdminController::class, 'editUser'])->name('user-Management.edit');
-        Route::put('/user/{id}', [AdminController::class, 'updateUser'])->name('user.update');
+        // Route::put('/user/{id}', [AdminController::class, 'updateUser'])->name('user.update');
         // Route::post('user-Management', [AdminController::class, 'store'])->name('user-Management.store');
         Route::delete('user-Management/{id}', [AdminController::class, 'destroyuser'])->name('user.delete');
         Route::get('update-User/{id}/edit', [AdminController::class, 'updateUser'])->name('update-User');

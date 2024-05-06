@@ -13,11 +13,16 @@
                             </div>
                         </div>
                         <!-- Tambahkan input lainnya di sini -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal"><i
-                                    class="bx bx-x me-1 align-middle"></i> Cancel</button>
-                            <button type="submit" class="btn btn-success"><i class="bx bx-check me-1 align-middle"></i>
-                                Confirm</button>
+                        <div class="row mt-2">
+                            <div class="col-12 text-end d-flex g-3 justify-content-end">
+                                <a href="#" onclick="history.back();">
+                                    <button type="button" class="btn btn-danger me-1">
+                                        <i class="bx bx-x me-1 align-middle"></i> Cancel
+                                    </button>
+                                </a>
+                                <button type="submit" class="btn btn-success"><i class="bx bx-check me-1 align-middle"></i>
+                                    Confirm</button>
+                            </div>
                         </div>
                     </div>
 </form>

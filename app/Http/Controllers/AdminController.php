@@ -25,7 +25,7 @@ class AdminController extends Controller
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
-        return view('admin.dashboard', compact('nama', 'kategori', 'lomba', 'user_jumlah','role', 'pengajuan_jumlah'));
+        return view('admin.dashboard', compact('nama', 'kategori', 'lomba', 'user_jumlah', 'role', 'pengajuan_jumlah'));
     }
     public function userManagement()
     {
@@ -37,7 +37,7 @@ class AdminController extends Controller
         // $role = 'super admin';
         $data_users = User::get();
         $kategori = Kategori::orderBy('created_at', 'desc')->pluck('kategori');
-        return view('admin.userManagement', compact('nama','role', 'data_users', 'kategori'));
+        return view('admin.userManagement', compact('nama', 'role', 'data_users', 'kategori'));
     }
     public function lombaManagement()
     {
@@ -70,7 +70,6 @@ class AdminController extends Controller
     }
     public function updateKategori($id)
     {
-
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
@@ -80,7 +79,6 @@ class AdminController extends Controller
 
     public function updateUser($id)
     {
-
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
@@ -89,16 +87,26 @@ class AdminController extends Controller
         return view('admin.updateUser', compact('nama', 'role', 'user', 'kategori'));
     }
     public function updateLomba($id)
-{
+    {
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
-    $lomba = Lomba::find($id);
-    $kategoriOptions = Kategori::pluck('kategori', 'id');
-    
+        $lomba = Lomba::find($id);
+        $kategoriOptions = Kategori::pluck('kategori', 'id');
 
-    return view('admin.updateLomba', compact('nama', 'role', 'lomba', 'kategoriOptions'));
-}
+        return view('admin.updateLomba', compact('nama', 'role', 'lomba', 'kategoriOptions'));
+    }
+
+    public function updateDaftarPengajuanLomba($id)
+    {
+        $user = Auth::user();
+        $nama = $user->nama;
+        $role = $user->role;
+        $daftarPengajuan = DaftarPengajuan::find($id);
+        $dospem = User::where('kategori', $daftarPengajuan->kategori)->get();
+        // dd($daftarPengajuan);
+        return view('admin.updateDaftarPengajuanLomba', compact('nama', 'role', 'daftarPengajuan', 'dospem'));
+    }
 
     public function storeUser(Request $request)
     {
@@ -112,6 +120,7 @@ class AdminController extends Controller
         ]);
         $data['password'] = Hash::make($data['password']);
         User::create($data);
+        Alert::success('Sukses', 'Data Berhasil Di Tambahkan');
         return $this->userManagement();
     }
 
@@ -138,31 +147,31 @@ class AdminController extends Controller
     // }
 
     public function storelomba(Request $request)
-{
-    try {
-        $data = $request->validate([
-            'nama_lomba' => 'required',
-            'kategori' => 'required',
-            'lokasi' => 'required',
-            'tanggal' => 'required'
-        ]);
+    {
+        try {
+            $data = $request->validate([
+                'nama_lomba' => 'required',
+                'kategori' => 'required',
+                'lokasi' => 'required',
+                'tanggal' => 'required',
+            ]);
 
-        Lomba::create($data);
-        $user_role = 'admin';
-        $route = $user_role . '/lomba-Management';
-        Alert::success('Sukses', 'Data Berhasil ditambahkan');
-        return redirect($route);
-    } catch (QueryException $e) {
-        // Tangani kesalahan saat input data
-        Alert::error('Gagal', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
-        return redirect()->back();
+            Lomba::create($data);
+            $user_role = 'admin';
+            $route = $user_role . '/lomba-Management';
+            Alert::success('Sukses', 'Data Berhasil ditambahkan');
+            return redirect($route);
+        } catch (QueryException $e) {
+            // Tangani kesalahan saat input data
+            Alert::error('Gagal', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
+            return redirect()->back();
+        }
     }
-}
 
     public function storeKategori(Request $request)
     {
         $data = request()->validate([
-            'kategori' => 'required'
+            'kategori' => 'required',
         ]);
         Kategori::create($data);
         Alert::success('Sukses', 'Data Berhasil ditambahkan');
@@ -217,6 +226,20 @@ class AdminController extends Controller
         return redirect($route);
     }
 
+    public function destroydaftarPengajuanLomba($id)
+    {
+        $daftarPengajuan = DaftarPengajuan::find($id);
+
+        if (!$daftarPengajuan) {
+            Alert::warning('Gagal', 'Data Tidak Ditemukan');
+        }
+
+        $daftarPengajuan->delete();
+        Alert::success('Sukses', 'Data Berhasil Di Hapus');
+        return $this->daftarPengajuanLomba();
+
+    }
+
     public function updatedLomba(Request $request, string $id)
     {
         //
@@ -225,7 +248,7 @@ class AdminController extends Controller
             'nama_lomba' => 'required',
             'kategori' => 'required',
             'lokasi' => 'required',
-            'tanggal' => 'required'
+            'tanggal' => 'required',
         ]);
 
         $lomba = lomba::findOrFail($id);
@@ -295,4 +318,25 @@ class AdminController extends Controller
         return redirect($route);
     }
 
+    public function updateddaftarPengajuanLomba(Request $request, $id)
+    {
+        $data = [
+            'nama_ketua' => $request->nama_ketua ?? null,
+            'identitas_number_ketua' => $request->identitas_number_ketua ?? null,
+            'no_telp_ketua' => $request->no_telp_ketua ?? null,
+            'email_ketua' => $request->email_ketua ?? null,
+            'namadosen' => $request->namadosen ?? null,
+            'file_proposal_pengajuan' => $request->hasFile('file_proposal_pengajuan') ? $request->file('file_proposal_pengajuan') : null,
+        ];
+
+        // Menghapus kunci 'file_proposal_pengajuan' jika nilainya null atau kosong
+        if (empty($data['file_proposal_pengajuan'])) {
+            unset($data['file_proposal_pengajuan']);
+        }
+
+        $daftarPengajuan = DaftarPengajuan::findOrFail($id);
+        $daftarPengajuan->update($data);
+        Alert::success('Sukses', 'Data Berhasil Di Update');
+        return $this->daftarPengajuanLomba();
+    }
 }

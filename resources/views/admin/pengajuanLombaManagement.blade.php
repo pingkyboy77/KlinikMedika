@@ -56,6 +56,9 @@
                                         <p class="mb-0">Kategori</p>
                                     </td>
                                     <td>
+                                        <p class="mb-0">File Proposal</p>
+                                    </td>
+                                    <td>
                                         <p class="mb-0">Status</p>
                                     </td>
                                     <td>
@@ -89,16 +92,23 @@
                                         <p class="mb-0">{{ $item->kategori }}</p>
                                     </td>
                                     <td>
-                                        <p class="mb-0">{{ $item->status }}</p>
+                                        <a href="/{{ $item->file_proposal_pengajuan }}" download="{{ substr($item->file_proposal_pengajuan, 23) }}">{{ substr($item->file_proposal_pengajuan, 23) }}</a>
+
                                     </td>
                                     <td>
-                                            <button type="button"
-                                                class="btn btn-warning btn-rounded waves-effect waves-light mb-2 me-2"
-                                                onclick="editUser({{ $item->id }})"><i class="bx bx-pencil"></i>
-                                                Edit</button>
-                                            <button type="button"
-                                                class="btn btn-danger btn-rounded waves-effect waves-light mb-2 me-2"><i
-                                                    class="bx bx-trash-alt"></i> Delete</button>
+                                        <p class="mb-0">{{ $item->status }}</p>
+                                    </td>
+                                    <td class="d-flex justify-content-start g-3">
+                                        <a class="btn btn-warning me-2"
+                                        href="{{ route('admin.update.daftarPengajuanLomba', ['id' => $item->id]) }}"><i
+                                            class="bx bx-pencil"></i>Edit</a>
+                                    <form action="{{ route('admin.DaftarPengajuan.delete', ['id' => $item->id]) }}"
+                                        method="POST">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-delete"><i
+                                                class="bx bx-trash-alt"></i> Delete</button>
+                                    </form>
                                         </td>
                                 </tr>
                                 @endforeach
@@ -117,5 +127,32 @@
         </div>
 
     </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteButtons = document.querySelectorAll('.btn-delete');
 
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                var form = this.parentElement;
+                var url = form.getAttribute('action');
+
+                Swal.fire({
+                    title: 'Apakah anda yakin menghapus data?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
 @endsection
