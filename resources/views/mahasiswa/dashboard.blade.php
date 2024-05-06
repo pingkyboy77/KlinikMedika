@@ -1,3 +1,4 @@
+
 @extends('mahasiswa.layouts.app')
 @section('content')
 <style>
@@ -27,7 +28,7 @@
                                     </div>
 
                                     <div>
-                                        <h4 class="mt-4 pt-1 mb-0 font-size-22">14 <span
+                                        <h4 class="mt-4 pt-1 mb-0 font-size-22">{{ $dospem_jumlah ?? '0' }} Dosen<span
                                                 class="text-success fw-medium font-size-13 align-middle"> </h4>
                                         <div class="d-flex mt-1 align-items-end overflow-hidden">
                                             <div class="flex-grow-1">
@@ -43,7 +44,7 @@
                     </a>
                 </div>
                 <div class="col-xl-4">
-                    <a href="{{ route('mahasiswa.daftarPerlombaan') }}">
+                    <a href="{{ route('mahasiswa.daftarPerlombaan') }}" data-nama="{{ $nama ?? '' }}">
                         <div class="card card-box">
                             <div class="card-body">
                                 <div>
@@ -60,7 +61,7 @@
                                     </div>
 
                                     <div>
-                                        <h4 class="mt-4 pt-1 mb-0 font-size-22">14 <span
+                                        <h4 class="mt-4 pt-1 mb-0 font-size-22">{{ $lomba_jumlah ?? '0' }} Lomba<span
                                                 class="text-success fw-medium font-size-13 align-middle"> </h4>
                                         <div class="d-flex mt-1 align-items-end overflow-hidden">
                                             <div class="flex-grow-1">

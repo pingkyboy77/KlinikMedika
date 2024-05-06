@@ -2,37 +2,101 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Lomba;
+use App\Models\daftarLomba;
 use Illuminate\Http\Request;
+use App\Models\DaftarPengajuan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class MahasiswaController extends Controller
 {
     public function beranda()
     {
-        $user_role = "Mahasiswa";
-        return view('mahasiswa.dashboard',compact('user_role'));
+        $user = Auth::user();
+        $nama = $user->nama;
+        $role = $user->role;
+        $dospem_jumlah = User::where('role', 'dosen')->count();
+        $lomba_jumlah = Lomba::count();
+        return view('mahasiswa.dashboard', compact('role', 'nama', 'dospem_jumlah', 'lomba_jumlah'));
     }
-
     public function daftarDosenPembimbing()
     {
-        $user_role = "Mahasiswa";
-        return view('mahasiswa.daftarDosenPembimbing', compact('user_role'));
+        $user = Auth::user();
+        $nama = $user->nama;
+        $role = $user->role;
+        $dospem = User::where('role', 'dosen')->get();
+        // dd($user);
+
+        return view('mahasiswa.daftarDosenPembimbing', compact('role', 'nama', 'dospem'));
     }
-    public function daftarPerlombaan()
+    public function daftarPerlombaan(Request $request)
     {
-        $user_role = "Mahasiswa";
-        return view('mahasiswa.daftarPerlombaan',compact('user_role'));
+        $user = Auth::user();
+        // dd($user);
+        $nama = $user->nama;
+        $role = $user->role;
+        $daftar_lomba = Lomba::orderBy('created_at', 'desc')->get();
+        // dd($daftar_lomba);
+        return view('mahasiswa.daftarPerlombaan', compact('role', 'nama', 'daftar_lomba'));
     }
     public function history()
     {
-        $user_role = "Mahasiswa";
-        return view('mahasiswa.history',compact('user_role'));
+        $user = Auth::user();
+        // dd($user);
+        $nama = $user->nama;
+        $role = $user->role;
+        $daftar_lomba_ikut = DaftarPengajuan::where('stored_by', $nama)->orderBy('created_at', 'desc')->get();
+        // dd($daftar_lomba_ikut);
+        return view('mahasiswa.history', compact('role', 'nama', 'daftar_lomba_ikut'));
     }
     public function jadwalBimbingan()
     {
-        $user_role = "Mahasiswa";
-        return view('mahasiswa.jadwalBimbingan',compact('user_role'));
+        $user = Auth::user();
+        // dd($user);
+        $nama = $user->nama;
+        $role = $user->role;
+        return view('mahasiswa.jadwalBimbingan', compact('role', 'nama'));
     }
+    public function pengajuanLomba($nama_lomba, $nama_akun, $kategori)
+    {
+        $data_pengajuan = DaftarPengajuan::where('nama_lomba', $nama_lomba)->where('stored_by', $nama_akun)->first();
+        if ($data_pengajuan != null) {
+            return redirect()->back()->with('error', 'Anda sudah mengajukan lomba ini');
+        } else {
+            $user = Auth::user();
+            $nama = $user->nama;
+            $role = $user->role;
+            $dospem = User::where('kategori', $kategori)->get();
+            // Gunakan parameter yang diterima dari route
+            $nama_lomba = $nama_lomba;
+            $nama_akun = $nama_akun;
+            $kategori = $kategori;
 
+            return view('mahasiswa.form-pengajuan-lomba', compact('role', 'nama', 'nama_lomba', 'nama_akun', 'kategori', 'dospem'));
+        }
+    }
+    public function pengajuanLombaStore(Request $request)
+    {
+        try {
+            // dd('masuk');
+            $data = request()->validate([
+                'nama_ketua' => 'required',
+                'identitas_number_ketua' => 'required',
+                'namadosen' => 'required',
+            ]);
+            $data['stored_by'] = Auth::user()->nama;
+            $data['jenis_pengajuan'] = 'Pengajuan Lomba';
+            $data['kategori'] = $request->kategori;
+            $data['nama_lomba'] = $request->nama_lomba;
+            $data['status'] = 'Menunggu Persetujuan';
+            // dd($data);
+            DaftarPengajuan::create($data);
+            
+            return redirect()->route('mahasiswa.history')->with('success', 'Pengajuan berhasil disimpan');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
 }
-

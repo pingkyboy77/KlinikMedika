@@ -1,11 +1,19 @@
 @extends('mahasiswa.layouts.app')
 @section('content')
+    {{-- style --}}
+    <style>
+        thead td p {
+            font-weight: bold;
+
+        }
+    </style>
+    {{-- end style --}}
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">
-                                        <h5 class="card-title mb-0">Daftar Pengajuan</h5>
-                                    </div>
+                    <h5 class="card-title mb-0">Daftar Pengajuan</h5>
+                </div>
                 <div class="card-body">
 
                     <div class="">
@@ -30,7 +38,7 @@
 
                     <div class="table-responsive">
                         <table class="table table-nowrap align-middle mb-0">
-                            <tbody>
+                            <thead>
                                 <tr>
                                     <td>
                                         <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
@@ -55,112 +63,57 @@
                                         <h5 class="text-dark font-size-14 m-0">Status</h5>
                                     </td>
                                 </tr>
-                                
+
+                            </thead>
+                            @if ($daftar_lomba_ikut->isNotEmpty())
+                                @foreach ($daftar_lomba_ikut as $item)
+                                    <tr>
+                                        <td>
+                                            <p class="mb-0">{{ $item->nama_lomba }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{ $item->kategori }}</p>
+                                        </td>
+
+                                        <td>
+                                            <p class="mb-0">{{ $item->nama_ketua }}</p>
+                                        </td>
+
+                                        <td>
+                                            <p class="mb-0">{{ $item->namadosen }}</p>
+                                        </td>
+
+                                        <td>
+                                            <p class="mb-0">{{ $item->jenis_pengajuan }}</p>
+                                        </td>
+
+                                        @if ($item->status == 'diterima')
+                                            <td class="ps-2">
+                                                <button type="button"
+                                                    class="btn btn-success btn-rounded waves-effect waves-light me-2">Ajukan
+                                                    Bimbingan</button>
+                                            </td>
+                                        @elseif ($item->status == 'ditolak')
+                                            <td class="d-flex ps-2 align-items-center">
+                                                <p class="d-flex gap-2 align-items-center m-0">
+                                                    <i class="bx bx-x text-danger fw-bold"></i>Decline
+                                                </p>
+                                            </td>
+                                        @else
+                                            <td class="d-flex ps-2 align-items-center">
+                                                <p class="d-flex gap-2 align-items-center m-0">
+                                                    <i class="bx bx-time text-success fw-bold"></i>Waiting
+                                                </p>
+                                            </td>
+                                        @endif
+
+                                    </tr>
+                                @endforeach
+                            @else
                                 <tr>
-                                    <td>
-                                        <p class="mb-0">Hackathon UI/UX</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">UI/UX</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Nizar Rifqy</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Fiqih Syaid Hermawan, S.kom, M.Kom, MPTI</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Pengajuan Lomba</p>
-                                    </td>
-
-                                    <td class="d-flex ps-2 align-items-center">
-                                        <p class="d-flex gap-2 align-items-center m-0">
-                                            <i class="bx bx-time text-success fw-bold"></i>Waiting</p>
-                                    </td>
+                                    <td colspan="6">Tidak Ada Pengajuan Perlombaan atau Bimbingan</td>
                                 </tr>
-                                
-                                <tr>
-                                    <td>
-                                        <p class="mb-0">Hackathon UI/UX</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">UI/UX</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Nizar Rifqy</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Fiqih Syaid Hermawan, S.kom, M.Kom, MPTI</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Pengajuan Lomba</p>
-                                    </td>
-
-                                    <td class="d-flex ps-2 align-items-center">
-                                        <p class="d-flex gap-2 align-items-center m-0">
-                                            <i class="bx bx-x text-danger fw-bold"></i>Decline</p>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <p class="mb-0">Hackathon UI/UX</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">UI/UX</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Arwaa Althifal</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Rehan Fadillah, S.kom, M.Kom</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Pengajuan Lomba</p>
-                                    </td>
-
-                                    <td class="ps-2">
-                                        <button type="button" class="btn btn-success btn-rounded waves-effect waves-light me-2" >Ajukan Bimbingan</button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <p class="mb-0">Hackathon UI/UX</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">UI/UX</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Arwaa Althifal</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Rehan Fadillah, S.kom, M.Kom</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Pengajuan Bimbingan</p>
-                                    </td>
-
-                                    <td class="d-flex ps-2 align-items-center">
-                                        <p class="d-flex gap-2 align-items-center m-0">
-                                            <i class="bx bx-check text-success fw-bold"></i>Accepted</p>
-                                    </td>
-                                </tr>
-
-
-                            </tbody>
+                            @endif
                         </table>
                     </div>
 

@@ -2,38 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kategori;
-use App\Models\Lomba;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-
+use App\Models\Lomba;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
+
+use App\Models\DaftarPengajuan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
     public function beranda()
     {
-        $user_role = 'Super Admin';
-        return view('admin.dashboard', compact('user_role'));
+        $kategori = Kategori::get()->count();
+        $lomba = Lomba::get()->count();
+        $user_jumlah = User::get()->count();
+        $pengajuan_jumlah = DaftarPengajuan::get()->count();
+        $user = Auth::user();
+        $nama = $user->nama;
+        $role = $user->role;
+        return view('admin.dashboard', compact('nama', 'kategori', 'lomba', 'user_jumlah','role', 'pengajuan_jumlah'));
     }
     public function userManagement()
     {
         $data_users = User::get();
-        $user_role = 'Super Admin';
-        return view('admin.userManagement', compact('user_role', 'data_users'));
+        $user = Auth::user();
+        $nama = $user->nama;
+        $role = $user->role;
+        // $nama = 'super admin';
+        // $role = 'super admin';
+        $data_users = User::get();
+        $kategori = Kategori::orderBy('created_at', 'desc')->pluck('kategori');
+        return view('admin.userManagement', compact('nama','role', 'data_users', 'kategori'));
     }
     public function lombaManagement()
     {
         $user_role = 'Super Admin';
         $lomba = Lomba::orderBy('created_at', 'desc')->get();
+        $user = Auth::user();
+        $nama = $user->nama;
+        $role = $user->role;
         // dd($lomba);
-        return view('admin.lombaManagement', compact('user_role', 'lomba'));
+        return view('admin.lombaManagement', compact('lomba', 'nama', 'role'));
+    }
+    public function daftarPengajuanLomba()
+    {
+        $user_role = 'Super Admin';
+        $lomba = Lomba::orderBy('created_at', 'desc')->get();
+        $user = Auth::user();
+        $nama = $user->nama;
+        $role = $user->role;
+        $pengajuan_jumlah = DaftarPengajuan::get();
+        // dd($lomba);
+        return view('admin.pengajuanLombaManagement', compact('lomba', 'nama', 'role', 'pengajuan_jumlah'));
     }
     public function kategoriManagement()
     {
-        $user_role = 'Super Admin';
+        $user = Auth::user();
+        $nama = $user->nama;
+        $role = $user->role;
         $kategori = Kategori::orderBy('created_at', 'desc')->get();
-        return view('admin.kategoriManagement', compact('user_role', 'kategori'));
+        return view('admin.kategoriManagement', compact('kategori', 'nama', 'role'));
     }
 
     public function storeUser(Request $request)
@@ -48,8 +78,7 @@ class AdminController extends Controller
         ]);
         $data['password'] = Hash::make($data['password']);
         User::create($data);
-        $user_role = 'Super Admin';
-        return view('admin.userManagement', compact('user_role'));
+        return $this->userManagement();
     }
 
     public function editUser($id)
@@ -79,8 +108,7 @@ class AdminController extends Controller
             'tanggal' => 'required'
         ]);
         Lomba::create($data);
-        $user_role = 'Super Admin';
-        return view('admin.lombaManagement', compact('user_role'));
+        return $this->lombaManagement();
     }
 
     public function storeKategori(Request $request)
@@ -89,8 +117,7 @@ class AdminController extends Controller
             'kategori' => 'required'
         ]);
         Kategori::create($data);
-        $user_role = 'User Admin';
-        return view('admin.kategoriManagement', compact('user_role'));
+        return $this->kategoriManagement();
     }
 
 }

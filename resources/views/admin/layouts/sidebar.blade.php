@@ -42,7 +42,7 @@
         <ul class="metismenu list-unstyled" id="side-menu">
 
             <li>
-                <a href="{{ route('admin.beranda') }}">
+                <a href="{{ route('admin.beranda') }} ">
                     <i class="bx bx-home-alt icon nav-icon"></i>
                     <span class="menu-item" data-key="t-dashboard">Dashboard</span>
                 </a>
@@ -63,6 +63,12 @@
                 <a href="{{ route('admin.daftarPengajuanLomba') }}">
                     <i class="bx bx-history icon nav-icon"></i>
                     <span class="menu-item" data-key="t-dashboard">Daftar Pengajuan Lomba</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.kategori-Management') }}">
+                    <i class="bx bx-adjust icon nav-icon"></i>
+                    <span class="menu-item" data-key="t-dashboard">Kategori</span>
                 </a>
             </li>
 

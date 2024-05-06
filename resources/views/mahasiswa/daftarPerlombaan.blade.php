@@ -1,11 +1,19 @@
 @extends('mahasiswa.layouts.app')
 @section('content')
+    {{-- style --}}
+    <style>
+        thead td p {
+            font-weight: bold;
+
+        }
+    </style>
+    {{-- end style --}}
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">
-                                        <h5 class="card-title mb-0">Daftar Lomba</h5>
-                                    </div>
+                    <h5 class="card-title mb-0">Daftar Lomba</h5>
+                </div>
                 <div class="card-body">
 
                     <div class="">
@@ -30,7 +38,7 @@
 
                     <div class="table-responsive">
                         <table class="table table-nowrap align-middle mb-0">
-                            <tbody>
+                            <thead>
                                 <tr>
                                     <td>
                                         <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
@@ -51,33 +59,44 @@
                                         <h5 class="text-dark font-size-14 m-0">Action</h5>
                                     </td>
                                 </tr>
-                                
-                                <tr>
-                                    <td>
-                                        <p class="mb-0">Hackathon UI/UX</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">UI/UX</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Gedung Aula Universitas Mercubuana Lt.7</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">20-07-2024</p>
-                                    </td>
-
-                                    <td class="ps-2">
-                                        <!-- Button untuk membuka modal -->
-                            <div>
-                                <button type="button"
-                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
-                                    onclick="openModal()"><i class="mdi mdi-plus me-1"></i> Daftar</button>
-                            </div>
-                                    </td>
-                                </tr>
-
+                            </thead>
+                            <tbody>
+                                @if ($daftar_lomba->isNotEmpty())
+                                    @foreach ($daftar_lomba as $item)
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">{{ $item->nama_lomba }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->kategori }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->lokasi }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->tanggal }}</p>
+                                            </td>
+                                            <td class="ps-2">
+                                                <!-- Button untuk membuka modal -->
+                                                    <div>
+                                                        <a
+                                                            href="{{ route('mahasiswa.pengajuan-lomba', ['nama_lomba' => $item->nama_lomba, 'nama_akun' => $nama, 'kategori' => $item->kategori]) }}">
+                                                            <button type="button"
+                                                                class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2">
+                                                                <i class="mdi mdi-plus me-1"></i> Daftar
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="5">
+                                            <p class="text-center">Tidak ada data</p>
+                                        </td>
+                                    </tr>
+                                @endif
 
                             </tbody>
                         </table>
@@ -93,7 +112,8 @@
     <!-- Modal -->
     <form action="#" method="POST">
         @csrf
-        <div class="modal fade create-daftarLomba" tabindex="-1" role="dialog" aria-labelledby="daftarLomba" aria-hidden="true">
+        <div class="modal fade create-daftarLomba" tabindex="-1" role="dialog" aria-labelledby="daftarLomba"
+            aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -106,21 +126,24 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="kategori">Nama Kategori</label>
-                                    <input type="text" name="kategori" class="form-control" placeholder="Enter Name" id="kategori">
+                                    <input type="text" name="kategori" class="form-control" placeholder="Enter Name"
+                                        id="kategori">
                                 </div>
                             </div>
                             <!-- Tambahkan input lainnya di sini -->
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal"><i class="bx bx-x me-1 align-middle"></i> Cancel</button>
-                        <button type="submit" class="btn btn-success"><i class="bx bx-check me-1 align-middle"></i> Confirm</button>
+                        <button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal"><i
+                                class="bx bx-x me-1 align-middle"></i> Cancel</button>
+                        <button type="submit" class="btn btn-success"><i class="bx bx-check me-1 align-middle"></i>
+                            Confirm</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
-    
+
     <script>
         function openModal() {
             var modal = document.querySelector('.create-daftarLomba');
@@ -128,5 +151,4 @@
             modalBootstrap.show();
         }
     </script>
-    
 @endsection

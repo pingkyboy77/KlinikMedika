@@ -1,6 +1,14 @@
 {{-- @dd($lomba) --}}
 @extends('admin.layouts.app')
 @section('content')
+{{-- style --}}
+<style>
+    thead td p{
+        font-weight: bold;
+
+    }
+</style>
+{{-- end stly --}}
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -35,8 +43,7 @@
                             <thead>
                                 <tr>
                                     <td>
-                                        <h5 class="text-truncate font-size-14 m-0"><a href="javascript: void(0);"
-                                                class="text-dark">Nama Perlombaan</a></h5>
+                                        <p class="mb-0">Nama Perlombaan</p>
                                     </td>
                                     <td>
                                         <p class="mb-0">Kategori</p>
@@ -56,12 +63,13 @@
                                 </div>
                                     </td> --}}
                                 </tr>
+                            </thead>
                             <tbody>
+                                @if ($lomba->isNotEmpty())
                                 @foreach ($lomba as $item)
                                     <tr>
                                         <td>
-                                            <h5 class="text-truncate font-size-14 m-0"><a href="javascript: void(0);"
-                                                    class="text-dark">{{ $item->nama_lomba }}</a></h5>
+                                            <p class="mb-0">{{ $item->nama_lomba }}</p>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{ $item->kategori }}</p>
@@ -80,9 +88,12 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="5" class="text-center">Data Kosong</td>
+                                </tr>
+                            @endif
                             </tbody>
-
-                            </thead>
                         </table>
                     </div>
 

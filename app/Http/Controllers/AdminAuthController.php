@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Lomba;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AdminAuthController extends Controller
 {
+    function landing()
+    {
+        return view('auth.landing');
+    }
     function index()
     {
         return view('auth.login');
@@ -20,19 +27,25 @@ class AdminAuthController extends Controller
             'identitas' => 'required',
             'password' => 'required',
         ]);
+
         // Coba melakukan proses login menggunakan Auth::attempt()
         if (Auth::attempt($data)) {
-            // Jika berhasil, regenerasi session dan redirect ke dashboard
+            // Jika berhasil, regenerasi session
             $request->session()->regenerate();
+
+            // Dapatkan informasi pengguna yang masuk
             $user = User::where('identitas', $data['identitas'])->first();
-            $user_role = $user->role;
-            // dd($user_role);
-            $viewName = $user_role . '.dashboard';
-            return view($viewName, compact('user_role'));
+            $role = $user->role;
+
+            // Tentukan rute yang akan diarahkan
+            $routeName = $role . '.beranda';
+            // dd($routeName);
+            // Redirect ke rute yang sesuai dengan peran pengguna
+            return redirect()->route($routeName);
         }
 
-        // Jika login gagal, kembali ke halaman sebelumnya dengan pesan error
-        return back()->with('LoginError', 'Gagal Login, identitas Atau Password Tidak Ditemukan');
+        // Jika login gagal, kembali ke halaman login dengan pesan error
+        return back()->with('LoginError', 'Gagal Login, identitas atau password tidak ditemukan');
     }
 
     function logout()

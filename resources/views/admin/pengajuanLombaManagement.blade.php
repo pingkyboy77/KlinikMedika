@@ -5,7 +5,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">User Management</h5>
+                    <h5 class="card-title mb-0">Daftar Pengajuan Lomba Management</h5>
                 </div>
                 <div class="card-body">
 
@@ -21,14 +21,14 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="col-xl-9 col-md-12">
+                            {{-- <div class="col-xl-9 col-md-12">
                                 <div class="text-sm-end">
                                     <button type="button"
                                         class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
                                         data-bs-toggle="modal" data-bs-target=".create-user"><i
                                             class="mdi mdi-plus me-1"></i> Create User</button>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -40,21 +40,21 @@
                                         <p class="mb-0">No.</p>
                                     </td>
                                     <td>
-                                        <p class="mb-0">Nama User</p>
+                                        <p class="mb-0">Nama User Pengajuan</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">Nama Ketua Kelompok</p>
                                     </td>
 
                                     <td>
-                                        <p class="mb-0">Identitas Number</p>
+                                        <p class="mb-0">Identitas Number Ketua</p>
                                     </td>
                                     <td>
-                                        <p class="mb-0">Password</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">Role</p>
+                                        <p class="mb-0">Nama Lomba</p>
                                     </td>
                                     <td>
                                         <p class="mb-0">Kategori</p>
-                                    </td>
+                                    </td>=
                                     <td>
                                         <p class="mb-0">Status</p>
                                     </td>
@@ -67,31 +67,31 @@
                             </thead>
 
                             <tbody>
-                                @if ($data_users->isNotEmpty())
-                                @foreach ($data_users as $item)
+                                @if ($pengajuan_jumlah->isNotEmpty())
+                                @foreach ($pengajuan_jumlah as $item)
                                     <tr>
-                                        <td>
-                                            <p class="mb-0">{{ $loop->iteration }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->identitas }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->password }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->role }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->kategori }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->status }}</p>
-                                        </td>
-                                        <td>
+                                    <td style="width:5%">
+                                        <p class="mb-0">{{ $loop->iteration }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">{{ $item->stored_by }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">{{ $item->nama_ketua }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">{{ $item->identitas_number_ketua }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">{{ $item->nama_lomba }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">{{ $item->kategori }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">{{ $item->status }}</p>
+                                    </td>
+                                    <td>
                                             <button type="button"
                                                 class="btn btn-warning btn-rounded waves-effect waves-light mb-2 me-2"
                                                 onclick="editUser({{ $item->id }})"><i class="bx bx-pencil"></i>
@@ -100,15 +100,14 @@
                                                 class="btn btn-danger btn-rounded waves-effect waves-light mb-2 me-2"><i
                                                     class="bx bx-trash-alt"></i> Delete</button>
                                         </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="8">
-                                        <p class="text-center">Belum ada User</p>
-                                    </td>
                                 </tr>
-                            @endif
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td colspan="8" class="text-center">Data Kosong</td>
+                                </tr>
+                                @endif
+
                             </tbody>
                         </table>
                     </div>
@@ -119,37 +118,4 @@
 
     </div>
 
-    @include('admin.modals')
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        var kategori = @JSON($kategori);
-        console.log(kategori);
-        document.getElementById('role').addEventListener('change', function() {
-            var role = this.value;
-            var kategoriDropdown = document.getElementById('kategori');
-            kategoriDropdown.innerHTML = '';
-
-            if (role === 'mahasiswa') {
-                var option = document.createElement('option');
-                option.text = 'Mahasiswa';
-                kategoriDropdown.add(option);
-            } else if (role === 'dosen') {
-                var option_dosen = @JSON($kategori);
-                var options = option_dosen;
-                options.forEach(function(optionValue) {
-                    var option = document.createElement('option');
-                    option.text = optionValue;
-                    kategoriDropdown.add(option);
-                });
-            } else if (role === 'admin') {
-                var options = ['Super Admin'];
-                options.forEach(function(optionValue) {
-                    var option = document.createElement('option');
-                    option.text = optionValue;
-                    kategoriDropdown.add(option);
-                });
-            }
-        });
-    </script>
 @endsection
