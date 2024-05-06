@@ -1,4 +1,3 @@
-{{-- @dd($lomba) --}}
 @extends('admin.layouts.app')
 @section('content')
 {{-- style --}}
@@ -57,11 +56,6 @@
                                     <td>
                                         <p class="mb-0">Action</p>
                                     </td>
-                                    {{-- <td>
-                                        <div class="text-sm-end">
-                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" >Lihat Detail</button>
-                                </div>
-                                    </td> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,11 +74,13 @@
                                         <td>
                                             <p class="mb-0">{{ $item->tanggal }}</p>
                                         </td>
-                                        <td>
-                                            <button type="button"
-                                                class="btn btn-warning btn-rounded waves-effect waves-light mb-2 me-2"><i class="bx bx-pencil"></i> Edit</button>
-                                            <button type="button"
-                                                class="btn btn-danger btn-rounded waves-effect waves-light mb-2 me-2"><i class="bx bx-trash-alt"></i> Delete</button>
+                                        <td class="d-flex">
+                                            <a class="btn btn-warning me-2" href="{{ url('/admin/update-Lomba/' . $item->id) . '/edit' }}"><i class="bx bx-pencil"></i>Edit</a>
+                                            <form action="{{ url('/admin/lomba-Management/' . $item->id) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-delete"><i class="bx bx-trash-alt"></i> Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -169,4 +165,33 @@
             modalBootstrap.show();
         }
     </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteButtons = document.querySelectorAll('.btn-delete');
+
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                var form = this.parentElement;
+                var url = form.getAttribute('action');
+
+                Swal.fire({
+                    title: 'Apakah anda yakin menghapus data?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
 @endsection

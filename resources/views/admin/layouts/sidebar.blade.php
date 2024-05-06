@@ -68,7 +68,7 @@
             <li>
                 <a href="{{ route('admin.kategori-Management') }}">
                     <i class="bx bx-adjust icon nav-icon"></i>
-                    <span class="menu-item" data-key="t-dashboard">Kategori</span>
+                    <span class="menu-item" data-key="t-dashboard">Kategori Management</span>
                 </a>
             </li>
 

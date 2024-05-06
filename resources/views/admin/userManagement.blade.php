@@ -68,47 +68,50 @@
 
                             <tbody>
                                 @if ($data_users->isNotEmpty())
-                                @foreach ($data_users as $item)
+                                    @foreach ($data_users as $item)
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">{{ $loop->iteration }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->nama }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->identitas }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->password }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->role }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->kategori }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->status }}</p>
+                                            </td>
+                                            <td class="d-flex">
+                                                <a class="btn btn-warning me-2"
+                                                    href="{{ url('/admin/update-User/' . $item->id) . '/edit' }}"><i
+                                                        class="bx bx-pencil"></i>Edit</a>
+                                                <form action="{{ url('/admin/user-Management/' . $item->id) }}"
+                                                    method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-delete"><i
+                                                            class="bx bx-trash-alt"></i> Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
                                     <tr>
-                                        <td>
-                                            <p class="mb-0">{{ $loop->iteration }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->identitas }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->password }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->role }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->kategori }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->status }}</p>
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                class="btn btn-warning btn-rounded waves-effect waves-light mb-2 me-2"
-                                                onclick="editUser({{ $item->id }})"><i class="bx bx-pencil"></i>
-                                                Edit</button>
-                                            <button type="button"
-                                                class="btn btn-danger btn-rounded waves-effect waves-light mb-2 me-2"><i
-                                                    class="bx bx-trash-alt"></i> Delete</button>
+                                        <td colspan="8">
+                                            <p class="text-center">Belum ada User</p>
                                         </td>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="8">
-                                        <p class="text-center">Belum ada User</p>
-                                    </td>
-                                </tr>
-                            @endif
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -150,6 +153,34 @@
                     kategoriDropdown.add(option);
                 });
             }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var deleteButtons = document.querySelectorAll('.btn-delete');
+
+            deleteButtons.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    var form = this.parentElement;
+                    var url = form.getAttribute('action');
+
+                    Swal.fire({
+                        title: 'Apakah anda yakin menghapus data?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
         });
     </script>
 @endsection

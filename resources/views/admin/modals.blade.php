@@ -38,9 +38,9 @@
                                  <label class="form-label" for="CreateTask-Category">Role</label>
                                  <select class="form-select" name="role" id="role">
                                      <option selected disabled> Select Role </option>
-                                     <option value="admin">Admin</option>
-                                     <option value="mahasiswa">Mahasiswa</option>
-                                     <option value="dosen">Dosen</option>
+                                     <option value="Admin">Admin</option>
+                                     <option value="Mahasiswa">Mahasiswa</option>
+                                     <option value="Dosen">Dosen</option>
                                  </select>
                              </div>
                          </div>
@@ -72,3 +72,48 @@
                          </div>
                      </div>
  </form>
+ {{-- End Model Create User --}}
+
+ {{-- ----------------------------------------------------------------------- --}}
+
+ {{-- Modal Create Perlombaan --}}
+
+ {{-- End Modal Create Perlombaan --}}
+
+ {{-- ----------------------------------------------------------------------- --}}
+
+
+
+ <script>
+     function openModal() {
+         var modal = document.querySelector('.create-lomba');
+         var modalBootstrap = new bootstrap.Modal(modal);
+         modalBootstrap.show();
+     }
+
+     document.getElementById('role').addEventListener('change', function() {
+         var role = this.value;
+         var kategoriDropdown = document.getElementById('kategori');
+         kategoriDropdown.innerHTML = '';
+
+         if (role === 'Mahasiswa') {
+             var option = document.createElement('option');
+             option.text = 'Mahasiswa';
+             kategoriDropdown.add(option);
+         } else if (role === 'Dosen') {
+             var options = ['UI/UX', 'Jaringan', 'Website'];
+             options.forEach(function(optionValue) {
+                 var option = document.createElement('option');
+                 option.text = optionValue;
+                 kategoriDropdown.add(option);
+             });
+         } else if (role === 'Admin') {
+             var options = ['Super Admin'];
+             options.forEach(function(optionValue) {
+                 var option = document.createElement('option');
+                 option.text = optionValue;
+                 kategoriDropdown.add(option);
+             });
+         }
+     });
+ </script>
