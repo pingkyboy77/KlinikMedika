@@ -12,14 +12,14 @@
                     <div class="">
                         <div class="row mb-2">
                             <div class="col-xl-3 col-md-12">
-                                <div class="pb-3 pb-xl-0">
+                                {{-- <div class="pb-3 pb-xl-0">
                                     <form class="email-search">
                                         <div class="position-relative">
                                             <input type="text" class="form-control bg-light" placeholder="Search...">
                                             <span class="bx bx-search font-size-18"></span>
                                         </div>
                                     </form>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="col-xl-9 col-md-12">
                                 <div class="text-sm-end">
@@ -33,22 +33,22 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-nowrap align-middle mb-0">
-                            <thead>
+                        <table class="table table-nowrap align-middle mb-0" id="myTable">
+                            <thead class="fw-bold">
                                 <tr>
-                                    <td style="width:5%">
-                                        <p class="mb-0">No.</p>
+                                    <td class="justify-content-center" style="width:5%">
+                                        <p class="mb-0">No</p>
                                     </td>
                                     <td>
                                         <p class="mb-0">Nama User</p>
                                     </td>
 
-                                    <td>
+                                    <td class="d-flex justify-content-start">
                                         <p class="mb-0">Identitas Number</p>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <p class="mb-0">Password</p>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <p class="mb-0">Role</p>
                                     </td>
@@ -70,18 +70,18 @@
                                 @if ($data_users->isNotEmpty())
                                     @foreach ($data_users as $item)
                                         <tr>
-                                            <td>
+                                            <td class="d-flex justify-content-center">
                                                 <p class="mb-0">{{ $loop->iteration }}</p>
                                             </td>
                                             <td>
                                                 <p class="mb-0">{{ $item->nama }}</p>
                                             </td>
-                                            <td>
+                                            <td class="d-flex justify-content-start">
                                                 <p class="mb-0">{{ $item->identitas }}</p>
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 <p class="mb-0">{{ $item->password }}</p>
-                                            </td>
+                                            </td> --}}
                                             <td>
                                                 <p class="mb-0">{{ $item->role }}</p>
                                             </td>
@@ -154,4 +154,18 @@
             });
         });
     </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+   <script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": [6] } // Menonaktifkan sorting pada kolom 1 dan 3
+            ]
+        });
+    });
+</script>
 @endsection
