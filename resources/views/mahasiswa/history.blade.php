@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table id="myTable" class="table table-nowrap align-middle mb-0" >
+                    <table id="table-history-lomba" class="table table-nowrap align-middle mb-0" >
                         <thead>
                             <tr>
                                 <td>
@@ -170,7 +170,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-nowrap align-middle mb-0" id="myTable2">
+                    <table class="table table-nowrap align-middle mb-0" id="table-history-bimbingan">
                         <thead>
                             <tr>
                                 <td>
@@ -249,28 +249,17 @@
                                     </p>
                                 </td>
                                 @else
-                                <td class=" d-flex gap-2">
-                                    <form
-                                        action="{{ route('dosen.updatepengajuan.bimbingan', ['id'=>$item->id, 'status' => 'diterima']) }}"
-                                        method="POST">
-                                        @csrf
-                                        <button type="submit"
-                                            class="d-flex align-items-center btn btn-success btn-rounded waves-effect waves-light">
-                                            <i class="bx bx-check fw-bold"></i> Accept</button></form>
-                                    <form
-                                        action="{{ route('dosen.updatepengajuan.bimbingan', ['id'=>$item->id, 'status' => 'ditolak']) }}"
-                                        method="POST">
-                                        @csrf
-                                        <button type="submit"
-                                            class="d-flex align-items-center btn btn-danger btn-rounded waves-effect waves-light">
-                                            <i class="bx bx-x fw-bold"></i> Decline</button></form>
+                                <td class="d-flex ps-2 align-items-center">
+                                    <p class="d-flex gap-2 align-items-center m-0">
+                                        <i class="bx bx-time text-danger fw-bold"></i>Waiting
+                                    </p>
                                 </td>
                                 @endif
                             </tr>
                             @endforeach
                             @else
                             <tr>
-                                <td colspan="6">
+                                <td colspan="9">
                                     <div class="text-center">
                                         <p class="text-muted font-italic">Tidak Ada Pengajuan Bimbingan Perlombaan</p>
                                     </div>
@@ -296,25 +285,40 @@
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function () {
-        if ($.fn.DataTable.isDataTable('#myTable')) {
-            $('#myTable').DataTable().destroy();
+        var dataTableExists = $.fn.DataTable.isDataTable('#table-history-lomba');
+        var dataTableExists2 = $.fn.DataTable.isDataTable('#table-history-Bimbingan');
+
+        if (dataTableExists) {
+            $('#table-history-lomba').DataTable().destroy();
+        }
+        if (dataTableExists2) {
+            $('#table-history-Bimbingan').DataTable().destroy();
         }
 
-        if ($('#myTable tbody tr').length > 0) {
-            $('#myTable').DataTable({
+        setTimeout(() => {
+
+            $('#table-history-lomba').DataTable({
+                scrollCollapse: true,
+                responsive: true,
                 "columnDefs": [{
                         "orderable": false,
-                        "targets": [7]
-                    } // Menonaktifkan sorting pada kolom 8
+                        "targets": [5]
+                    } // Disable sorting for the third column (index 2)
+                    // Add more entries as needed for other columns
                 ]
             });
-        } else {
-            console.log('Tabel kosong');
-        }
+        }, 100);
+        setTimeout(() => {
+
+            $('#table-history-Bimbingan').DataTable({
+                scrollCollapse: true,
+                responsive: true,
+            });
+        }, 100);
     });
 
 </script>
-<script>
+{{-- <script>
     $(document).ready(function () {
         $('#myTable2').DataTable({
             "columnDefs": [
@@ -330,6 +334,6 @@
             }
         });
     });
-</script>
+</script> --}}
 
 @endsection

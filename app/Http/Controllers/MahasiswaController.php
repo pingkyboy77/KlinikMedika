@@ -44,8 +44,8 @@ class MahasiswaController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $daftar_lomba = Lomba::orderBy('created_at', 'desc')->get();
-        // dd($daftar_lomba);
-        return view('mahasiswa.daftarPerlombaan', compact('role', 'nama', 'daftar_lomba'));
+        $daftar_lomba_ikut = DaftarPengajuan::where('stored_by', $nama)->get();
+        return view('mahasiswa.daftarPerlombaan', compact('role', 'nama', 'daftar_lomba', 'daftar_lomba_ikut'));
     }
     public function history()
     {
@@ -69,6 +69,7 @@ class MahasiswaController extends Controller
     public function pengajuanLomba($nama_lomba, $nama_akun, $id)
     {
         // Check if the user has already submitted this competition
+        $nama_lomba = str_replace('-', ' ', $nama_lomba);
         $data_pengajuan = DaftarPengajuan::where('nama_lomba', $nama_lomba)->where('stored_by', $nama_akun)->first();
 
         if ($data_pengajuan != null) {

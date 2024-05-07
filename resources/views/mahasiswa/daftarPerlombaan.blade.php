@@ -36,10 +36,13 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive" >
-                        <table class="table table-nowrap align-middle mb-0" id="myTable">
+                    <div class="table-responsive">
+                        <table class="table table-nowrap align-middle mb-0" id="tabel-daftar-perlombaan">
                             <thead>
                                 <tr>
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">No.</h5>
+                                    </td>
                                     <td>
                                         <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
                                     </td>
@@ -65,6 +68,9 @@
                                     @foreach ($daftar_lomba as $item)
                                         <tr>
                                             <td>
+                                                <p class="mb-0">{{ $loop->iteration }}</p>
+                                            </td>
+                                            <td>
                                                 <p class="mb-0">{{ $item->nama_lomba }}</p>
                                             </td>
                                             <td>
@@ -78,22 +84,26 @@
                                             </td>
                                             <td class="ps-2">
                                                 <!-- Button untuk membuka modal -->
-                                                    <div>
+                                                <div>
+                                                    @if ($daftar_lomba_ikut->where('nama_lomba', $item->nama_lomba)->isNotEmpty())
+                                                            <span class="text-bold">Sudah Mendaftar</span>
+                                                    @else
                                                         <a
-                                                            href="{{ route('mahasiswa.pengajuan-lomba', ['nama_lomba' => $item->nama_lomba, 'nama_akun' => $nama, 'id' => $item->id]) }}">
+                                                            href="{{ route('mahasiswa.pengajuan-lomba', ['nama_lomba' => str_replace(' ','-',$item->nama_lomba), 'nama_akun' => $nama, 'id' => $item->id]) }}">
                                                             <button type="button"
                                                                 class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2">
                                                                 <i class="mdi mdi-plus me-1"></i> Daftar
                                                             </button>
                                                         </a>
-                                                    </div>
+                                                    @endif
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="5">
-                                            <p class="text-center">Tidak ada data</p>
+                                        <td colspan="6">
+                                            <p class="text-center">Tidak ada data perlombaan</p>
                                         </td>
                                     </tr>
                                 @endif
@@ -109,60 +119,37 @@
     </div>
 
 
-    <!-- Modal -->
-    <form action="#" method="POST">
-        @csrf
-        <div class="modal fade create-daftarLomba" tabindex="-1" role="dialog" aria-labelledby="daftarLomba"
-            aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="daftarLomba">Tambah Lomba</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Isi formulir modal -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="kategori">Nama Kategori</label>
-                                    <input type="text" name="kategori" class="form-control" placeholder="Enter Name"
-                                        id="kategori">
-                                </div>
-                            </div>
-                            <!-- Tambahkan input lainnya di sini -->
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal"><i
-                                class="bx bx-x me-1 align-middle"></i> Cancel</button>
-                        <button type="submit" class="btn btn-success"><i class="bx bx-check me-1 align-middle"></i>
-                            Confirm</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
         function openModal() {
             var modal = document.querySelector('.create-daftarLomba');
             var modalBootstrap = new bootstrap.Modal(modal);
             modalBootstrap.show();
         }
-    </script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-   <script>
-    $(document).ready(function () {
-        $('#myTable').DataTable({
-            "columnDefs": [
-                { "orderable": false, "targets": [4] } // Menonaktifkan sorting pada kolom 1 dan 3
-            ]
+        $(document).ready(function() {
+            var dataTableExists = $.fn.DataTable.isDataTable('#tabel-daftar-perlombaan');
+            if (dataTableExists) {
+                $('#tabel-daftar-perlombaan').DataTable().destroy();
+            }
+
+            setTimeout(() => {
+
+                $('#tabel-daftar-perlombaan').DataTable({
+                    scrollCollapse: true,
+                    responsive: true,
+                    "columnDefs": [{
+                            "orderable": false,
+                            "targets": [5]
+                        } // Disable sorting for the third column (index 2)
+                        // Add more entries as needed for other columns
+                    ]
+                });
+            }, 100);
         });
-    });
-</script>
+    </script>
 @endsection

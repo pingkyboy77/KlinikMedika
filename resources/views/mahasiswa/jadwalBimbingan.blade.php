@@ -16,28 +16,10 @@
                 </div>
                 <div class="card-body">
 
-                    <div class="">
-                        <div class="row mb-2">
-                            <div class="col-xl-3 col-md-12">
-                                <div class="pb-3 pb-xl-0">
-                                    <form class="email-search">
-                                        <div class="position-relative">
-                                            <input type="text" class="form-control bg-light" placeholder="Search...">
-                                            <span class="bx bx-search font-size-18"></span>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="col-xl-9 col-md-12">
-                                <div class="text-sm-end">
-                                    {{-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".create-task"><i class="mdi mdi-plus me-1"></i> Create Task</button> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="table-responsive">
-                        <table class="table table-nowrap align-middle mb-0" id="myTable">
+                        <table class="table table-nowrap align-middle mb-0" id="tabel-jadwal-bimbingan">
                             <thead>
                                 <tr>
                                     <td>
@@ -75,68 +57,68 @@
 
                             </thead>
 
-                            <tbody id="myTable">
+                            <tbody>
 
-                            @if ($daftar_bimbingan->isNotEmpty())
-                                @foreach ($daftar_bimbingan as $item)
-                                    <tr>
-                                        <td>
-                                            <p class="mb-0">{{ $loop->iteration }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama_lomba }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->kategori_lomba }}</p>
-                                        </td>
-
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama_ketua }}</p>
-                                        </td>
-
-                                        <td>
-                                            <p class="mb-0">{{ $item->namadosen }}</p>
-                                        </td>
-
-                                        <td>
-                                            <p class="mb-0">{{ $item->lokasi_bimbingan }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->tanggal_bimbingan }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->waktu_bimbingan }}</p>
-                                        </td>
-
-
-                                        @if ($item->status == 'diterima')
-                                            <td class="d-flex ps-2 align-items-center">
-                                                <p class="d-flex gap-2 align-items-center m-0">
-                                                    <i class="bx bx-check text-success fw-bold"></i>accepted
-                                                </p>
+                                @if ($daftar_bimbingan->isNotEmpty())
+                                    @foreach ($daftar_bimbingan as $item)
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">{{ $loop->iteration }}</p>
                                             </td>
-                                        @elseif ($item->status == 'ditolak')
-                                            <td class="d-flex ps-2 align-items-center">
-                                                <p class="d-flex gap-2 align-items-center m-0">
-                                                    <i class="bx bx-x text-danger fw-bold"></i>Decline
-                                                </p>
+                                            <td>
+                                                <p class="mb-0">{{ $item->nama_lomba }}</p>
                                             </td>
-                                        @else
-                                            <td class="d-flex ps-2 align-items-center">
-                                                <p class="d-flex gap-2 align-items-center m-0">
-                                                    <i class="bx bx-time text-success fw-bold"></i>Waiting
-                                                </p>
+                                            <td>
+                                                <p class="mb-0">{{ $item->kategori_lomba }}</p>
                                             </td>
-                                        @endif
 
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="9" class="text-center">Tidak Ada Bimbingan</td>
-                                </tr>
-                            @endif
-                        </tbody>
+                                            <td>
+                                                <p class="mb-0">{{ $item->nama_ketua }}</p>
+                                            </td>
+
+                                            <td>
+                                                <p class="mb-0">{{ $item->namadosen }}</p>
+                                            </td>
+
+                                            <td>
+                                                <p class="mb-0">{{ $item->lokasi_bimbingan }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->tanggal_bimbingan }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->waktu_bimbingan }}</p>
+                                            </td>
+
+
+                                            <td class="d-flex ps-2 align-items-center">
+                                                @if ($item->status == 'diterima')
+                                                    <p class="d-flex gap-2 align-items-center m-0">
+                                                        <i class="bx bx-check text-success fw-bold"></i>accepted
+                                                    </p>
+                                                    {{-- </td> --}}
+                                                @elseif ($item->status == 'ditolak')
+                                                    {{-- <td class="d-flex ps-2 align-items-center"> --}}
+                                                    <p class="d-flex gap-2 align-items-center m-0">
+                                                        <i class="bx bx-x text-danger fw-bold"></i>Decline
+                                                    </p>
+                                                    {{-- </td> --}}
+                                                @else
+                                                    {{-- <td class="d-flex ps-2 align-items-center"> --}}
+                                                    <p class="d-flex gap-2 align-items-center m-0">
+                                                        <i class="bx bx-time text-info fw-bold"></i>Waiting
+                                                    </p>
+                                                @endif
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    {{-- <tr>
+                                        <td colspan="9" class="text-center">Tidak Ada Bimbingan</td>
+                                    </tr> --}}
+                                @endif
+                            </tbody>
 
                         </table>
                     </div>
@@ -147,21 +129,23 @@
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-   <script>
-    $(document).ready(function () {
-    if ($('#myTable').length > 0 && $('#myTable tbody tr').length > 0) {
-        $('#myTable').DataTable({
-            "columnDefs": [
-                { "orderable": false, "targets": [7] } // Menonaktifkan sorting pada kolom 8
-            ]
-        });
-    } else {
-        console.log('Tabel kosong atau tidak ditemukan');
-    }
-});
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var dataTableExists = $.fn.DataTable.isDataTable('#tabel-jadwal-bimbingan');
+            if (dataTableExists) {
+                $('#tabel-jadwal-bimbingan').DataTable().destroy();
+            }
 
-</script>
+            setTimeout(() => {
+
+                $('#tabel-jadwal-bimbingan').DataTable({
+                    scrollCollapse: true,
+                    responsive: true,
+                });
+            }, 100);
+        });
+    </script>
 @endsection
