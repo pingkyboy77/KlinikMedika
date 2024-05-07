@@ -41,8 +41,10 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        <h5 class="text-truncate font-size-14 m-0"><a href="javascript: void(0);"
-                                                class="text-dark">Mahasiswa Akun Pengajuan</a></h5>
+                                        <h5 class="text-truncate font-size-14 m-0">No.</h5>
+                                    </th>
+                                    <th>
+                                        <h5 class="text-truncate font-size-14 m-0">Diajukan Oleh</h5>
                                     </th>
                                     <th>
                                         <p class="mb-0">Nama Ketua Kelompok</p>
@@ -68,6 +70,9 @@
                                 @if ($daftar_lomba_pengajuan->isNotEmpty())
                                 @foreach ($daftar_lomba_pengajuan as $item)
                                     <tr>
+                                        <td>
+                                            <p class="mb-0">{{ $loop->iteration }}</p>
+                                        </td>
                                         <td>
                                             <p class="mb-0">{{ $item->stored_by }}</p>
                                         </td>
@@ -100,12 +105,16 @@
                                             </td>
                                         @else
                                         <td class=" d-flex gap-2">
-                                            <button type="button"
+                                            <form action="{{ route('dosen.updatepengajuan.lomba', ['id'=>$item->id, 'status' => 'diterima']) }}" method="POST">
+                                                @csrf
+                                            <button type="submit"
                                                 class="d-flex align-items-center btn btn-success btn-rounded waves-effect waves-light">
-                                                <i class="bx bx-check fw-bold"></i> Accept</button>
-                                            <button type="button"
+                                                <i class="bx bx-check fw-bold"></i> Accept</button></form>
+                                                <form action="{{ route('dosen.updatepengajuan.lomba', ['id'=>$item->id, 'status' => 'ditolak']) }}" method="POST">
+                                                    @csrf
+                                            <button type="submit"
                                                 class="d-flex align-items-center btn btn-danger btn-rounded waves-effect waves-light">
-                                                <i class="bx bx-x fw-bold"></i> Decline</button>
+                                                <i class="bx bx-x fw-bold"></i> Decline</button></form>
                                             </td>
                                         @endif
                                     </tr>

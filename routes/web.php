@@ -38,6 +38,8 @@ Route::prefix('mahasiswa')
         Route::get('jadwalBimbingan', [MahasiswaController::class, 'jadwalBimbingan'])->name('jadwalBimbingan');
         Route::get('pengajuan-lomba/{nama_lomba}/{nama_akun}/{id}', [MahasiswaController::class, 'pengajuanLomba'])->name('pengajuan-lomba');
         Route::post('daftarPerlombaan', [MahasiswaController::class, 'pengajuanLombaStore'])->name('store.pengajuan-lomba');
+        Route::get('pengajuan-bimbingan/{id}', [MahasiswaController::class, 'pengajuanBimbingan'])->name('pengajuan-bimbingan');
+        Route::post('jadwalBimbingan', [MahasiswaController::class, 'pengajuanBimbinganStore'])->name('store.pengajuan-bimbingan');
     });
 
 Route::prefix('admin')
@@ -46,14 +48,15 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('beranda', [AdminController::class, 'beranda'])->name('beranda');
         Route::get('daftarPengajuanLomba', [AdminController::class, 'daftarPengajuanLomba'])->name('daftarPengajuanLomba');
+        Route::get('daftarPengajuanBimbingan', [AdminController::class, 'daftarPengajuanBimbingan'])->name('daftarPengajuanBimbingan');
+        Route::get('update-daftarPengajuanBimbingan/{id}/edit', [AdminController::class, 'updatedaftarPengajuanBimbingan'])->name('update.daftarPengajuanBimbingan');
         Route::get('update-daftarPengajuanLomba/{id}/edit', [AdminController::class, 'updatedaftarPengajuanLomba'])->name('update.daftarPengajuanLomba');
         Route::post('update-daftarPengajuanLomba/{id}/edit', [AdminController::class, 'updateddaftarPengajuanLomba'])->name('updated.daftarPengajuanLomba');
+        Route::post('update-daftarPengajuanBimbingan/{id}/edit', [AdminController::class, 'updateddaftarPengajuanBimbingan'])->name('updated.daftarPengajuanBimbingan');
         Route::delete('daftarPengajuanLomba/{id}', [AdminController::class, 'destroyDaftarPengajuanLomba'])->name('DaftarPengajuan.delete');
+        Route::delete('daftarPengajuanBimbingan/{id}', [AdminController::class, 'destroyDaftarPengajuanBimbingan'])->name('DaftarPengajuanBimbingan.delete');
         Route::get('user-Management', [AdminController::class, 'userManagement'])->name('user-Management');
         Route::post('user-Management', [AdminController::class, 'storeUser'])->name('user-Management.store');
-        // Route::get('/user/{id}/edit', [AdminController::class, 'editUser'])->name('user-Management.edit');
-        // Route::put('/user/{id}', [AdminController::class, 'updateUser'])->name('user.update');
-        // Route::post('user-Management', [AdminController::class, 'store'])->name('user-Management.store');
         Route::delete('user-Management/{id}', [AdminController::class, 'destroyuser'])->name('user.delete');
         Route::get('update-User/{id}/edit', [AdminController::class, 'updateUser'])->name('update-User');
         Route::post('update-User/{id}/edit', [AdminController::class, 'updatedUser'])->name('updated-User');
@@ -68,8 +71,6 @@ Route::prefix('admin')
         Route::delete('kategori-Management/{id}', [AdminController::class, 'destroykategori'])->name('kategori.delete');
         Route::get('update-Kategori/{id}/edit', [AdminController::class, 'updateKategori'])->name('update-Kategori');
         Route::post('update-Kategori/{id}/edit', [AdminController::class, 'updatedKategori'])->name('updated-Kategori');
-        // Route::put('update-Kategori/{id}', [AdminController::class, 'updatedKategori'])->name('Kategori.update');
-        // Route::delete('kategori-Management/{id}', [AdminController::class, 'updatekategori'])->name('lomba.update');
 
     });
 
@@ -81,4 +82,6 @@ Route::prefix('dosen')
         Route::get('daftarBimbingan', [DosenController::class, 'daftarBimbingan'])->name('daftarBimbingan');
         Route::get('pengajuanLomba', [DosenController::class, 'pengajuanLomba'])->name('pengajuanLomba');
         Route::get('jadwalBimbingan', [DosenController::class, 'jadwalBimbingan'])->name('jadwalBimbingan');
+        Route::post('pengajuanLomba/{id}/{status}', [DosenController::class, 'updateStatusLomba'])->name('updatepengajuan.lomba');
+        Route::post('pengajuanBimbingan/{id}/{status}', [DosenController::class, 'updateStatusBimbingan'])->name('updatepengajuan.bimbingan');
     });

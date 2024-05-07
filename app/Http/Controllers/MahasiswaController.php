@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Lomba;
 use App\Models\daftarLomba;
 use Illuminate\Http\Request;
+use App\Models\DaftarBimbingan;
 use App\Models\DaftarPengajuan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -50,8 +51,9 @@ class MahasiswaController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $daftar_lomba_ikut = DaftarPengajuan::where('stored_by', $nama)->orderBy('created_at', 'desc')->get();
+        $daftar_bimbingan = DaftarBimbingan::where('stored_by', $nama)->orderBy('created_at', 'desc')->get();
         // dd($daftar_lomba_ikut);
-        return view('mahasiswa.history', compact('role', 'nama', 'daftar_lomba_ikut'));
+        return view('mahasiswa.history', compact('role', 'nama', 'daftar_lomba_ikut', 'daftar_bimbingan'));
     }
     public function jadwalBimbingan()
     {
@@ -59,7 +61,8 @@ class MahasiswaController extends Controller
         // dd($user);
         $nama = $user->nama;
         $role = $user->role;
-        return view('mahasiswa.jadwalBimbingan', compact('role', 'nama'));
+        $daftar_bimbingan = DaftarBimbingan::where('stored_by', $nama)->where('status','diterima')->orderBy('created_at', 'asc')->get();
+        return view('mahasiswa.jadwalBimbingan', compact('role', 'nama', 'daftar_bimbingan'));
     }
     public function pengajuanLomba($nama_lomba, $nama_akun, $id)
     {
@@ -98,13 +101,13 @@ class MahasiswaController extends Controller
                 'email_ketua' => 'required',
                 'no_telp_ketua' => 'required',
                 'namadosen' => 'required',
-                'file_proposal_pengajuan' => 'required|file'
+                'file_proposal_pengajuan' => 'required|file',
             ]);
             // dd($data);
             if ($request->hasFile('file_proposal_pengajuan')) {
                 $file_proposal_pengajuan = $request->file('file_proposal_pengajuan');
                 $file_name = time() . '-' . $file_proposal_pengajuan->getClientOriginalName();
-                
+
                 $storage = 'uploads/file_pengajuan/';
                 $file_proposal_pengajuan->move($storage, $file_name);
                 $data['file_proposal_pengajuan'] = $storage . $file_name;
@@ -112,8 +115,6 @@ class MahasiswaController extends Controller
                 $data['file_proposal_pengajuan'] = null;
             }
 
-
-            
             // Populate other data
             $data['stored_by'] = Auth::user()->nama;
             $data['jenis_pengajuan'] = 'Pengajuan Lomba';
@@ -129,5 +130,35 @@ class MahasiswaController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function pengajuanBimbingan($id)
+    {
+        // dd('masuk');
+        $user = Auth::user();
+        $nama = $user->nama;
+        $role = $user->role;
+        $acc_lomba = DaftarPengajuan::where('id', $id)->first();
+        // dd($acc_lomba);
+        return view('mahasiswa.form-pengajuan-bimbingan', compact('role', 'nama', 'acc_lomba'));
+    }
+    public function pengajuanBimbinganStore(Request $request){
+        $data = $request->validate([
+            'stored_by' => 'required',
+            'nama_ketua' => 'required',
+            'nama_lomba' => 'required',
+            'identitas_number_ketua' => 'required',
+            'kategori_lomba' => 'required',
+            'namadosen' => 'required',
+            'lokasi_bimbingan' => 'required',
+            'tanggal_bimbingan' => 'required',
+            'waktu_bimbingan' => 'required',
+        ]);
+        $data['jenis_pengajuan'] = 'Pengajuan Bimbingan';
+        $data['status'] = 'Menunggu Persetujuan';
+        Alert::success('Sukses', 'Data Berhasil Di Update');
+        DaftarBimbingan::create($data);
+        return redirect()->route('mahasiswa.jadwalBimbingan');
+        // dd($data);
     }
 }

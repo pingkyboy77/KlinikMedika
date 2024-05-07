@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\DaftarBimbingan;
 use App\Models\DaftarPengajuan;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DosenController extends Controller
 {
@@ -13,7 +15,8 @@ class DosenController extends Controller
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
-        return view('dosen.dashboard', compact('role','nama'));
+        $jumlah_lomba_pengajuan = DaftarPengajuan::where('namadosen', $nama)->orderBy('created_at', 'desc')->count();
+        return view('dosen.dashboard', compact('role','jumlah_lomba_pengajuan','nama'));
     }
 
     public function daftarBimbingan()
@@ -21,7 +24,8 @@ class DosenController extends Controller
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
-        return view('dosen.daftarBimbingan', compact('role','nama'));
+        $daftar_bimbingan = DaftarBimbingan::where('namadosen', $nama)->where('status','diterima')->orderBy('created_at', 'asc')->get();
+        return view('dosen.daftarBimbingan', compact('role','nama', 'daftar_bimbingan'));
     }
     public function pengajuanLomba()
     {
@@ -36,6 +40,25 @@ class DosenController extends Controller
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
-        return view('dosen.jadwalBimbingan', compact('role','nama'));
+        $daftar_bimbingan_pengajuan = DaftarBimbingan::where('namadosen', $nama)->orderBy('created_at', 'asc')->get();
+        return view('dosen.jadwalBimbingan', compact('role','nama', 'daftar_bimbingan_pengajuan'));
+    }
+    public function updateStatusLomba(Request $request, $id , $status)
+    {
+        // dd($status);
+        $daftar_lomba = DaftarPengajuan::find($id);
+        $daftar_lomba->status = $request->status;
+        $daftar_lomba->save();
+        Alert::success('Sukses', 'Data Berhasil Di Update');
+        return redirect()->route('dosen.pengajuanLomba');
+    }
+    public function updateStatusBimbingan(Request $request, $id , $status)
+    {
+        // dd($status);
+        $daftar_lomba = DaftarBimbingan::find($id);
+        $daftar_lomba->status = $request->status;
+        $daftar_lomba->save();
+        Alert::success('Sukses', 'Data Berhasil Di Update');
+        return redirect()->route('dosen.pengajuanLomba');
     }
 }

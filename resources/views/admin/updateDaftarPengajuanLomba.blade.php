@@ -8,7 +8,7 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header">
-                        {{-- <h5 class="card-title mb-0">Form Pendaftaran Perlombaan {{ $nama_lomba }}</h5> --}}
+                        <h5 class="card-title mb-0">Update Pengajuan Perlombaan {{ $daftarPengajuan->nama_lomba }}</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -56,9 +56,23 @@
                                         <option selected disabled> Select Dosen </option>
                                         @foreach ($dospem as $item)
                                             <option value="{{ $item->nama }}"
-                                                @if ($daftarPengajuan->namadosen === $item->nama) selected @endif> {{ $item->nama }}
+                                                @if ($daftarPengajuan->namadosen === $item->nama) selected @endif>
+                                                {{ $item->nama }}
                                             </option>
                                         @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="CreateTask-Category">status</label>
+                                    <select class="form-select" name="status" id="kategori">
+                                        <option value="diterima" @if ($daftarPengajuan->status == 'diterima') selected @endif>Diterima
+                                        </option>
+                                        <option value="ditolak" @if ($daftarPengajuan->status == 'ditolak') selected @endif>Ditolak
+                                        </option>
+                                        <option value="Menunggu Persetujuan"
+                                            @if ($daftarPengajuan->status == 'Menunggu Persetujuan') selected @endif>Menunggu Persetujuan</option>
                                     </select>
                                 </div>
                             </div>
@@ -73,6 +87,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <div class="row mt-2">
                             <div class="col-12 text-end d-flex g-3 justify-content-end">

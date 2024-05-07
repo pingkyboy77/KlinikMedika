@@ -66,6 +66,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.daftarPengajuanBimbingan') }}">
+                    <i class="bx bx-history icon nav-icon"></i>
+                    <span class="menu-item" data-key="t-dashboard">Daftar Pengajuan Bimbingan</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin.kategori-Management') }}">
                     <i class="bx bx-adjust icon nav-icon"></i>
                     <span class="menu-item" data-key="t-dashboard">Kategori Management</span>

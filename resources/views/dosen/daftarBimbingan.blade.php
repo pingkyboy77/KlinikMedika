@@ -30,54 +30,112 @@
 
                     <div class="table-responsive">
                         <table class="table table-nowrap align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">No.</h5>
+                                    </td>
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
+                                    </td>
+                                    {{-- <td>
+                                        <h5 class="text-dark font-size-14 m-0">Kategori</h5>
+                                    </td> --}}
+
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Nama Ketua</h5>
+                                    </td>
+
+                                    {{-- <td>
+                                        <h5 class="text-dark font-size-14 m-0">Nama Dosen</h5>
+                                    </td> --}}
+
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Lokasi Bimbingan</h5>
+                                    </td>
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Tanggal Bimbingan</h5>
+                                    </td>
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Waktu Bimbingan</h5>
+                                    </td>
+
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Status</h5>
+                                    </td>
+                                </tr>
+
+                            </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <h5 class="text-truncate font-size-14 m-0"><a href="javascript: void(0);"
-                                                class="text-dark">Nama Mahasiswa</a></h5>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">Jurusan</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Nama Perlombaan</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">Jam</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">Tanggal</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">Action</p>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <p class="mb-0">Arwaa Althifal Suhermanja</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">Teknik Informatika</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Hackathon UI/UX</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">10:00 - 12:00 WIB</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">20-07-2024</p>
-                                    </td>
-                                    <td class="ps-2">
-                                        <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" >Lihat Detail</button>
-                                    </td>
-                                </tr>
-
-
+                                @if ($daftar_bimbingan->isNotEmpty())
+                                @foreach ($daftar_bimbingan as $item)
+                                    <tr>
+                                        <td>
+                                            <p class="mb-0">{{ $loop->iteration }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{ $item->nama_lomba }}</p>
+                                        </td>
+                                        {{-- <td>
+                                            <p class="mb-0">{{ $item->kategori_lomba }}</p>
+                                        </td> --}}
+                                        <td>
+                                            <p class="mb-0">{{ $item->nama_ketua }}</p>
+                                        </td>
+                                        {{-- <td>
+                                            <p class="mb-0">{{ $item->namadosen }}</p>
+                                        </td> --}}
+                                        <td>
+                                            <p class="mb-0">{{ $item->lokasi_bimbingan }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{ $item->tanggal_bimbingan }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{ $item->waktu_bimbingan }}</p>
+                                        </td>
+                                        
+                                        @if ($item->status == 'diterima')
+                                            <td class="d-flex ps-2 align-items-center">
+                                                <p class="d-flex gap-2 align-items-center m-0">
+                                                    <i class="bx bx-check text-success fw-bold"></i>accepted
+                                                </p>
+                                            </td>
+                                        @elseif ($item->status == 'ditolak')
+                                            <td class="d-flex ps-2 align-items-center">
+                                                <p class="d-flex gap-2 align-items-center m-0">
+                                                    <i class="bx bx-x text-danger fw-bold"></i>Decline
+                                                </p>
+                                            </td>
+                                        @else
+                                        <td class=" d-flex gap-2">
+                                            <form action="{{ route('dosen.updatepengajuan.bimbingan', ['id'=>$item->id, 'status' => 'diterima']) }}" method="POST">
+                                                @csrf
+                                            <button type="submit"
+                                                class="d-flex align-items-center btn btn-success btn-rounded waves-effect waves-light">
+                                                <i class="bx bx-check fw-bold"></i> Accept</button></form>
+                                                <form action="{{ route('dosen.updatepengajuan.bimbingan', ['id'=>$item->id, 'status' => 'ditolak']) }}" method="POST">
+                                                    @csrf
+                                            <button type="submit"
+                                                class="d-flex align-items-center btn btn-danger btn-rounded waves-effect waves-light">
+                                                <i class="bx bx-x fw-bold"></i> Decline</button></form>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="6">
+                                            <div class="text-center">
+                                                <p class="text-muted font-italic">Tidak Ada Pengajuan Bimbingan Perlombaan</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
                             </tbody>
+
+
+
                         </table>
                     </div>
 

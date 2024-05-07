@@ -1,0 +1,47 @@
+<?php
+ session_start();
+    $conx=mysqli_connect("localhost","root","","login");
+    
+    $sql=mysqli_query($conx, "SELECT * FROM data");
+    
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Beranda</title>
+    <link rel="stylesheet" type="text/css" href="style2.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+	<div class="navbar">
+		<img src="gmb.png" class="log">
+		<h3 class="judul">KOPERASI PENDAKI SENSATIONAL</h3>
+	</div>
+	<div class="sidebar">
+		<ul>
+			<li><a href="beranda.php">Home</a></li>
+            <li><a href="coba1.php">Data Anggota</a></li>
+            <li><a href="INDEX.php">Laporan Data Anggota</a></li>
+            <li><a href="coba.php">Laporan Pinjaman</a></li>
+            <li><a href="coba2.php">Laporan Simpanan</a></li>
+            <li><a href="SHU.php">laporan SHU</a></li>
+            <li><a href="FORM2.php">Log Out</a></li>
+		</ul>
+		
+	</div>
+
+	<div class="container">
+		<article>
+			<img src="gmb.png" class="imgbr">
+			<p>SELAMAT DATANG</p>
+			<p>Pendaki sensational merupakan komunitas pendakian yang berdiri di kota Bandung. kami membentuk pula koperasi untuk kelancaran setiap kegiatan anggota kami dalam melakukan aktivitas pendakian. selain itu koperasi ini di buat dengan tujuan untuk mempererat kekeluargaan antar anggota. selain itu juga mengembangkan hobi menjadi sebuah usaha adalah hal yang sangat postif. kami komunitas pendaki yang sadar bahwa ada peluang usaha yang dapat di lakukan. maka dengan niat dan segala usaha kami dirikan koperasi berikut ini yang bernama "KOPERASI PENDAKI SENSATIONAL".
+		</p>
+		<p>Koperasi ini memiliki anggota yang tersebar di beberapa region di pulau jawa, kami baru mengembangkan sayap kami di pulau jawa karena untuk meraih orang yang berada di luar pulau adalah hal yang cukup sulit, leader dari koperasi ini saya selaku pembuat aplikasi ini, saya berasal dari bandung, terimakasih anda sudah menggunakan aplikasi ini, dan saya harap anda dapat mempergunakannya untuk kepentingan yang baik dan dapat membantu diri saya sendiri dan anda selaku anggota.</p>
+		</article>
+	</div>
+	<footer>
+		Copyright 2022 KRISNA-YUDA-NUGRAHA_41520010094
+	</footer>
+</body>
+</html>

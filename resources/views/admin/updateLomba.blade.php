@@ -15,6 +15,9 @@
                         <label class="form-label" for="nama_lomba">Nama Perlombaan</label>
                         <input type="text" name="nama_lomba" class="form-control" placeholder="Enter Name"
                             value="{{ isset($lomba) ? $lomba->nama_lomba : old('nama_lomba') }}" id="nama_lomba">
+                            @if ($errors->has('nama_lomba'))
+                            <div class="text-danger">{{ $errors->first('nama_lomba') }}</div>
+                        @endif
                     </div>
                 </div>
                 <!-- Tambahkan input lainnya di sini -->
@@ -36,6 +39,9 @@
                         <label class="form-label" for="lokasi">Lokasi</label>
                         <input type="text" name="lokasi" class="form-control" placeholder="Enter Place"
                             value="{{ isset($lomba) ? $lomba->lokasi : old('lokasi') }}" id="lokasi">
+                            @if ($errors->has('lokasi'))
+                            <div class="text-danger">{{ $errors->first('lokasi') }}</div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -43,6 +49,9 @@
                         <label class="form-label" for="tanggal">Tanggal</label>
                         <input type="date" name="tanggal" class="form-control" placeholder="Enter Place"
                             value="{{ isset($lomba) ? $lomba->tanggal : old('tanggal') }}" id="tanggal">
+                            @if ($errors->has('tanggal'))
+                            <div class="text-danger">{{ $errors->first('tanggal') }}</div>
+                        @endif
                     </div>
                 </div>
                 <div class="modal-footer p-0 px-2 border-top-0">

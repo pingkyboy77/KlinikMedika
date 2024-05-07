@@ -1,11 +1,19 @@
 @extends('mahasiswa.layouts.app')
 @section('content')
+    {{-- style --}}
+    <style>
+        thead td p {
+            font-weight: bold;
+
+        }
+    </style>
+    {{-- end stly --}}
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">
-                                        <h5 class="card-title mb-0">Jadwal Bimbingan</h5>
-                                    </div>
+                    <h5 class="card-title mb-0">Jadwal Bimbingan</h5>
+                </div>
                 <div class="card-body">
 
                     <div class="">
@@ -30,8 +38,11 @@
 
                     <div class="table-responsive">
                         <table class="table table-nowrap align-middle mb-0">
-                            <tbody>
+                            <thead>
                                 <tr>
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">No.</h5>
+                                    </td>
                                     <td>
                                         <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
                                     </td>
@@ -40,41 +51,88 @@
                                     </td>
 
                                     <td>
+                                        <h5 class="text-dark font-size-14 m-0">Nama Ketua</h5>
+                                    </td>
+
+                                    <td>
                                         <h5 class="text-dark font-size-14 m-0">Nama Dosen</h5>
                                     </td>
 
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">Tanggal</h5>
+                                        <h5 class="text-dark font-size-14 m-0">Lokasi Bimbingan</h5>
+                                    </td>
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Tanggal Bimbingan</h5>
+                                    </td>
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Waktu Bimbingan</h5>
                                     </td>
 
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">Action</h5>
+                                        <h5 class="text-dark font-size-14 m-0">Status</h5>
                                     </td>
                                 </tr>
-                                
+
+                            </thead>
+                            @if ($daftar_bimbingan->isNotEmpty())
+                                @foreach ($daftar_bimbingan as $item)
+                                    <tr>
+                                        <td>
+                                            <p class="mb-0">{{ $loop->iteration }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{ $item->nama_lomba }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{ $item->kategori_lomba }}</p>
+                                        </td>
+
+                                        <td>
+                                            <p class="mb-0">{{ $item->nama_ketua }}</p>
+                                        </td>
+
+                                        <td>
+                                            <p class="mb-0">{{ $item->namadosen }}</p>
+                                        </td>
+
+                                        <td>
+                                            <p class="mb-0">{{ $item->lokasi_bimbingan }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{ $item->tanggal_bimbingan }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{ $item->waktu_bimbingan }}</p>
+                                        </td>
+
+
+                                        @if ($item->status == 'diterima')
+                                            <td class="d-flex ps-2 align-items-center">
+                                                <p class="d-flex gap-2 align-items-center m-0">
+                                                    <i class="bx bx-check text-success fw-bold"></i>accepted
+                                                </p>
+                                            </td>
+                                        @elseif ($item->status == 'ditolak')
+                                            <td class="d-flex ps-2 align-items-center">
+                                                <p class="d-flex gap-2 align-items-center m-0">
+                                                    <i class="bx bx-x text-danger fw-bold"></i>Decline
+                                                </p>
+                                            </td>
+                                        @else
+                                            <td class="d-flex ps-2 align-items-center">
+                                                <p class="d-flex gap-2 align-items-center m-0">
+                                                    <i class="bx bx-time text-success fw-bold"></i>Waiting
+                                                </p>
+                                            </td>
+                                        @endif
+
+                                    </tr>
+                                @endforeach
+                            @else
                                 <tr>
-                                    <td>
-                                        <p class="mb-0">Hackathon UI/UX</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">UI/UX</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">Fiqih Syaid Hermawan, S.Kom, M.Kom, MPTI</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0">20-07-2024</p>
-                                    </td>
-
-                                    <td class="ps-2">
-                                        <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" >Lihat Detail</button>
-                                    </td>
+                                    <td colspan="9" class="text-center">Tidak Ada Bimbingan</td>
                                 </tr>
-
-
-                            </tbody>
+                            @endif
                         </table>
                     </div>
 
