@@ -108,7 +108,7 @@
                     </a>
                 </div>
                 <div class="col-xl-4">
-                    <a href="{{ route('mahasiswa.history') }}" data-nama="{{ $nama ?? '' }}">
+                    <a href="{{ route('mahasiswa.jadwalBimbingan') }}" data-nama="{{ $nama ?? '' }}">
                         <div class="card card-box">
                             <div class="card-body">
                                 <div>

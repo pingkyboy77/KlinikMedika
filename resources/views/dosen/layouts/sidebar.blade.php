@@ -49,19 +49,19 @@
             </li>
             <li>
                 <a href="{{ route('dosen.daftarBimbingan') }}">
-                    <i class="bx bx-calendar-event icon nav-icon"></i>
+                    <i class="bx bx-list-ul icon nav-icon"></i>
                     <span class="menu-item" data-key="t-dashboard">Daftar Bimbingan</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('dosen.pengajuanLomba') }}">
-                    <i class="bx bx-user-circle icon nav-icon"></i>
+                    <i class="bx bx-calendar-event icon nav-icon"></i>
                     <span class="menu-item" data-key="t-dashboard">Pengajuan Lomba</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('dosen.jadwalBimbingan') }}">
-                    <i class="bx bx-user-circle icon nav-icon"></i>
+                    <i class="bx bx-calendar-check icon nav-icon"></i>
                     <span class="menu-item" data-key="t-dashboard">Pengajuan Bimbingan</span>
                 </a>
             </li>

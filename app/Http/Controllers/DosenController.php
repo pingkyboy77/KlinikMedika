@@ -15,8 +15,10 @@ class DosenController extends Controller
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
-        $jumlah_lomba_pengajuan = DaftarPengajuan::where('namadosen', $nama)->orderBy('created_at', 'desc')->count();
-        return view('dosen.dashboard', compact('role','jumlah_lomba_pengajuan','nama'));
+        $jumlah_lomba_pengajuan = DaftarPengajuan::get()->count();
+        $jumlah_daftar_bimbingan = DaftarBimbingan::get()->count();
+        $jumlah_bimbingan_pengajuan = DaftarBimbingan::get()->count();
+        return view('dosen.dashboard', compact('role','jumlah_lomba_pengajuan','nama', 'jumlah_daftar_bimbingan', 'jumlah_bimbingan_pengajuan'));
     }
 
     public function daftarBimbingan()

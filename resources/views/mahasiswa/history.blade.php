@@ -128,7 +128,7 @@
                         @endforeach
                         @else
                         <tr>
-                            <td colspan="6">Tidak Ada Pengajuan Perlombaan atau Bimbingan</td>
+                            <td >Tidak Ada Pengajuan Perlombaan atau Bimbingan</td>
                         </tr>
                         @endif
                     </table>
@@ -170,7 +170,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-nowrap align-middle mb-0" id="table-history-bimbingan">
+                    <table class="table table-nowrap align-middle mb-0" id="table-history-Bimbingan">
                         <thead>
                             <tr>
                                 <td>
@@ -257,14 +257,6 @@
                                 @endif
                             </tr>
                             @endforeach
-                            @else
-                            <tr>
-                                <td colspan="9">
-                                    <div class="text-center">
-                                        <p class="text-muted font-italic">Tidak Ada Pengajuan Bimbingan Perlombaan</p>
-                                    </div>
-                                </td>
-                            </tr>
                             @endif
                         </tbody>
 

@@ -106,11 +106,11 @@
                                         </tr>
                                     @endforeach
                                 @else
-                                    <tr>
+                                    {{-- <tr>
                                         <td colspan="8">
                                             <p class="text-center">Belum ada User</p>
                                         </td>
-                                    </tr>
+                                    </tr> --}}
                                 @endif
                             </tbody>
                         </table>
@@ -160,12 +160,25 @@
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
    <script>
-    $(document).ready(function () {
-        $('#myTable').DataTable({
-            "columnDefs": [
-                { "orderable": false, "targets": [6] } // Menonaktifkan sorting pada kolom 1 dan 3
-            ]
+    $(document).ready(function() {
+            var dataTableExists = $.fn.DataTable.isDataTable('#myTable');
+            if (dataTableExists) {
+                $('#myTable').DataTable().destroy();
+            }
+
+            setTimeout(() => {
+
+                $('#myTable').DataTable({
+                    scrollCollapse: true,
+                    responsive: true,
+                    "columnDefs": [{
+                            "orderable": false,
+                            "targets": [6]
+                        } // Disable sorting for the third column (index 2)
+                        // Add more entries as needed for other columns
+                    ]
+                });
+            }, 100);
         });
-    });
 </script>
 @endsection
