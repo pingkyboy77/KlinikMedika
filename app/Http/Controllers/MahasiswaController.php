@@ -22,7 +22,10 @@ class MahasiswaController extends Controller
         $role = $user->role;
         $dospem_jumlah = User::where('role', 'dosen')->count();
         $lomba_jumlah = Lomba::count();
-        return view('mahasiswa.dashboard', compact('role', 'nama', 'dospem_jumlah', 'lomba_jumlah'));
+        $history_jumlah = DaftarPengajuan::get()->count();
+        $bimbingan_jumlah = DaftarBimbingan::get()->count();
+        
+        return view('mahasiswa.dashboard', compact('role', 'nama', 'dospem_jumlah', 'lomba_jumlah', 'history_jumlah', 'bimbingan_jumlah'));
     }
     public function daftarDosenPembimbing()
     {
@@ -52,7 +55,6 @@ class MahasiswaController extends Controller
         $role = $user->role;
         $daftar_lomba_ikut = DaftarPengajuan::where('stored_by', $nama)->orderBy('created_at', 'desc')->get();
         $daftar_bimbingan = DaftarBimbingan::where('stored_by', $nama)->orderBy('created_at', 'desc')->get();
-        // dd($daftar_lomba_ikut);
         return view('mahasiswa.history', compact('role', 'nama', 'daftar_lomba_ikut', 'daftar_bimbingan'));
     }
     public function jadwalBimbingan()

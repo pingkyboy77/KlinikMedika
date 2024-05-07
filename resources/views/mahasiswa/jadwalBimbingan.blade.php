@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-nowrap align-middle mb-0">
+                        <table class="table table-nowrap align-middle mb-0" id="myTable">
                             <thead>
                                 <tr>
                                     <td>
@@ -74,6 +74,9 @@
                                 </tr>
 
                             </thead>
+
+                            <tbody id="myTable">
+
                             @if ($daftar_bimbingan->isNotEmpty())
                                 @foreach ($daftar_bimbingan as $item)
                                     <tr>
@@ -133,6 +136,8 @@
                                     <td colspan="9" class="text-center">Tidak Ada Bimbingan</td>
                                 </tr>
                             @endif
+                        </tbody>
+
                         </table>
                     </div>
 
@@ -141,4 +146,22 @@
         </div>
 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+   <script>
+    $(document).ready(function () {
+    if ($('#myTable').length > 0 && $('#myTable tbody tr').length > 0) {
+        $('#myTable').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": [7] } // Menonaktifkan sorting pada kolom 8
+            ]
+        });
+    } else {
+        console.log('Tabel kosong atau tidak ditemukan');
+    }
+});
+
+</script>
 @endsection

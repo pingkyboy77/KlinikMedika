@@ -1,24 +1,25 @@
 @extends('mahasiswa.layouts.app')
 @section('content')
-    {{-- style --}}
-    <style>
-        thead td p {
-            font-weight: bold;
+{{-- style --}}
+<style>
+    thead td p {
+        font-weight: bold;
 
-        }
-    </style>
-    {{-- end style --}}
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Daftar Pengajuan Lomba</h5>
-                </div>
-                <div class="card-body">
+    }
 
-                    <div class="">
-                        <div class="row mb-2">
-                            <div class="col-xl-3 col-md-12">
+</style>
+{{-- end style --}}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Daftar Pengajuan Lomba</h5>
+            </div>
+            <div class="card-body">
+
+                <div class="">
+                    <div class="row mb-2">
+                        {{-- <div class="col-xl-3 col-md-12">
                                 <div class="pb-3 pb-xl-0">
                                     <form class="email-search">
                                         <div class="position-relative">
@@ -27,260 +28,308 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
-                            <div class="col-xl-9 col-md-12">
-                                <div class="text-sm-end">
-                                    {{-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".create-task"><i class="mdi mdi-plus me-1"></i> Create Task</button> --}}
-                                </div>
+                            </div> --}}
+                        <div class="col-xl-9 col-md-12">
+                            <div class="text-sm-end">
+                                {{-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".create-task"><i class="mdi mdi-plus me-1"></i> Create Task</button> --}}
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-nowrap align-middle mb-0">
-                            <thead>
-                                <tr>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">No.</h5>
-                                    </td>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
-                                    </td>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Kategori</h5>
-                                    </td>
+                <div class="table-responsive">
+                    <table id="myTable" class="table table-nowrap align-middle mb-0" >
+                        <thead>
+                            <tr>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">No.</h5>
+                                </td>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
+                                </td>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Kategori</h5>
+                                </td>
 
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Nama Ketua</h5>
-                                    </td>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Nama Ketua</h5>
+                                </td>
 
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Nama Dosen</h5>
-                                    </td>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Nama Dosen</h5>
+                                </td>
 
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Jenis Pengajuan</h5>
-                                    </td>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">File Proposal Pengajuan</h5>
-                                    </td>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Jenis Pengajuan</h5>
+                                </td>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">File Proposal Pengajuan</h5>
+                                </td>
 
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Status</h5>
-                                    </td>
-                                </tr>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Status</h5>
+                                </td>
+                            </tr>
 
-                            </thead>
-                            @if ($daftar_lomba_ikut->isNotEmpty())
-                                @foreach ($daftar_lomba_ikut as $item)
-                                    <tr>
-                                        <td>
-                                            <p class="mb-0">{{ $loop->iteration }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama_lomba }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->kategori }}</p>
-                                        </td>
+                        </thead>
+                        @if ($daftar_lomba_ikut->isNotEmpty())
+                        @foreach ($daftar_lomba_ikut as $item)
+                        <tr>
+                            <td>
+                                <p class="mb-0">{{ $loop->iteration }}</p>
+                            </td>
+                            <td>
+                                <p class="mb-0">{{ $item->nama_lomba }}</p>
+                            </td>
+                            <td>
+                                <p class="mb-0">{{ $item->kategori }}</p>
+                            </td>
 
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama_ketua }}</p>
-                                        </td>
+                            <td>
+                                <p class="mb-0">{{ $item->nama_ketua }}</p>
+                            </td>
 
-                                        <td>
-                                            <p class="mb-0">{{ $item->namadosen }}</p>
-                                        </td>
+                            <td>
+                                <p class="mb-0">{{ $item->namadosen }}</p>
+                            </td>
 
-                                        <td>
-                                            <p class="mb-0">{{ $item->jenis_pengajuan }}</p>
-                                        </td>
-                                        <td>
-                                            {{-- <p class="mb-0">{{ substr($item->file_proposal_pengajuan, 23) }}</p> --}}
-                                            <a href="/{{ $item->file_proposal_pengajuan }}" download="{{ substr($item->file_proposal_pengajuan, 23) }}">{{ substr($item->file_proposal_pengajuan, 23) }}</a>
-                                    
-                                        </td>
+                            <td>
+                                <p class="mb-0">{{ $item->jenis_pengajuan }}</p>
+                            </td>
+                            <td>
+                                {{-- <p class="mb-0">{{ substr($item->file_proposal_pengajuan, 23) }}</p> --}}
+                                <a href="/{{ $item->file_proposal_pengajuan }}"
+                                    download="{{ substr($item->file_proposal_pengajuan, 23) }}">{{ substr($item->file_proposal_pengajuan, 23) }}</a>
 
-                                        @if ($item->status == 'diterima')
-                                            <td class="ps-2">
-                                                <a href="{{ route('mahasiswa.pengajuan-bimbingan' , ['id' => $item->id ]) }}">
-                                                <button type="button"
-                                                    class="btn btn-success btn-rounded waves-effect waves-light me-2">Ajukan
-                                                    Bimbingan</button></a>
-                                            </td>
-                                        @elseif ($item->status == 'ditolak')
-                                            <td class="d-flex ps-2 align-items-center">
-                                                <p class="d-flex gap-2 align-items-center m-0">
-                                                    <i class="bx bx-x text-danger fw-bold"></i>Decline
-                                                </p>
-                                            </td>
-                                        @else
-                                            <td class="d-flex ps-2 align-items-center">
-                                                <p class="d-flex gap-2 align-items-center m-0">
-                                                    <i class="bx bx-time text-success fw-bold"></i>Waiting
-                                                </p>
-                                            </td>
-                                        @endif
+                            </td>
 
-                                    </tr>
-                                @endforeach
+                            @if ($item->status == 'diterima')
+                            <td class="ps-2">
+                                <a href="{{ route('mahasiswa.pengajuan-bimbingan' , ['id' => $item->id ]) }}">
+                                    <button type="button"
+                                        class="btn btn-success btn-rounded waves-effect waves-light me-2">Ajukan
+                                        Bimbingan</button></a>
+                            </td>
+                            @elseif ($item->status == 'ditolak')
+                            <td class="d-flex ps-2 align-items-center">
+                                <p class="d-flex gap-2 align-items-center m-0">
+                                    <i class="bx bx-x text-danger fw-bold"></i>Decline
+                                </p>
+                            </td>
                             @else
-                                <tr>
-                                    <td colspan="6">Tidak Ada Pengajuan Perlombaan atau Bimbingan</td>
-                                </tr>
+                            <td class="d-flex ps-2 align-items-center">
+                                <p class="d-flex gap-2 align-items-center m-0">
+                                    <i class="bx bx-time text-success fw-bold"></i>Waiting
+                                </p>
+                            </td>
                             @endif
-                        </table>
-                    </div>
 
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td colspan="6">Tidak Ada Pengajuan Perlombaan atau Bimbingan</td>
+                        </tr>
+                        @endif
+                    </table>
                 </div>
+
             </div>
         </div>
-
     </div>
 
-    {{-- row of bimbingan --}}
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Daftar Pengajuan Bimbingan</h5>
-                </div>
-                <div class="card-body">
+</div>
 
-                    <div class="">
-                        <div class="row mb-2">
-                            <div class="col-xl-3 col-md-12">
-                                <div class="pb-3 pb-xl-0">
-                                    <form class="email-search">
-                                        <div class="position-relative">
-                                            <input type="text" class="form-control bg-light" placeholder="Search...">
-                                            <span class="bx bx-search font-size-18"></span>
-                                        </div>
-                                    </form>
-                                </div>
+{{-- row of bimbingan --}}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Daftar Pengajuan Bimbingan</h5>
+            </div>
+            <div class="card-body">
+
+                <div class="">
+                    <div class="row mb-2">
+                        {{-- <div class="col-xl-3 col-md-12">
+                            <div class="pb-3 pb-xl-0">
+                                <form class="email-search">
+                                    <div class="position-relative">
+                                        <input type="text" class="form-control bg-light" placeholder="Search...">
+                                        <span class="bx bx-search font-size-18"></span>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="col-xl-9 col-md-12">
-                                <div class="text-sm-end">
-                                    {{-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".create-task"><i class="mdi mdi-plus me-1"></i> Create Task</button> --}}
-                                </div>
+                        </div> --}}
+                        <div class="col-xl-9 col-md-12">
+                            <div class="text-sm-end">
+                                {{-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".create-task"><i class="mdi mdi-plus me-1"></i> Create Task</button> --}}
                             </div>
                         </div>
                     </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-nowrap align-middle mb-0">
-                            <thead>
-                                <tr>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">No.</h5>
-                                    </td>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
-                                    </td>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Kategori</h5>
-                                    </td>
-
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Nama Ketua</h5>
-                                    </td>
-
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Nama Dosen</h5>
-                                    </td>
-
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Lokasi Bimbingan</h5>
-                                    </td>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Tanggal Bimbingan</h5>
-                                    </td>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Waktu Bimbingan</h5>
-                                    </td>
-
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">Status</h5>
-                                    </td>
-                                </tr>
-
-                            </thead>
-                            <tbody>
-                                @if ($daftar_bimbingan->isNotEmpty())
-                                @foreach ($daftar_bimbingan as $item)
-                                    <tr>
-                                        <td>
-                                            <p class="mb-0">{{ $loop->iteration }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama_lomba }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->kategori_lomba }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama_ketua }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->namadosen }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->lokasi_bimbingan }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->tanggal_bimbingan }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->waktu_bimbingan }}</p>
-                                        </td>
-                                        
-                                        @if ($item->status == 'diterima')
-                                            <td class="d-flex ps-2 align-items-center">
-                                                <p class="d-flex gap-2 align-items-center m-0">
-                                                    <i class="bx bx-check text-success fw-bold"></i>accepted
-                                                </p>
-                                            </td>
-                                        @elseif ($item->status == 'ditolak')
-                                            <td class="d-flex ps-2 align-items-center">
-                                                <p class="d-flex gap-2 align-items-center m-0">
-                                                    <i class="bx bx-x text-danger fw-bold"></i>Decline
-                                                </p>
-                                            </td>
-                                        @else
-                                        <td class=" d-flex gap-2">
-                                            <form action="{{ route('dosen.updatepengajuan.bimbingan', ['id'=>$item->id, 'status' => 'diterima']) }}" method="POST">
-                                                @csrf
-                                            <button type="submit"
-                                                class="d-flex align-items-center btn btn-success btn-rounded waves-effect waves-light">
-                                                <i class="bx bx-check fw-bold"></i> Accept</button></form>
-                                                <form action="{{ route('dosen.updatepengajuan.bimbingan', ['id'=>$item->id, 'status' => 'ditolak']) }}" method="POST">
-                                                    @csrf
-                                            <button type="submit"
-                                                class="d-flex align-items-center btn btn-danger btn-rounded waves-effect waves-light">
-                                                <i class="bx bx-x fw-bold"></i> Decline</button></form>
-                                            </td>
-                                        @endif
-                                    </tr>
-                                @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="6">
-                                            <div class="text-center">
-                                                <p class="text-muted font-italic">Tidak Ada Pengajuan Bimbingan Perlombaan</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endif
-                            </tbody>
-
-
-
-                        </table>
-                    </div>
-
                 </div>
+
+                <div class="table-responsive">
+                    <table class="table table-nowrap align-middle mb-0" id="myTable2">
+                        <thead>
+                            <tr>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">No.</h5>
+                                </td>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
+                                </td>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Kategori</h5>
+                                </td>
+
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Nama Ketua</h5>
+                                </td>
+
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Nama Dosen</h5>
+                                </td>
+
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Lokasi Bimbingan</h5>
+                                </td>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Tanggal Bimbingan</h5>
+                                </td>
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Waktu Bimbingan</h5>
+                                </td>
+
+                                <td>
+                                    <h5 class="text-dark font-size-14 m-0">Status</h5>
+                                </td>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @if ($daftar_bimbingan->isNotEmpty())
+                            @foreach ($daftar_bimbingan as $item)
+                            <tr>
+                                <td>
+                                    <p class="mb-0">{{ $loop->iteration }}</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0">{{ $item->nama_lomba }}</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0">{{ $item->kategori_lomba }}</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0">{{ $item->nama_ketua }}</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0">{{ $item->namadosen }}</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0">{{ $item->lokasi_bimbingan }}</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0">{{ $item->tanggal_bimbingan }}</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0">{{ $item->waktu_bimbingan }}</p>
+                                </td>
+
+                                @if ($item->status == 'diterima')
+                                <td class="d-flex ps-2 align-items-center">
+                                    <p class="d-flex gap-2 align-items-center m-0">
+                                        <i class="bx bx-check text-success fw-bold"></i>accepted
+                                    </p>
+                                </td>
+                                @elseif ($item->status == 'ditolak')
+                                <td class="d-flex ps-2 align-items-center">
+                                    <p class="d-flex gap-2 align-items-center m-0">
+                                        <i class="bx bx-x text-danger fw-bold"></i>Decline
+                                    </p>
+                                </td>
+                                @else
+                                <td class=" d-flex gap-2">
+                                    <form
+                                        action="{{ route('dosen.updatepengajuan.bimbingan', ['id'=>$item->id, 'status' => 'diterima']) }}"
+                                        method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="d-flex align-items-center btn btn-success btn-rounded waves-effect waves-light">
+                                            <i class="bx bx-check fw-bold"></i> Accept</button></form>
+                                    <form
+                                        action="{{ route('dosen.updatepengajuan.bimbingan', ['id'=>$item->id, 'status' => 'ditolak']) }}"
+                                        method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="d-flex align-items-center btn btn-danger btn-rounded waves-effect waves-light">
+                                            <i class="bx bx-x fw-bold"></i> Decline</button></form>
+                                </td>
+                                @endif
+                            </tr>
+                            @endforeach
+                            @else
+                            <tr>
+                                <td colspan="6">
+                                    <div class="text-center">
+                                        <p class="text-muted font-italic">Tidak Ada Pengajuan Bimbingan Perlombaan</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endif
+                        </tbody>
+
+
+
+                    </table>
+                </div>
+
             </div>
         </div>
-
     </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($.fn.DataTable.isDataTable('#myTable')) {
+            $('#myTable').DataTable().destroy();
+        }
+
+        if ($('#myTable tbody tr').length > 0) {
+            $('#myTable').DataTable({
+                "columnDefs": [{
+                        "orderable": false,
+                        "targets": [7]
+                    } // Menonaktifkan sorting pada kolom 8
+                ]
+            });
+        } else {
+            console.log('Tabel kosong');
+        }
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        $('#myTable2').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": [8] } // Menonaktifkan sorting pada kolom 8
+            ],
+            "language": {
+                "emptyTable": "Tidak ada data yang tersedia dalam tabel"
+            },
+            "initComplete": function(settings, json) {
+                if ($('#myTable2').DataTable().rows().count() == 0) {
+                    $('#myTable2').DataTable().destroy();
+                }
+            }
+        });
+    });
+</script>
+
 @endsection

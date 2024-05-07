@@ -16,7 +16,7 @@
 
                     <div class="">
                         <div class="row mb-2">
-                            <div class="col-xl-3 col-md-12">
+                            {{-- <div class="col-xl-3 col-md-12">
                                 <div class="pb-3 pb-xl-0">
                                     <form class="email-search">
                                         <div class="position-relative">
@@ -25,7 +25,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-xl-9 col-md-12">
                                 <div class="text-sm-end">
                                     {{-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".create-task"><i class="mdi mdi-plus me-1"></i> Create Task</button> --}}
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-nowrap align-middle mb-0">
+                        <table class="table table-nowrap align-middle mb-0" id="myTable">
                             <thead>
                                 <tr>
                                     <td>
@@ -79,4 +79,18 @@
         </div>
 
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+   <script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": [2] } // Menonaktifkan sorting pada kolom 1 dan 3
+            ]
+        });
+    });
+</script>
 @endsection
