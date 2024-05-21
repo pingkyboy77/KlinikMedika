@@ -49,8 +49,9 @@ class AdminController extends Controller
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
+        $kategoriOptions = Kategori::pluck('kategori', 'id');
         // dd($lomba);
-        return view('admin.lombaManagement', compact('lomba', 'nama', 'role'));
+        return view('admin.lombaManagement', compact('lomba', 'nama', 'role', 'kategoriOptions'));
     }
     public function daftarPengajuanLomba()
     {

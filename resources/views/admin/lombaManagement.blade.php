@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 @section('content')
-{{-- style --}}
-<style>
-    thead td p{
-        font-weight: bold;
+    {{-- style --}}
+    <style>
+        thead td p {
+            font-weight: bold;
 
-    }
-</style>
-{{-- end stly --}}
+        }
+    </style>
+    {{-- end stly --}}
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -30,8 +30,7 @@
                             </div> --}}
                             <!-- Button untuk membuka modal -->
                             <div class="text-sm-end">
-                                <button type="button"
-                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
+                                <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
                                     onclick="openModal()"><i class="mdi mdi-plus me-1"></i> Create Lomba</button>
                             </div>
                         </div>
@@ -63,38 +62,42 @@
                             </thead>
                             <tbody>
                                 @if ($lomba->isNotEmpty())
-                                @foreach ($lomba as $item)
+                                    @foreach ($lomba as $item)
+                                        <tr>
+                                            <td class="d-flex justify-content-center">
+                                                <p class="mb-0">{{ $item->id }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->nama_lomba }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->kategori }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->lokasi }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->tanggal }}</p>
+                                            </td>
+                                            <td class="d-flex">
+                                                <a class="btn btn-warning me-2"
+                                                    href="{{ url('/admin/update-Lomba/' . $item->id) . '/edit' }}"><i
+                                                        class="bx bx-pencil"></i>Edit</a>
+                                                <form action="{{ url('/admin/lomba-Management/' . $item->id) }}"
+                                                    method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-delete"><i
+                                                            class="bx bx-trash-alt"></i> Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
                                     <tr>
-                                        <td class="d-flex justify-content-center">
-                                            <p class="mb-0">{{ $item->id }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama_lomba }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->kategori }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->lokasi }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->tanggal }}</p>
-                                        </td>
-                                        <td class="d-flex">
-                                            <a class="btn btn-warning me-2" href="{{ url('/admin/update-Lomba/' . $item->id) . '/edit' }}"><i class="bx bx-pencil"></i>Edit</a>
-                                            <form action="{{ url('/admin/lomba-Management/' . $item->id) }}" method="POST">
-                                                @method('delete')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger btn-delete"><i class="bx bx-trash-alt"></i> Delete</button>
-                                            </form>
-                                        </td>
+                                        <td colspan="5" class="text-center">Data Kosong</td>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="5" class="text-center">Data Kosong</td>
-                                </tr>
-                            @endif
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -112,7 +115,7 @@
             <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modal_lomba">Create User</h5>
+                        <h5 class="modal-title" id="modal_lomba">Create Perlombaan</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -131,9 +134,10 @@
                                     <label class="form-label" for="CreateTask-Category">Kategori</label>
                                     <select class="form-select" name="kategori" id="kategori">
                                         <option selected disabled> Select Kategori </option>
-                                        <option value="UI/UX">UI/UX</option>
-                                        <option value="Jaringan">Jaringan</option>
-                                        <option value="Website">Website</option>
+                                        @foreach ($kategoriOptions as $option)
+                                            <option value="{{ $option }}" >
+                                                {{ $option }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -171,43 +175,43 @@
             modalBootstrap.show();
         }
     </script>
-    
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var deleteButtons = document.querySelectorAll('.btn-delete');
 
-        deleteButtons.forEach(function (button) {
-            button.addEventListener('click', function (event) {
-                event.preventDefault();
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var deleteButtons = document.querySelectorAll('.btn-delete');
 
-                var form = this.parentElement;
-                var url = form.getAttribute('action');
+            deleteButtons.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
 
-                Swal.fire({
-                    title: 'Apakah anda yakin menghapus data?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit();
-                    }
+                    var form = this.parentElement;
+                    var url = form.getAttribute('action');
+
+                    Swal.fire({
+                        title: 'Apakah anda yakin menghapus data?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-   <script>
-    $(document).ready(function() {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
             var dataTableExists = $.fn.DataTable.isDataTable('#myTable');
             if (dataTableExists) {
                 $('#myTable').DataTable().destroy();
@@ -227,5 +231,5 @@
                 });
             }, 100);
         });
-</script>
+    </script>
 @endsection
