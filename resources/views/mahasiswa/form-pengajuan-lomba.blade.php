@@ -14,13 +14,10 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Form Pendaftaran Perlombaan {{ $nama_lomba }}</h5>
+                        <h5 class="card-title mb-0">Form Pendaftaran Perlombaan</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <input type="hidden" value="{{ $nama_lomba }}" name="nama_lomba">
-                            <input type="hidden" value="{{ $nama_akun }}" name="stored_by">
-                            <input type="hidden" value="{{ $kategori }}" name="kategori">
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="CreateTask-Task-Name">Nama Ketua</label>
@@ -49,17 +46,6 @@
                                     <label class="form-label" for="CreateTask-Task-Name">Email Ketua</label>
                                     <input type="email" name="email_ketua" class="form-control"
                                         placeholder="Enter Email Name" id="CreateTask-Task-Name">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="CreateTask-Category">Dosen Pembimbing</label>
-                                    <select class="form-select" name="namadosen" id="kategori">
-                                        <option selected disabled> Select Dosen </option>
-                                        @foreach ($dospem as $item)
-                                            <option value="{{ $item->nama }}"> {{ $item->nama }} </option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">

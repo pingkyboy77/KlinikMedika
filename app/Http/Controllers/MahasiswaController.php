@@ -8,6 +8,7 @@ use App\Models\daftarLomba;
 use Illuminate\Http\Request;
 use App\Models\DaftarBimbingan;
 use App\Models\DaftarPengajuan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -86,7 +87,12 @@ class MahasiswaController extends Controller
             $kategori = Lomba::where('id', $id)->pluck('kategori')->first();
 
             // Get supervisors for the competition category
-            $dospem = User::where('kategori', $kategori)->get();
+            $dosen_dengan_pengajuan_diterima = DB::table('daftar_pengajuans')->select('namadosen')->where('status', 'diterima')->groupBy('namadosen')->having(DB::raw('count(namadosen)'), '<', 2)->pluck('namadosen');
+            // dd($dosen_dengan_pengajuan_diterima); 
+            // Ambil dosen sesuai kategori dari daftar pengajuan dan filter berdasarkan dosen yang di atas
+            $dospem = User::where('kategori', $kategori)
+                ->whereIn('nama', $dosen_dengan_pengajuan_diterima)
+                ->get();
 
             // Pass parameters to the view
             return view('mahasiswa.form-pengajuan-lomba', compact('role', 'nama', 'nama_lomba', 'nama_akun', 'kategori', 'dospem'));

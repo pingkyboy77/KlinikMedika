@@ -9,8 +9,9 @@ use Illuminate\Http\Request;
 use App\Models\DaftarBimbingan;
 
 use App\Models\DaftarPengajuan;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -70,7 +71,7 @@ class AdminController extends Controller
         $role = $user->role;
         $daftar_bimbingan = DaftarBimbingan::get();
         // dd($lomba);
-        return view('admin.pengajuanBimbinganManagement', compact( 'nama', 'role', 'daftar_bimbingan'));
+        return view('admin.pengajuanBimbinganManagement', compact('nama', 'role', 'daftar_bimbingan'));
     }
     public function kategoriManagement()
     {
@@ -115,7 +116,13 @@ class AdminController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $daftarPengajuan = DaftarPengajuan::find($id);
-        $dospem = User::where('kategori', $daftarPengajuan->kategori)->get();
+        // Ambil dosen yang tidak memiliki dua atau lebih nama_dosen dengan status diterima
+        $dosen_dengan_pengajuan_diterima = DB::table('daftar_pengajuans')->select('namadosen')->where('status', 'diterima')->groupBy('namadosen')->having(DB::raw('count(namadosen)'), '<', 2)->pluck('namadosen');
+        // dd($dosen_dengan_pengajuan_diterima); 
+        // Ambil dosen sesuai kategori dari daftar pengajuan dan filter berdasarkan dosen yang di atas
+        $dospem = User::where('kategori', $daftarPengajuan->kategori)
+            ->whereIn('nama', $dosen_dengan_pengajuan_diterima)
+            ->get();
         // dd($daftarPengajuan);
         return view('admin.updateDaftarPengajuanLomba', compact('nama', 'role', 'daftarPengajuan', 'dospem'));
     }
@@ -150,7 +157,6 @@ class AdminController extends Controller
             Alert::error('Gagal', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
             return redirect()->back();
         }
-
     }
 
     // public function editUser($id)
@@ -266,7 +272,6 @@ class AdminController extends Controller
         $daftarPengajuan->delete();
         Alert::success('Sukses', 'Data Berhasil Di Hapus');
         return $this->daftarPengajuanLomba();
-
     }
     public function destroyDaftarPengajuanBimbingan($id)
     {
@@ -279,7 +284,6 @@ class AdminController extends Controller
         $daftarPengajuan->delete();
         Alert::success('Sukses', 'Data Berhasil Di Hapus');
         return $this->daftarPengajuanBimbingan();
-
     }
 
     public function updatedLomba(Request $request, string $id)
