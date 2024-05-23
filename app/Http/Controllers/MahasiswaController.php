@@ -93,7 +93,7 @@ class MahasiswaController extends Controller
             $dospem = User::where('kategori', $kategori)
                 ->whereIn('nama', $dosen_dengan_pengajuan_diterima)
                 ->get();
-
+            
             // Pass parameters to the view
             return view('mahasiswa.form-pengajuan-lomba', compact('role', 'nama', 'nama_lomba', 'nama_akun', 'kategori', 'dospem'));
         }
