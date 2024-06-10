@@ -53,12 +53,12 @@
                     <span class="menu-item" data-key="t-dashboard">User Management</span>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ route('admin.lomba-Management') }}">
                     <i class="bx bx-calendar-event icon nav-icon"></i>
                     <span class="menu-item" data-key="t-dashboard">Lomba Management</span>
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ route('admin.daftarPengajuanLomba') }}">
                     <i class="bx bx-history icon nav-icon"></i>

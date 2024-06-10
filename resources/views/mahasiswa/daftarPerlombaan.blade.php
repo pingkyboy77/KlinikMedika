@@ -1,3 +1,4 @@
+{{-- @dd($daftar_lomba_ikut) --}}
 @extends('mahasiswa.layouts.app')
 @section('content')
     {{-- style --}}
@@ -28,8 +29,14 @@
                                     </form>
                                 </div>
                             </div> --}}
-                            <div class="col-xl-9 col-md-12">
+                            <div class="col-xl-12 col-md-12 justify-content-end">
                                 <div class="text-sm-end">
+                                    <div class="text-sm-end">
+                                        <a href="{{ route('mahasiswa.pengajuan-lomba') }}">
+                                            <button type="button"
+                                                class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i
+                                                    class="mdi mdi-plus me-1"></i> Form Pendaftaran Lomba</button></a>
+                                    </div>
                                     {{-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".create-task"><i class="mdi mdi-plus me-1"></i> Daftar Lomba</button> --}}
                                 </div>
                             </div>
@@ -51,63 +58,90 @@
                                     </td>
 
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">Tempat</h5>
+                                        <h5 class="text-dark font-size-14 m-0">Nama Ketua</h5>
                                     </td>
 
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">Tanggal</h5>
+                                        <h5 class="text-dark font-size-14 m-0">Nama Dosen</h5>
                                     </td>
 
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">Action</h5>
+                                        <h5 class="text-dark font-size-14 m-0">Jenis Pengajuan</h5>
+                                    </td>
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">File Proposal Pengajuan</h5>
+                                    </td>
+
+                                    <td>
+                                        <h5 class="text-dark font-size-14 m-0">Status</h5>
                                     </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @if ($daftar_lomba->isNotEmpty())
-                                    @foreach ($daftar_lomba as $item)
-                                        <tr>
-                                            <td>
-                                                <p class="mb-0">{{ $loop->iteration }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0">{{ $item->nama_lomba }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0">{{ $item->kategori }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0">{{ $item->lokasi }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0">{{ $item->tanggal }}</p>
-                                            </td>
-                                            <td class="ps-2">
-                                                <!-- Button untuk membuka modal -->
-                                                <div>
-                                                    @if ($daftar_lomba_ikut->where('nama_lomba', $item->nama_lomba)->isNotEmpty())
-                                                            <span class="text-bold">Sudah Mendaftar</span>
-                                                    @else
-                                                        <a
-                                                            href="{{ route('mahasiswa.pengajuan-lomba', ['nama_lomba' => str_replace(' ','-',$item->nama_lomba), 'nama_akun' => $nama, 'id' => $item->id]) }}">
-                                                            <button type="button"
-                                                                class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2">
-                                                                <i class="mdi mdi-plus me-1"></i> Daftar
-                                                            </button>
-                                                        </a>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="6">
-                                            <p class="text-center">Tidak ada data perlombaan</p>
-                                        </td>
-                                    </tr>
-                                @endif
 
+                            </thead>
+                            @if ($daftar_lomba_ikut->isNotEmpty())
+                                @foreach ($daftar_lomba_ikut as $item)
+                                    <tr>
+                                        <td>
+                                            <p class="mb-0">{{ $loop->iteration }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{ $item->nama_lomba }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{ $item->kategori }}</p>
+                                        </td>
+
+                                        <td>
+                                            <p class="mb-0">{{ $item->nama_ketua }}</p>
+                                        </td>
+
+                                        <td>
+                                            <p class="mb-0">{{ $item->namadosen }}</p>
+                                        </td>
+
+                                        <td>
+                                            <p class="mb-0">{{ $item->jenis_pengajuan }}</p>
+                                        </td>
+                                        <td>
+                                            {{-- <p class="mb-0">{{ substr($item->file_proposal_pengajuan, 23) }}</p> --}}
+                                            <a href="/{{ $item->file_proposal_pengajuan }}"
+                                                download="{{ substr($item->file_proposal_pengajuan, 23) }}">{{ substr($item->file_proposal_pengajuan, 23) }}</a>
+
+                                        </td>
+
+                                        @if ($item->status == 'diterima')
+                                            <td class="ps-2">
+                                                <a
+                                                    href="{{ route('mahasiswa.pengajuan-bimbingan', ['id' => $item->id]) }}">
+                                                    <button type="button"
+                                                        class="btn btn-success btn-rounded waves-effect waves-light me-2">Ajukan
+                                                        Bimbingan</button></a>
+                                            </td>
+                                        @elseif ($item->status == 'ditolak')
+                                            <td class="d-flex ps-2 align-items-center">
+                                                <p class="d-flex gap-2 align-items-center m-0">
+                                                    <i class="bx bx-x text-danger fw-bold"></i>Decline
+                                                </p>
+                                            </td>
+                                        @else
+                                            <td class="d-flex">
+                                                <a class="btn btn-warning me-2"
+                                                    href="{{ route('account.update.daftarPengajuanLomba', ['id' => $item->id]) }}"><i
+                                                        class="bx bx-pencil"></i>Edit</a>
+                                                <form
+                                                    action="{{ route('account.DaftarPengajuan.delete', ['id' => $item->id]) }}"
+                                                    method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-delete"><i
+                                                            class="bx bx-trash-alt"></i> Delete</button>
+                                                </form>
+                                            </td>
+                                        @endif
+
+                                    </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -124,13 +158,14 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <script>
+    {{-- <script>
         function openModal() {
-            var modal = document.querySelector('.create-daftarLomba');
+            var modal = document.querySelector('.create-lomba');
             var modalBootstrap = new bootstrap.Modal(modal);
             modalBootstrap.show();
         }
-
+    </script> --}}
+    <script>
         $(document).ready(function() {
             var dataTableExists = $.fn.DataTable.isDataTable('#tabel-daftar-perlombaan');
             if (dataTableExists) {
@@ -144,7 +179,7 @@
                     responsive: true,
                     "columnDefs": [{
                             "orderable": false,
-                            "targets": [5]
+                            "targets": [6]
                         } // Disable sorting for the third column (index 2)
                         // Add more entries as needed for other columns
                     ]

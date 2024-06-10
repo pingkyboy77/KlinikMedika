@@ -71,51 +71,53 @@
 
                             <tbody>
                                 @if ($pengajuan_jumlah->isNotEmpty())
-                                @foreach ($pengajuan_jumlah as $item)
-                                    <tr>
-                                    <td style="width:5%">
-                                        <p class="mb-0">{{ $loop->iteration }}</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">{{ $item->stored_by }}</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">{{ $item->nama_ketua }}</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">{{ $item->identitas_number_ketua }}</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">{{ $item->nama_lomba }}</p>
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">{{ $item->kategori }}</p>
-                                    </td>
-                                    <td>
-                                        <a href="/{{ $item->file_proposal_pengajuan }}" download="{{ substr($item->file_proposal_pengajuan, 23) }}">{{ substr($item->file_proposal_pengajuan, 23) }}</a>
+                                    @foreach ($pengajuan_jumlah as $item)
+                                        <tr>
+                                            <td style="width:5%">
+                                                <p class="mb-0">{{ $loop->iteration }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->stored_by }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->nama_ketua }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->identitas_number_ketua }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->nama_lomba }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->kategori }}</p>
+                                            </td>
+                                            <td>
+                                                <a href="/{{ $item->file_proposal_pengajuan }}"
+                                                    download="{{ substr($item->file_proposal_pengajuan, 23) }}">{{ substr($item->file_proposal_pengajuan, 23) }}</a>
 
-                                    </td>
-                                    <td>
-                                        <p class="mb-0">{{ $item->status }}</p>
-                                    </td>
-                                    <td class="d-flex justify-content-start g-3">
-                                        <a class="btn btn-warning me-2"
-                                        href="{{ route('admin.update.daftarPengajuanLomba', ['id' => $item->id]) }}"><i
-                                            class="bx bx-pencil"></i>Edit</a>
-                                    <form action="{{ route('admin.DaftarPengajuan.delete', ['id' => $item->id]) }}"
-                                        method="POST">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger btn-delete"><i
-                                                class="bx bx-trash-alt"></i> Delete</button>
-                                    </form>
-                                        </td>
-                                </tr>
-                                @endforeach
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->status }}</p>
+                                            </td>
+                                            <td class="d-flex">
+                                                <a class="btn btn-warning me-2"
+                                                    href="{{ route('account.update.daftarPengajuanLomba', ['id' => $item->id]) }}"><i
+                                                        class="bx bx-pencil"></i>Edit</a>
+                                                <form
+                                                    action="{{ route('account.DaftarPengajuan.delete', ['id' => $item->id]) }}"
+                                                    method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-delete"><i
+                                                            class="bx bx-trash-alt"></i> Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @else
-                                <tr>
-                                    <td colspan="8" class="text-center">Data Kosong</td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="8" class="text-center">Data Kosong</td>
+                                    </tr>
                                 @endif
 
                             </tbody>
@@ -127,32 +129,32 @@
         </div>
 
     </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var deleteButtons = document.querySelectorAll('.btn-delete');
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var deleteButtons = document.querySelectorAll('.btn-delete');
 
-        deleteButtons.forEach(function (button) {
-            button.addEventListener('click', function (event) {
-                event.preventDefault();
+            deleteButtons.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
 
-                var form = this.parentElement;
-                var url = form.getAttribute('action');
+                    var form = this.parentElement;
+                    var url = form.getAttribute('action');
 
-                Swal.fire({
-                    title: 'Apakah anda yakin menghapus data?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit();
-                    }
+                    Swal.fire({
+                        title: 'Apakah anda yakin menghapus data?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 @endsection

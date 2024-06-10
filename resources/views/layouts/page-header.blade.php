@@ -71,25 +71,25 @@
 </div>
 <script>
     // Fungsi untuk mengupdate waktu setiap detik
-    function updateClock() {
-        var currentTime = new Date();
-        var hours = currentTime.getHours();
-        var minutes = currentTime.getMinutes();
-        var seconds = currentTime.getSeconds();
-        var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-        var day = days[currentTime.getDay()];
+    // function updateClock() {
+    //     var currentTime = new Date();
+    //     var hours = currentTime.getHours();
+    //     var minutes = currentTime.getMinutes();
+    //     var seconds = currentTime.getSeconds();
+    //     var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    //     var day = days[currentTime.getDay()];
 
-        // Format waktu menjadi HH:MM:SS
-        var timeString = day + ' ' + String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' +
-            String(seconds).padStart(2, '0');
+    //     // Format waktu menjadi HH:MM:SS
+    //     var timeString = day + ' ' + String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' +
+    //         String(seconds).padStart(2, '0');
 
-        // Menampilkan waktu di dalam elemen dengan id 'current-time'
-        document.getElementById('current-time').innerHTML = timeString;
+    //     // Menampilkan waktu di dalam elemen dengan id 'current-time'
+    //     document.getElementById('current-time').innerHTML = timeString;
 
-        // Mengupdate waktu setiap detik
-        setTimeout(updateClock, 1000);
-    }
+    //     // Mengupdate waktu setiap detik
+    //     setTimeout(updateClock, 1000);
+    // }
 
-    // Memanggil fungsi untuk pertama kali
-    updateClock();
+    // // Memanggil fungsi untuk pertama kali
+    // updateClock();
 </script>

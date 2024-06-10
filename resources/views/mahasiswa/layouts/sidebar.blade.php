@@ -62,7 +62,7 @@
             <li>
                 <a href="{{ route('mahasiswa.history') }}">
                     <i class="bx bx-history icon nav-icon"></i>
-                    <span class="menu-item" data-key="t-dashboard">History</span>
+                    <span class="menu-item" data-key="t-dashboard">Daftar Pengajuan Bimbingan</span>
                 </a>
             </li>
             <li>

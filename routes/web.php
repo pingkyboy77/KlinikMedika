@@ -19,6 +19,10 @@ use App\Http\Controllers\MahasiswaController;
 //         Route::resource('/user', AdminAuthController::class);
 
 //     });
+use App\Http\Controllers\PengajuanController;
+
+Route::get('/get-dosen-pembimbing', [PengajuanController::class, 'getDosenPembimbing']);
+
 Route::get('/', [AdminAuthController::class, 'index'])->name('login');
 Route::post('/proses', [AdminAuthController::class, 'doLogin'])->name('proses.login');
 Route::get('/logout', [AdminAuthController::class, 'logout'])->name('logout');
@@ -36,12 +40,18 @@ Route::prefix('mahasiswa')
         // Route::post('daftarPerlombaan', [MahasiswaController::class, 'store'])->name('daftarPerlombaan.store');
         Route::get('history', [MahasiswaController::class, 'history'])->name('history');
         Route::get('jadwalBimbingan', [MahasiswaController::class, 'jadwalBimbingan'])->name('jadwalBimbingan');
-        Route::get('pengajuan-lomba/{nama_lomba}/{nama_akun}/{id}', [MahasiswaController::class, 'pengajuanLomba'])->name('pengajuan-lomba');
+        Route::get('pengajuan-lomba', [MahasiswaController::class, 'pengajuanLomba'])->name('pengajuan-lomba');
         Route::post('daftarPerlombaan', [MahasiswaController::class, 'pengajuanLombaStore'])->name('store.pengajuan-lomba');
         Route::get('pengajuan-bimbingan/{id}', [MahasiswaController::class, 'pengajuanBimbingan'])->name('pengajuan-bimbingan');
         Route::post('jadwalBimbingan', [MahasiswaController::class, 'pengajuanBimbinganStore'])->name('store.pengajuan-bimbingan');
     });
-
+Route::prefix('account')
+    ->name('account.')
+    ->middleware(['auth', 'role:admin,mahasiswa'])
+    ->group(function () {
+        Route::get('update-daftarPengajuanLomba/{id}/edit', [AdminController::class, 'updatedaftarPengajuanLomba'])->name('update.daftarPengajuanLomba');
+        Route::delete('daftarPengajuanLomba/{id}', [AdminController::class, 'destroyDaftarPengajuanLomba'])->name('DaftarPengajuan.delete');
+    });
 Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth', 'role:admin'])
@@ -50,10 +60,10 @@ Route::prefix('admin')
         Route::get('daftarPengajuanLomba', [AdminController::class, 'daftarPengajuanLomba'])->name('daftarPengajuanLomba');
         Route::get('daftarPengajuanBimbingan', [AdminController::class, 'daftarPengajuanBimbingan'])->name('daftarPengajuanBimbingan');
         Route::get('update-daftarPengajuanBimbingan/{id}/edit', [AdminController::class, 'updatedaftarPengajuanBimbingan'])->name('update.daftarPengajuanBimbingan');
-        Route::get('update-daftarPengajuanLomba/{id}/edit', [AdminController::class, 'updatedaftarPengajuanLomba'])->name('update.daftarPengajuanLomba');
+        // Route::get('update-daftarPengajuanLomba/{id}/edit', [AdminController::class, 'updatedaftarPengajuanLomba'])->name('update.daftarPengajuanLomba');
         Route::post('update-daftarPengajuanLomba/{id}/edit', [AdminController::class, 'updateddaftarPengajuanLomba'])->name('updated.daftarPengajuanLomba');
         Route::post('update-daftarPengajuanBimbingan/{id}/edit', [AdminController::class, 'updateddaftarPengajuanBimbingan'])->name('updated.daftarPengajuanBimbingan');
-        Route::delete('daftarPengajuanLomba/{id}', [AdminController::class, 'destroyDaftarPengajuanLomba'])->name('DaftarPengajuan.delete');
+        // Route::delete('daftarPengajuanLomba/{id}', [AdminController::class, 'destroyDaftarPengajuanLomba'])->name('DaftarPengajuan.delete');
         Route::delete('daftarPengajuanBimbingan/{id}', [AdminController::class, 'destroyDaftarPengajuanBimbingan'])->name('DaftarPengajuanBimbingan.delete');
         Route::get('user-Management', [AdminController::class, 'userManagement'])->name('user-Management');
         Route::post('user-Management', [AdminController::class, 'storeUser'])->name('user-Management.store');

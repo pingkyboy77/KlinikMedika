@@ -29,10 +29,10 @@
                                 </div>
                             </div> --}}
                             <!-- Button untuk membuka modal -->
-                            <div class="text-sm-end">
+                            {{-- <div class="text-sm-end">
                                 <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
                                     onclick="openModal()"><i class="mdi mdi-plus me-1"></i> Create Lomba</button>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -108,73 +108,9 @@
 
     </div>
 
-    <!-- Modal -->
-    <form action="{{ route('admin.lomba-Management.store') }}" method="POST">
-        @csrf
-        <div class="modal fade create-lomba" tabindex="-1" role="dialog" aria-labelledby="modal_lomba" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modal_lomba">Create Perlombaan</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Isi formulir modal -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="nama_lomba">Nama Perlombaan</label>
-                                    <input type="text" name="nama_lomba" class="form-control" placeholder="Enter Name"
-                                        id="nama_lomba">
-                                </div>
-                            </div>
-                            <!-- Tambahkan input lainnya di sini -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="CreateTask-Category">Kategori</label>
-                                    <select class="form-select" name="kategori" id="kategori">
-                                        <option selected disabled> Select Kategori </option>
-                                        @foreach ($kategoriOptions as $option)
-                                            <option value="{{ $option }}" >
-                                                {{ $option }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="lokasi">Lokasi</label>
-                                    <input type="text" name="lokasi" class="form-control" placeholder="Enter Place"
-                                        id="lokasi">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="tanggal">Tanggal</label>
-                                    <input type="date" name="tanggal" class="form-control" placeholder="Enter Place"
-                                        id="tanggal">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal"><i
-                                class="bx bx-x me-1 align-middle"></i> Cancel</button>
-                        <button type="submit" class="btn btn-success"><i class="bx bx-check me-1 align-middle"></i>
-                            Confirm</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+    
 
-    <script>
-        function openModal() {
-            var modal = document.querySelector('.create-lomba');
-            var modalBootstrap = new bootstrap.Modal(modal);
-            modalBootstrap.show();
-        }
-    </script>
+    
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

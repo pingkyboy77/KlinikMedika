@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Lomba;
+use App\Models\Kategori;
 use App\Models\daftarLomba;
 use Illuminate\Http\Request;
 use App\Models\DaftarBimbingan;
@@ -25,7 +26,7 @@ class MahasiswaController extends Controller
         $lomba_jumlah = Lomba::count();
         $history_jumlah = DaftarPengajuan::get()->count();
         $bimbingan_jumlah = DaftarBimbingan::get()->count();
-        
+
         return view('mahasiswa.dashboard', compact('role', 'nama', 'dospem_jumlah', 'lomba_jumlah', 'history_jumlah', 'bimbingan_jumlah'));
     }
     public function daftarDosenPembimbing()
@@ -45,8 +46,12 @@ class MahasiswaController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $daftar_lomba = Lomba::orderBy('created_at', 'desc')->get();
-        $daftar_lomba_ikut = DaftarPengajuan::where('stored_by', $nama)->get();
-        return view('mahasiswa.daftarPerlombaan', compact('role', 'nama', 'daftar_lomba', 'daftar_lomba_ikut'));
+        $daftar_lomba_ikut = DB::table('daftar_pengajuans')
+            ->where('stored_by', $nama)
+            ->get();
+        $kategoriOptions = Kategori::pluck('kategori', 'id');
+        // dd($daftar_lomba_ikut);
+        return view('mahasiswa.daftarPerlombaan', compact('role', 'nama', 'daftar_lomba', 'daftar_lomba_ikut', 'kategoriOptions'));
     }
     public function history()
     {
@@ -64,39 +69,30 @@ class MahasiswaController extends Controller
         // dd($user);
         $nama = $user->nama;
         $role = $user->role;
-        $daftar_bimbingan = DaftarBimbingan::where('stored_by', $nama)->where('status','diterima')->orderBy('created_at', 'asc')->get();
+        $daftar_bimbingan = DaftarBimbingan::where('stored_by', $nama)->where('status', 'diterima')->orderBy('created_at', 'asc')->get();
         return view('mahasiswa.jadwalBimbingan', compact('role', 'nama', 'daftar_bimbingan'));
     }
-    public function pengajuanLomba($nama_lomba, $nama_akun, $id)
+    public function pengajuanLomba(Request $request)
     {
-        // Check if the user has already submitted this competition
-        $nama_lomba = str_replace('-', ' ', $nama_lomba);
-        $data_pengajuan = DaftarPengajuan::where('nama_lomba', $nama_lomba)->where('stored_by', $nama_akun)->first();
 
-        if ($data_pengajuan != null) {
-            return redirect()->back()->with('error', 'Anda sudah mengajukan lomba ini');
-        } else {
-            // Get the authenticated user
-            $user = Auth::user();
+        // Get the authenticated user
+        $user = Auth::user();
 
-            // Extract user details
-            $nama = $user->nama;
-            $role = $user->role;
+        // Extract user details
+        $nama = $user->nama;
+        $role = $user->role;
 
-            // Get competition category
-            $kategori = Lomba::where('id', $id)->pluck('kategori')->first();
+        // Get competition category
+        $kategori = Kategori::pluck('kategori', 'id');
 
-            // Get supervisors for the competition category
-            $dosen_dengan_pengajuan_diterima = DB::table('daftar_pengajuans')->select('namadosen')->where('status', 'diterima')->groupBy('namadosen')->having(DB::raw('count(namadosen)'), '<', 2)->pluck('namadosen');
-            // dd($dosen_dengan_pengajuan_diterima); 
-            // Ambil dosen sesuai kategori dari daftar pengajuan dan filter berdasarkan dosen yang di atas
-            $dospem = User::where('kategori', $kategori)
-                ->whereIn('nama', $dosen_dengan_pengajuan_diterima)
-                ->get();
-            
-            // Pass parameters to the view
-            return view('mahasiswa.form-pengajuan-lomba', compact('role', 'nama', 'nama_lomba', 'nama_akun', 'kategori', 'dospem'));
-        }
+        // Get supervisors for the competition category
+        $dosen_dengan_pengajuan_diterima = DB::table('daftar_pengajuans')->select('namadosen')->where('status', 'diterima')->groupBy('namadosen')->having(DB::raw('count(namadosen)'), '<', 2)->pluck('namadosen');
+        // dd($dosen_dengan_pengajuan_diterima);
+        // Ambil dosen sesuai kategori dari daftar pengajuan dan filter berdasarkan dosen yang di atas
+        $dospem = User::whereIn('nama', $dosen_dengan_pengajuan_diterima)->get();
+
+        // Pass parameters to the view
+        return view('mahasiswa.form-pengajuan-lomba', compact('role', 'nama', 'kategori', 'dospem'));
     }
 
     public function pengajuanLombaStore(Request $request)
@@ -110,6 +106,8 @@ class MahasiswaController extends Controller
                 'email_ketua' => 'required',
                 'no_telp_ketua' => 'required',
                 'namadosen' => 'required',
+                'lokasi' => 'required',
+                'tanggal' => 'required',
                 'file_proposal_pengajuan' => 'required|file',
             ]);
             // dd($data);
@@ -132,10 +130,10 @@ class MahasiswaController extends Controller
             $data['status'] = 'Menunggu Persetujuan';
             // Save data to database
             // dd($data);
-            Alert::success('Sukses', 'Data Berhasil Di Update');
             DaftarPengajuan::create($data);
+            Alert::success('Sukses', 'Data Berhasil Di Update');
 
-            return redirect()->route('mahasiswa.history')->with('success', 'Pengajuan berhasil disimpan');
+            return redirect()->route('mahasiswa.daftarPerlombaan')->with('success', 'Pengajuan berhasil disimpan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -151,7 +149,8 @@ class MahasiswaController extends Controller
         // dd($acc_lomba);
         return view('mahasiswa.form-pengajuan-bimbingan', compact('role', 'nama', 'acc_lomba'));
     }
-    public function pengajuanBimbinganStore(Request $request){
+    public function pengajuanBimbinganStore(Request $request)
+    {
         $data = $request->validate([
             'stored_by' => 'required',
             'nama_ketua' => 'required',

@@ -16,8 +16,8 @@ class DosenController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $jumlah_lomba_pengajuan = DaftarPengajuan::get()->count();
-        $jumlah_daftar_bimbingan = DaftarBimbingan::get()->count();
-        $jumlah_bimbingan_pengajuan = DaftarBimbingan::get()->count();
+        $jumlah_daftar_bimbingan = DaftarBimbingan::where('status', 'diterima')->get()->count();
+        $jumlah_bimbingan_pengajuan = DaftarBimbingan::where('status' , 'Menunggu Persetujuan')->get()->count();
         return view('dosen.dashboard', compact('role','jumlah_lomba_pengajuan','nama', 'jumlah_daftar_bimbingan', 'jumlah_bimbingan_pengajuan'));
     }
 
@@ -61,6 +61,6 @@ class DosenController extends Controller
         $daftar_lomba->status = $request->status;
         $daftar_lomba->save();
         Alert::success('Sukses', 'Data Berhasil Di Update');
-        return redirect()->route('dosen.pengajuanLomba');
+        return redirect()->route('dosen.jadwalBimbingan');
     }
 }
