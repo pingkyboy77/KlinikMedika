@@ -32,15 +32,16 @@ class AdminController extends Controller
     }
     public function userManagement()
     {
-        $data_users = User::get();
+        // $data_users = User::get();
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
         // $nama = 'super admin';
         // $role = 'super admin';
-        $data_users = User::get();
+        $data_users = User::where('role', 'mahasiswa')->get();
+        $data_users_dosen = User::where('role', 'dosen')->get();
         $kategori = Kategori::orderBy('created_at', 'desc')->pluck('kategori');
-        return view('admin.userManagement', compact('nama', 'role', 'data_users', 'kategori'));
+        return view('admin.userManagement', compact('nama', 'role', 'data_users', 'kategori','data_users_dosen'));
     }
     public function lombaManagement()
     {

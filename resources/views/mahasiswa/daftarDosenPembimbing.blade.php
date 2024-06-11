@@ -1,3 +1,4 @@
+{{-- @dd(str_replace([' ', ',', '.', ' '], '-', $dospem[0]->nama)) --}}
 @extends('mahasiswa.layouts.app')
 @section('content')
     <style>
@@ -37,41 +38,76 @@
                     <div class="table-responsive">
                         <table class="table table-nowrap align-middle mb-0" id="tabel-data-dosen-pembimbing">
                             <thead>
-                                <tr>
-                                    <td class="d-flex justify-content-start">
-                                        <h5 class="text-dark font-size-14 m-0">No.</h5>
+                               <tr>
+                                    <td>
+                                        <p class="mb-0">No</p>
                                     </td>
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">Nama Dosen Pembimbing</h5>
-                                    </td>
-                                    <td>
-                                        <h5 class="text-dark font-size-14 m-0">NIDN</h5>
+                                        <p class="mb-0">Nama User</p>
                                     </td>
 
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">Kategori</h5>
+                                        <p class="mb-0">NIP / NIDN</p>
                                     </td>
-
+                                    {{-- <td>
+                                        <p class="mb-0">Password</p>
+                                    </td> --}}
+                                    <td>
+                                        <p class="mb-0">Role</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">Kategori</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">Jabatan Fungsional</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">Email</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">Status</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">Action</p>
+                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if ($dospem->isNotEmpty())
                                     @foreach ($dospem as $item)
                                         <tr>
-                                            <td class="d-flex justify-content-start">
+                                            <td>
                                                 <p class="mb-0">{{ $loop->iteration }}</p>
                                             </td>
                                             <td>
                                                 <p class="mb-0">{{ $item->nama }}</p>
                                             </td>
                                             <td>
-                                                <p class="mb-0">{{ $item->identitas }}</p>
+                                                <p class="mb-0">{{ $item->identitas }} / {{ $item->NIDN }}</p>
                                             </td>
-
+                                            {{-- <td>
+                                                <p class="mb-0">{{ $item->password }}</p>
+                                            </td> --}}
+                                            <td>
+                                                <p class="mb-0">{{ $item->role }}</p>
+                                            </td>
                                             <td>
                                                 <p class="mb-0">{{ $item->kategori }}</p>
                                             </td>
-
+                                            <td>
+                                                <p class="mb-0">{{ $item->pangkat_akademik }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->email }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->status }}</p>
+                                            </td>
+                                            <td class="d-flex">
+                                                <a class="btn btn-success me-2 d-flex justify-content-center align-items-center gap-1" target="_blank"
+                                                    href="{{ url('https://new-fik.upnvj.ac.id/team-category/dosen-d3-sistem-informasi/') }}"><i
+                                                        class="bx bx-search"></i>Lihat Profil</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else

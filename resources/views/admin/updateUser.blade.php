@@ -91,32 +91,38 @@
 
 
     <script>
-        var kategori = @JSON($kategori);
-        document.getElementById('role_update').addEventListener('change', function() {
-            var role = this.value;
-            var kategoriDropdown = document.getElementById('kategori_update');
-            kategoriDropdown.innerHTML = '';
+    var kategori = @JSON($kategori);
 
-            if (role === 'mahasiswa') {
+    document.getElementById('role_update').addEventListener('change', function() {
+        var role = this.value;
+        var kategoriDropdown = document.getElementById('kategori_update');
+        kategoriDropdown.innerHTML = ''; // Clear existing options
+
+        if (role === 'mahasiswa') {
+            var options = ['SBMPTN', 'Mandiri', 'Prestasi'];
+            options.forEach(function(optionValue) {
                 var option = document.createElement('option');
-                option.text = 'Mahasiswa';
+                option.text = optionValue;
+                option.value = optionValue;
                 kategoriDropdown.add(option);
-            } else if (role === 'dosen') {
-                var option_dosen = @JSON($kategori);
-                var options = option_dosen;
-                options.forEach(function(optionValue) {
-                    var option = document.createElement('option');
-                    option.text = optionValue;
-                    kategoriDropdown.add(option);
-                });
-            } else if (role === 'admin') {
-                var options = ['Super Admin'];
-                options.forEach(function(optionValue) {
-                    var option = document.createElement('option');
-                    option.text = optionValue;
-                    kategoriDropdown.add(option);
-                });
-            }
-        });
-    </script>
+            });
+        } else if (role === 'dosen') {
+            kategori.forEach(function(optionValue) {
+                var option = document.createElement('option');
+                option.text = optionValue;
+                option.value = optionValue;
+                kategoriDropdown.add(option);
+            });
+        } else if (role === 'admin') {
+            var options = ['Super Admin'];
+            options.forEach(function(optionValue) {
+                var option = document.createElement('option');
+                option.text = optionValue;
+                option.value = optionValue;
+                kategoriDropdown.add(option);
+            });
+        }
+    });
+</script>
+
 @endsection

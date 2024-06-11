@@ -124,18 +124,10 @@
                                                 </p>
                                             </td>
                                         @else
-                                            <td class="d-flex">
-                                                <a class="btn btn-warning me-2"
-                                                    href="{{ route('account.update.daftarPengajuanLomba', ['id' => $item->id]) }}"><i
-                                                        class="bx bx-pencil"></i>Edit</a>
-                                                <form
-                                                    action="{{ route('account.DaftarPengajuan.delete', ['id' => $item->id]) }}"
-                                                    method="POST">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger btn-delete"><i
-                                                            class="bx bx-trash-alt"></i> Delete</button>
-                                                </form>
+                                            <td class="d-flex ps-2 align-items-center">
+                                                <p class="d-flex gap-2 align-items-center m-0">
+                                                    <i class="bx bx-time text-warning fw-bold"></i>Menunggu Persetujuan
+                                                </p>
                                             </td>
                                         @endif
 
