@@ -11,7 +11,7 @@
 
                     <div class="">
                         <div class="row mb-2">
-                            <div class="col-xl-3 col-md-12">
+                            {{-- <div class="col-xl-3 col-md-12">
                                 <div class="pb-3 pb-xl-0">
                                     <form class="email-search">
                                         <div class="position-relative">
@@ -20,7 +20,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div> --}}
                             {{-- <div class="col-xl-9 col-md-12">
                                 <div class="text-sm-end">
                                     <button type="button"
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-nowrap align-middle mb-0">
+                        <table class="table table-nowrap align-middle mb-0" id="tabelpengajuan">
                             <thead>
                                 <tr>
                                     <td style="width:5%">
@@ -125,10 +125,6 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="8" class="text-center">Data Kosong</td>
-                                    </tr>
                                 @endif
 
                             </tbody>
@@ -140,6 +136,32 @@
         </div>
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        $(document).ready(function() {
+            var dataTableExists = $.fn.DataTable.isDataTable('#tabelpengajuan');
+            if (dataTableExists) {
+                $('#tabelpengajuan').DataTable().destroy();
+            }
+
+            setTimeout(() => {
+
+                $('#tabelpengajuan').DataTable({
+                    scrollCollapse: true,
+                    responsive: true,
+                    "columnDefs": [{
+                            "orderable": false,
+                            "targets": [8]
+                        } // Disable sorting for the third column (index 2)
+                        // Add more entries as needed for other columns
+                    ]
+                });
+            }, 100);
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

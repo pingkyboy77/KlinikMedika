@@ -14,7 +14,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="CreateTask-Task-Name">Nama</label>
                         <input type="text" name="nama" class="form-control" placeholder="Enter Task Name"
-                            value="{{ isset($user) ? $user->nama : old('nama') }}" id="CreateTask-Task-Name">
+                            value="{{ isset($user) ? $user->nama : old('nama') }}" id="CreateTask-Task-Name" disabled>
                             @if ($errors->has('nama'))
                             <div class="text-danger">{{ $errors->first('nama') }}</div>
                         @endif
@@ -26,7 +26,7 @@
                         <label class="form-label" for="CreateTask-Task-Name">Identitas Number</label>
                         <input type="text" name="identitas" class="form-control"
                             value="{{ isset($user) ? $user->identitas : old('identitas') }}" placeholder="Enter Task Name"
-                            id="CreateTask-Task-Name">
+                            id="CreateTask-Task-Name" disabled>
                             @if ($errors->has('identitas'))
                             <div class="text-danger">{{ $errors->first('identitas') }}</div>
                         @endif

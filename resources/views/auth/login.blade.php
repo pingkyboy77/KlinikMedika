@@ -95,7 +95,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center p-4">
-                            <p>© <script>document.write(new Date().getFullYear())</script> DraftCoding - Krisna Yuda Nugraha</p>
+                            <p>© <script>document.write(new Date().getFullYear())</script> UPNVJ - MUTIARA DWI JAYANTI</p>
                         </div>
                     </div>
                 </div>
