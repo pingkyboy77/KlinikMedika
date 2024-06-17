@@ -1,6 +1,6 @@
 @extends('dosen.layouts.app')
 @section('content')
-{{-- style --}}
+    {{-- style --}}
     <style>
         thead td p {
             font-weight: bold;
@@ -76,61 +76,65 @@
                             </thead>
                             <tbody>
                                 @if ($daftar_bimbingan_pengajuan->isNotEmpty())
-                                @foreach ($daftar_bimbingan_pengajuan as $item)
-                                    <tr>
-                                        <td>
-                                            <p class="mb-0">{{ $loop->iteration }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama_lomba }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->kategori_lomba }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama_ketua }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->namadosen }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->lokasi_bimbingan }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->tanggal_bimbingan }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->waktu_bimbingan }}</p>
-                                        </td>
-                                        
-                                        @if ($item->status == 'diterima')
-                                            <td class="d-flex ps-2 align-items-center">
-                                                <p class="d-flex gap-2 align-items-center m-0">
-                                                    <i class="bx bx-check text-success fw-bold"></i>accepted
-                                                </p>
+                                    @foreach ($daftar_bimbingan_pengajuan as $item)
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">{{ $loop->iteration }}</p>
                                             </td>
-                                        @elseif ($item->status == 'ditolak')
-                                            <td class="d-flex ps-2 align-items-center">
-                                                <p class="d-flex gap-2 align-items-center m-0">
-                                                    <i class="bx bx-x text-danger fw-bold"></i>Decline
-                                                </p>
+                                            <td>
+                                                <p class="mb-0">{{ $item->nama_lomba }}</p>
                                             </td>
-                                        @else
-                                        <td class=" d-flex gap-2">
-                                            <form action="{{ route('dosen.updatepengajuan.bimbingan', ['id'=>$item->id, 'status' => 'diterima']) }}" method="POST">
-                                                @csrf
-                                            <button type="submit"
-                                                class="d-flex align-items-center btn btn-success btn-rounded waves-effect waves-light">
-                                                <i class="bx bx-check fw-bold"></i> Accept</button></form>
-                                                <form action="{{ route('dosen.updatepengajuan.bimbingan', ['id'=>$item->id, 'status' => 'ditolak']) }}" method="POST">
+                                            <td>
+                                                <p class="mb-0">{{ $item->kategori_lomba }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->nama_ketua }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->namadosen }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->lokasi_bimbingan }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->tanggal_bimbingan }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->waktu_bimbingan }}</p>
+                                            </td>
+
+                                            @if ($item->status == 'diterima')
+                                                <td class="d-flex ps-2 align-items-center">
+                                                    <p class="d-flex gap-2 align-items-center m-0">
+                                                        <i class="bx bx-check text-success fw-bold"></i>accepted
+                                                    </p>
+                                                </td>
+                                            @elseif ($item->status == 'Di jadwalkan Ulang')
+                                                <td class="d-flex ps-2 align-items-center">
+                                                    <p class="d-flex gap-2 align-items-center m-0">
+                                                        <i class="bx bx-check text-warning fw-bold"></i>Reschedule
+                                                    </p>
+                                                </td>
+                                            @else
+                                                <td class=" d-flex gap-2">
+                                                    <form
+                                                        action="{{ route('dosen.updatepengajuan.bimbingan', ['id' => $item->id, 'status' => 'diterima']) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="d-flex align-items-center btn btn-success btn-rounded waves-effect waves-light gap-2">
+                                                            <i class="bx bx-check fw-bold"></i> Accept</button>
+                                                    </form>
+                                                    {{-- <form action="{{ route('dosen.updatepengajuan.bimbingan', ['id'=>$item->id, 'status' => 'Di jadwalkan Ulang']) }}" method="POST"> --}}
                                                     @csrf
-                                            <button type="submit"
-                                                class="d-flex align-items-center btn btn-danger btn-rounded waves-effect waves-light">
-                                                <i class="bx bx-x fw-bold"></i> Decline</button></form>
-                                            </td>
-                                        @endif
-                                    </tr>
-                                @endforeach
+                                                    <button type="submit" onclick="openModal()"
+                                                        class="d-flex align-items-center btn btn-warning btn-rounded waves-effect waves-light gap-2">
+                                                        <i class="bx bx-time text-white fw-bold"></i> Reschedule</button>
+                                                    {{-- </form> --}}
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
                                 @endif
                             </tbody>
 
@@ -145,10 +149,56 @@
 
     </div>
 
+    <form action="{{ route('dosen.updatepengajuan.bimbingan', ['id' => $item->id, 'status' => 'Di jadwalkan Ulang']) }}"
+        method="POST">
+        @csrf
+        <div class="modal fade reschedule" tabindex="-1" role="dialog" aria-labelledby="modal_kategori"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_kategori">RESCHEDULE BIMBINGAN</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Isi formulir modal -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <h5 style="font-size:1rem">Lokasi Bimbingan</h5>
+                                <input type="text" name="lokasi_bimbingan" class="form-control">
+
+                            </div>
+                            <div class="col-md-4">
+                                <h5 style="font-size:1rem">Tanggal Bimbingan</h5>
+                                <input type="date" name="tanggal_bimbingan" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <h5 style="font-size:1rem">Waktu Bimbingan</h5>
+                                <input type="time" name="waktu_bimbingan" class="form-control">
+                            </div>
+                        </div>
+                        <!-- Tambahkan input lainnya di sini -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal"><i
+                                    class="bx bx-x me-1 align-middle"></i> Cancel</button>
+                            <button type="submit" class="btn btn-success"><i class="bx bx-check me-1 align-middle"></i>
+                                Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        function openModal() {
+            var modal = document.querySelector('.reschedule');
+            var modalBootstrap = new bootstrap.Modal(modal);
+            modalBootstrap.show();
+        }
+    </script>
     <script>
         $(document).ready(function() {
             var dataTableExists = $.fn.DataTable.isDataTable('#jadwal-bimbingan');

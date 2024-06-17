@@ -1,3 +1,4 @@
+{{-- @dd($usermahasiswa) --}}
 @extends('mahasiswa.layouts.app')
 @section('content')
     {{-- style --}}
@@ -56,17 +57,32 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label" for="CreateTask-Task-Name">Nama Ketua</label>
-                                    <input type="text" name="nama_ketua" class="form-control"
-                                        placeholder="Enter Task Name" id="CreateTask-Task-Name">
+                                    <label class="form-label" for="CreateTask-Task-Name">Nim Ketua</label>
+                                    <input type="number" name="identitas_number_ketua" class="form-control"
+                                        placeholder="Enter Identitas" id="nim_ketua">
+                                        {{-- <input type="hidden" name="nama_ketua" id="nama_ketua"> --}}
                                 </div>
 
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label" for="CreateTask-Task-Name">Nim Ketua</label>
-                                    <input type="number" name="identitas_number_ketua" class="form-control"
-                                        placeholder="Enter Task Name" id="CreateTask-Task-Name">
+                                    <label class="form-label" for="CreateTask-Task-Name">Nama Ketua</label>
+                                    <input type="text" name="hidden_nama_ketua" class="form-control"
+                                        placeholder="Enter Name" disabled id="hidden_nama_ketua">
+                                        <input type="hidden" name="nama_ketua" id="nama_ketua">
+                                </div>
+
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="CreateTask-Task-Name">Program Studi</label>
+                                    <select class="form-select" name="prodi">
+                                        <option selected disabled> Select Prodi </option>
+                                        <option value="D-3 Sistem Informasi">D-3 Sistem Informasi </option>
+                                        <option value="S-1 Sistem Informasi">S-1 Sistem Informasi </option>
+                                        <option value="S-1 Informatika">S-1 Informatika </option>
+                                    </select>
                                 </div>
 
                             </div>
@@ -94,7 +110,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label" for="file_proposal_pengajuan">File Proposal Pengajuan</label>
+                                    <label class="form-label" for="file_proposal_pengajuan">File Proposal
+                                        Pengajuan</label>
                                     <input type="file" name="file_proposal_pengajuan" class="form-control">
                                 </div>
                             </div>
@@ -120,10 +137,30 @@
     </form>
 
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        const usermahasiswa = @JSON($usermahasiswa);
+        $(document).ready(function() {
+            console.log(usermahasiswa);
+            $('#nim_ketua').on('input', function() {
+                var nim = $(this).val();
+                var nama_ketua = '';
+
+                // Cari nama berdasarkan nim yang diinput
+                usermahasiswa.forEach(function(mahasiswa) {
+                    if (mahasiswa.identitas === nim) {
+                        nama_ketua = mahasiswa.nama;
+                    }
+                });
+
+                // Update nilai nama_ketua berdasarkan hasil pencarian
+                $('#nama_ketua').val(nama_ketua);
+                $('#hidden_nama_ketua').val(nama_ketua);
+            });
+        });
         document.getElementById('kategori').addEventListener('change', function() {
             var kategori = this.value;
-           console.log(kategori);
+            console.log(kategori);
             fetch(`/get-dosen-pembimbing?kategori=${kategori}`)
                 .then(response => response.json())
                 .then(data => {
@@ -132,8 +169,8 @@
                     console.log(data);
                     data.forEach(dosen => {
                         var option = document.createElement('option');
-                        option.value = dosen.nama; 
-                        option.textContent = dosen.nama; 
+                        option.value = dosen.nama;
+                        option.textContent = dosen.nama;
                         namadosenSelect.appendChild(option);
                     });
                 })

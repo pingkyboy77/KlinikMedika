@@ -69,7 +69,13 @@ class MahasiswaController extends Controller
         // dd($user);
         $nama = $user->nama;
         $role = $user->role;
-        $daftar_bimbingan = DaftarBimbingan::where('stored_by', $nama)->where('status', 'diterima')->orderBy('created_at', 'asc')->get();
+        $daftar_bimbingan = DaftarBimbingan::where('stored_by', $nama)
+            ->where(function ($query) {
+                $query->where('status', 'diterima')
+                    ->orWhere('status', 'Di jadwalkan Ulang');
+            })
+            ->orderBy('created_at', 'asc')
+            ->get();
         return view('mahasiswa.jadwalBimbingan', compact('role', 'nama', 'daftar_bimbingan'));
     }
     public function pengajuanLomba(Request $request)
@@ -90,9 +96,10 @@ class MahasiswaController extends Controller
         // dd($dosen_dengan_pengajuan_diterima);
         // Ambil dosen sesuai kategori dari daftar pengajuan dan filter berdasarkan dosen yang di atas
         $dospem = User::whereIn('nama', $dosen_dengan_pengajuan_diterima)->get();
+        $usermahasiswa = User::where('role', 'mahasiswa')->get();
 
         // Pass parameters to the view
-        return view('mahasiswa.form-pengajuan-lomba', compact('role', 'nama', 'kategori', 'dospem'));
+        return view('mahasiswa.form-pengajuan-lomba', compact('role', 'nama', 'kategori', 'dospem', 'usermahasiswa'));
     }
 
     public function pengajuanLombaStore(Request $request)
@@ -108,6 +115,7 @@ class MahasiswaController extends Controller
                 'namadosen' => 'required',
                 'lokasi' => 'required',
                 'tanggal' => 'required',
+                'prodi' => 'required',
                 'file_proposal_pengajuan' => 'required|file',
             ]);
             // dd($data);
@@ -166,7 +174,7 @@ class MahasiswaController extends Controller
         $data['status'] = 'Menunggu Persetujuan';
         Alert::success('Sukses', 'Data Berhasil Di Update');
         DaftarBimbingan::create($data);
-        return redirect()->route('mahasiswa.jadwalBimbingan');
+        return redirect()->route('mahasiswa.history');
         // dd($data);
     }
 }

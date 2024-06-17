@@ -73,7 +73,7 @@
                                     </td>
 
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">Status</h5>
+                                        <h5 class="text-dark font-size-14 m-0">Action</h5>
                                     </td>
                                 </tr>
 

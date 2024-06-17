@@ -60,9 +60,9 @@
                                         <h5 class="text-dark font-size-14 m-0">Waktu Bimbingan</h5>
                                     </td>
 
-                                    <td>
+                                    {{-- <td>
                                         <h5 class="text-dark font-size-14 m-0">Status</h5>
-                                    </td>
+                                    </td> --}}
                                 </tr>
 
                             </thead>
@@ -95,7 +95,7 @@
                                             <p class="mb-0">{{ $item->waktu_bimbingan }}</p>
                                         </td>
                                         
-                                        @if ($item->status == 'diterima')
+                                        {{-- @if ($item->status == 'diterima')
                                             <td class="d-flex ps-2 align-items-center">
                                                 <p class="d-flex gap-2 align-items-center m-0">
                                                     <i class="bx bx-check text-success fw-bold"></i>accepted
@@ -120,7 +120,7 @@
                                                 class="d-flex align-items-center btn btn-danger btn-rounded waves-effect waves-light">
                                                 <i class="bx bx-x fw-bold"></i> Decline</button></form>
                                             </td>
-                                        @endif
+                                        @endif --}}
                                     </tr>
                                 @endforeach
                                 
@@ -154,12 +154,6 @@
                 $('#table-bimbingan-mahasiswa').DataTable({
                     scrollCollapse: true,
                     responsive: true,
-                    "columnDefs": [{
-                            "orderable": false,
-                            "targets": [6]
-                        } // Disable sorting for the third column (index 2)
-                        // Add more entries as needed for other columns
-                    ]
                 });
             }, 100);
         });
