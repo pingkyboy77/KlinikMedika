@@ -15,9 +15,9 @@ class DosenController extends Controller
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
-        $jumlah_lomba_pengajuan = DaftarPengajuan::get()->count();
-        $jumlah_daftar_bimbingan = DaftarBimbingan::where('status', 'diterima')->get()->count();
-        $jumlah_bimbingan_pengajuan = DaftarBimbingan::where('status' , 'Menunggu Persetujuan')->get()->count();
+        $jumlah_lomba_pengajuan = DaftarPengajuan::where('namadosen', $nama)->get()->count();
+        $jumlah_daftar_bimbingan = DaftarBimbingan::where('namadosen', $nama)->where('status', 'diterima')->where('namadosen', $nama)->get()->count();
+        $jumlah_bimbingan_pengajuan = DaftarBimbingan::where('namadosen' , $nama)->where('status' , 'Menunggu Persetujuan')->get()->count();
         return view('dosen.dashboard', compact('role','jumlah_lomba_pengajuan','nama', 'jumlah_daftar_bimbingan', 'jumlah_bimbingan_pengajuan'));
     }
 
@@ -26,7 +26,10 @@ class DosenController extends Controller
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
-        $daftar_bimbingan = DaftarBimbingan::where('namadosen', $nama)->where('status','diterima')->orderBy('created_at', 'asc')->get();
+        $daftar_bimbingan = DaftarBimbingan::where('namadosen', $nama)->where(function ($query) {
+                $query->where('status', 'diterima')
+                    ->orWhere('status', 'Di jadwalkan Ulang');
+            })->orderBy('created_at', 'asc')->get();
         return view('dosen.daftarBimbingan', compact('role','nama', 'daftar_bimbingan'));
     }
     public function pengajuanLomba()
@@ -56,9 +59,21 @@ class DosenController extends Controller
     }
     public function updateStatusBimbingan(Request $request, $id , $status)
     {
-        // dd($status);
+        // dd($status, $request->all());
         $daftar_lomba = DaftarBimbingan::find($id);
-        $daftar_lomba->status = $request->status;
+        $daftar_lomba->lokasi_bimbingan = $request->lokasi_bimbingan;
+        $daftar_lomba->tanggal_bimbingan = $request->tanggal_bimbingan;
+        $daftar_lomba->waktu_bimbingan = $request->waktu_bimbingan;
+        $daftar_lomba->status = $status;
+        $daftar_lomba->save();
+        Alert::success('Sukses', 'Data Berhasil Di Update');
+        return redirect()->route('dosen.jadwalBimbingan');
+    }
+    public function updateStatusBimbinganACC(Request $request, $id , $status)
+    {
+        // dd($status, $request->all());
+        $daftar_lomba = DaftarBimbingan::find($id);
+        $daftar_lomba->status = $status;
         $daftar_lomba->save();
         Alert::success('Sukses', 'Data Berhasil Di Update');
         return redirect()->route('dosen.jadwalBimbingan');

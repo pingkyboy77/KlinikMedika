@@ -94,4 +94,5 @@ Route::prefix('dosen')
         Route::get('jadwalBimbingan', [DosenController::class, 'jadwalBimbingan'])->name('jadwalBimbingan');
         Route::post('pengajuanLomba/{id}/{status}', [DosenController::class, 'updateStatusLomba'])->name('updatepengajuan.lomba');
         Route::post('pengajuanBimbingan/{id}/{status}', [DosenController::class, 'updateStatusBimbingan'])->name('updatepengajuan.bimbingan');
+        Route::post('pengajuanBimbinganACC/{id}/{status}', [DosenController::class, 'updateStatusBimbinganACC'])->name('updatepengajuanACC.bimbingan');
     });

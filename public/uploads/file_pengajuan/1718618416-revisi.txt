@@ -1,0 +1,26 @@
+implementasi
+APSI (tahapan implementasi sistem)
+- uji coba ke mhs, dosen
+- diterapkan di fik
+- dikoordanisaikan ke pak saimin / pario (bertanya kira kira bisa saya terapkan dimana)
+- pada sistem ini kira kira siapa yg bertanggung jawab dan melakukan pengelolaan
+
+REVISI MAHASISWA
+sebenarnya yg login ini sebagai mahasiswa atau sebagai ketua? soalnya gada penjelasannya
+kalo sebagai ketua gmn make sure nya? siapa tau nanti anggota yg login trs ngisi nama orang jd ketua.
+
+MENU FORM  
+- kalo di ketik nim, nama nya udh harus otomatis muncul (database)
+- tambahin nama & nim anggota
+- prodi dimasukin 
+- nama nya diganti jangan form pendaftaran lomba
+- kategori hci & computer graphics kenapa cuma bu ika (karna 1 dosen gabisa double kategori)
+- after isi form gausah 'ajukan bimbingan'
+- 'ajukan bimbingan'nya di menu daftar pengajuan bimbingan aja
+
+MENU DAFTAR PENGAJUAN BIMBINGAN 
+- ada timeline dosen yang dipilih (misal setiap hari selasa jam 10)
+- jadi mhs memilih waktu yg sesuai dengan jadwal dosen tsb
+- tapi dosen tetap acc jika bisa
+- jika tidak bisa dosen diberikan ruang untuk memilih jadwal (lokasi, tgl, waktu, dan penjelasan)
+

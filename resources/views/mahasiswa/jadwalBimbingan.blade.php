@@ -50,9 +50,9 @@
                                         <h5 class="text-dark font-size-14 m-0">Waktu Bimbingan</h5>
                                     </td>
 
-                                    <td>
+                                    {{-- <td>
                                         <h5 class="text-dark font-size-14 m-0">Status</h5>
-                                    </td>
+                                    </td> --}}
                                 </tr>
 
                             </thead>
@@ -91,25 +91,21 @@
                                             </td>
 
 
-                                            <td class="d-flex ps-2 align-items-center">
+                                            {{-- <td class="d-flex ps-2 align-items-center">
                                                 @if ($item->status == 'diterima')
                                                     <p class="d-flex gap-2 align-items-center m-0">
                                                         <i class="bx bx-check text-success fw-bold"></i>accepted
                                                     </p>
-                                                    {{-- </td> --}}
                                                 @elseif ($item->status == 'ditolak')
-                                                    {{-- <td class="d-flex ps-2 align-items-center"> --}}
                                                     <p class="d-flex gap-2 align-items-center m-0">
                                                         <i class="bx bx-x text-danger fw-bold"></i>Decline
                                                     </p>
-                                                    {{-- </td> --}}
                                                 @else
-                                                    {{-- <td class="d-flex ps-2 align-items-center"> --}}
                                                     <p class="d-flex gap-2 align-items-center m-0">
                                                         <i class="bx bx-time text-info fw-bold"></i>Waiting
                                                     </p>
                                                 @endif
-                                            </td>
+                                            </td> --}}
 
                                         </tr>
                                     @endforeach

@@ -69,7 +69,13 @@ class MahasiswaController extends Controller
         // dd($user);
         $nama = $user->nama;
         $role = $user->role;
-        $daftar_bimbingan = DaftarBimbingan::where('stored_by', $nama)->where('status', 'diterima')->orderBy('created_at', 'asc')->get();
+        $daftar_bimbingan = DaftarBimbingan::where('stored_by', $nama)
+            ->where(function ($query) {
+                $query->where('status', 'diterima')
+                    ->orWhere('status', 'Di jadwalkan Ulang');
+            })
+            ->orderBy('created_at', 'asc')
+            ->get();
         return view('mahasiswa.jadwalBimbingan', compact('role', 'nama', 'daftar_bimbingan'));
     }
     public function pengajuanLomba(Request $request)
@@ -90,9 +96,10 @@ class MahasiswaController extends Controller
         // dd($dosen_dengan_pengajuan_diterima);
         // Ambil dosen sesuai kategori dari daftar pengajuan dan filter berdasarkan dosen yang di atas
         $dospem = User::whereIn('nama', $dosen_dengan_pengajuan_diterima)->get();
+        $usermahasiswa = User::where('role', 'mahasiswa')->get();
 
         // Pass parameters to the view
-        return view('mahasiswa.form-pengajuan-lomba', compact('role', 'nama', 'kategori', 'dospem'));
+        return view('mahasiswa.form-pengajuan-lomba', compact('role', 'nama', 'kategori', 'dospem', 'usermahasiswa'));
     }
 
     public function pengajuanLombaStore(Request $request)
@@ -108,21 +115,33 @@ class MahasiswaController extends Controller
                 'namadosen' => 'required',
                 'lokasi' => 'required',
                 'tanggal' => 'required',
+                'prodi' => 'required',
                 'tingkatan_lomba' => 'required',
                 'file_proposal_pengajuan' => 'required|file',
             ]);
-            // dd($data);
             if ($request->hasFile('file_proposal_pengajuan')) {
                 $file_proposal_pengajuan = $request->file('file_proposal_pengajuan');
                 $file_name = time() . '-' . $file_proposal_pengajuan->getClientOriginalName();
-
+                
                 $storage = 'uploads/file_pengajuan/';
                 $file_proposal_pengajuan->move($storage, $file_name);
                 $data['file_proposal_pengajuan'] = $storage . $file_name;
             } else {
                 $data['file_proposal_pengajuan'] = null;
             }
-
+            if ($request->has('anggota_1')){
+                $data['anggota_1'] = $request->anggota_1;
+            }
+            if ($request->has('anggota_2')){
+                $data['anggota_2'] = $request->anggota_2;
+            }
+            if ($request->has('anggota_3')){
+                $data['anggota_3'] = $request->anggota_3;
+            }
+            if ($request->has('anggota_4')){
+                // dd("masuk 4");
+                $data['anggota_4'] = $request->anggota_4;
+            }
             // Populate other data
             $data['stored_by'] = Auth::user()->nama;
             $data['jenis_pengajuan'] = 'Pengajuan Lomba';
@@ -132,6 +151,7 @@ class MahasiswaController extends Controller
             // Save data to database
             // dd($data);
             DaftarPengajuan::create($data);
+            // dd('masuk');
             Alert::success('Sukses', 'Data Berhasil Di Update');
 
             return redirect()->route('mahasiswa.daftarPerlombaan')->with('success', 'Pengajuan berhasil disimpan');
@@ -167,7 +187,7 @@ class MahasiswaController extends Controller
         $data['status'] = 'Menunggu Persetujuan';
         Alert::success('Sukses', 'Data Berhasil Di Update');
         DaftarBimbingan::create($data);
-        return redirect()->route('mahasiswa.jadwalBimbingan');
+        return redirect()->route('mahasiswa.history');
         // dd($data);
     }
 }

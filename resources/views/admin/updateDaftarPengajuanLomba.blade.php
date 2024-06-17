@@ -12,18 +12,26 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            {{-- <input type="hidden" value="{{ $nama_lomba }}" name="nama_lomba">
-                            <input type="hidden" value="{{ $nama_akun }}" name="stored_by">
-                            <input type="hidden" value="{{ $kategori }}" name="kategori"> --}}
+                            <input type="hidden" value="{{ $nama }}" name="stored_by">
+                            <input type="hidden" value="{{ $daftarPengajuan->kategori }}" name="kategori"> 
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="nama_lomba">Nama Perlombaan</label>
+                                    <input type="text" name="nama_lomba" class="form-control" placeholder="Enter Name"
+                                        id="nama_lomba" value="{{ isset($daftarPengajuan) ? $daftarPengajuan->nama_lomba : old('nama_lomba') }}">
+                                </div>
+                            </div>
+
                             <div class="col-md-6">
                             <div class="mb-3">
                                  <label class="form-label" for="CreateTask-Category">Tingkatan Lomba</label>
                                  <select class="form-select" name="tingkatan_lomba" required>
-                                     <option selected disabled> Select Tingkatan </option>
-                                     <option value="Kota">Kota</option>
-                                     <option value="Provinsi">Provinsi</option>
-                                     <option value="Nasional">Nasional</option>
-                                     <option value="Internasional">Internasional</option>
+                                     <!-- <option selected disabled> Select Tingkatan </option> -->
+                                     <option value="Kota" @if($daftarPengajuan->tingkatan_lomba == 'Kota') selected @endif>Kota</option>
+                                     <option value="Provinsi" @if($daftarPengajuan->tingkatan_lomba == 'Provinsi') selected @endif>Provinsi</option>
+                                     <option value="Nasional" @if($daftarPengajuan->tingkatan_lomba == 'Nasional') selected @endif>Nasional</option>
+                                     <option value="Internasional" @if($daftarPengajuan->tingkatan_lomba == 'Internasional') selected @endif>Internasional</option>
                                  </select>
                                  @error('tingkatan_lomba')
                                      <div class="text-danger">{{ $message }}</div>
@@ -31,11 +39,19 @@
                              </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="CreateTask-Task-Name">Identitas Number Ketua</label>
+                            <div class="mb-3">
+                                    <label class="form-label" for="CreateTask-Task-Name">Nim Ketua</label>
                                     <input type="number" name="identitas_number_ketua" class="form-control"
-                                        value="{{ isset($daftarPengajuan) ? $daftarPengajuan->identitas_number_ketua : old('identitas_number_ketua') }}"
-                                        placeholder="Enter Task Name" id="CreateTask-Task-Name">
+                                        placeholder="Enter Identitas" id="nim_ketua" value="{{ isset($daftarPengajuan) ? $daftarPengajuan->identitas_number_ketua : old('identitas_number_ketua') }}">
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="CreateTask-Task-Name">Nama Ketua</label>
+                                    <input type="text" name="hidden_nama_ketua" class="form-control"
+                                        placeholder="Enter Name" disabled id="hidden_nama_ketua" value="{{ isset($daftarPengajuan) ? $daftarPengajuan->nama_ketua : old('nama_ketua') }}" >
+                                        <input type="hidden" name="nama_ketua" id="nama_ketua" value="{{ isset($daftarPengajuan) ? $daftarPengajuan->nama_ketua : old('nama_ketua') }}">
                                 </div>
 
                             </div>
@@ -55,6 +71,50 @@
                                         placeholder="Enter Email Name" id="CreateTask-Task-Name">
                                 </div>
                             </div>
+                            <div class="col-md-6 mb-5">
+                            <div class="mb-3">
+                                 <label class="form-label" for="CreateTask-Category">Program Studi</label>
+                                 <select class="form-select" name="prodi" required>
+                                     <!-- <option selected disabled> Select Tingkatan </option> -->
+                                     <option value="S1 Informatika"  @if($daftarPengajuan->program_studi == 'S1 Informatika') selected @endif>S1 Informatika</option>
+                                     <option value="S1 Sistem Informasi"  @if($daftarPengajuan->program_studi == 'S1 Sistem Informasi') selected @endif>S1 Sistem Informasi</option>
+                                     <option value="D3 SIstem Informasi" @if($daftarPengajuan->program_studi == 'D3 SIstem Informasi') selected @endif>D3 SIstem Informasi</option>
+                                 </select>
+                                 @error('program_studi')
+                                     <div class="text-danger">{{ $message }}</div>
+                                 @enderror
+                             </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="CreateTask-Task-Name">Anggota 1 (Nama - Nim)</label>
+                                    <input type="text" name="anggota_1" class="form-control"
+                                        placeholder="Enter Anggota 1" id="CreateTask-Task-Name" value="{{ isset($daftarPengajuan) ? $daftarPengajuan->anggota_1 : old('anggota_1') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="CreateTask-Task-Name">Anggota 2 (Nama - Nim)</label>
+                                    <input type="text" name="anggota_2" class="form-control"
+                                        placeholder="Enter Anggota 2" id="CreateTask-Task-Name" value="{{ isset($daftarPengajuan) ? $daftarPengajuan->anggota_2 : old('anggota_2') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-5">
+                                <div class="mb-3">
+                                    <label class="form-label" for="CreateTask-Task-Name">Anggota 3 (Nama - Nim)</label>
+                                    <input type="text" name="anggota_3" class="form-control"
+                                        placeholder="Enter Anggota 3" id="CreateTask-Task-Name" value="{{ isset($daftarPengajuan) ? $daftarPengajuan->anggota_3 : old('anggota_3') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-5">
+                                <div class="mb-3">
+                                    <label class="form-label" for="CreateTask-Task-Name">Anggota 4 (Nama - Nim)</label>
+                                    <input type="text" name="anggota_4" class="form-control"
+                                        placeholder="Enter Anggota 4" id="CreateTask-Task-Name" value="{{ isset($daftarPengajuan) ? $daftarPengajuan->anggota_4 : old('anggota_4') }}">
+                                </div>
+                            </div>
+</div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="CreateTask-Category">Dosen Pembimbing</label>
@@ -113,4 +173,26 @@
 
         </div>
     </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const usermahasiswa = @JSON($usermahasiswa);
+        $(document).ready(function() {
+            console.log(usermahasiswa);
+            $('#nim_ketua').on('input', function() {
+                var nim = $(this).val();
+                var nama_ketua = '';
+
+                // Cari nama berdasarkan nim yang diinput
+                usermahasiswa.forEach(function(mahasiswa) {
+                    if (mahasiswa.identitas === nim) {
+                        nama_ketua = mahasiswa.nama;
+                    }
+                });
+
+                // Update nilai nama_ketua berdasarkan hasil pencarian
+                $('#nama_ketua').val(nama_ketua);
+                $('#hidden_nama_ketua').val(nama_ketua);
+            });
+        });
+    </script>
 @endsection

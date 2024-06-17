@@ -115,10 +115,10 @@
                                         <i class="bx bx-check text-success fw-bold"></i>accepted
                                     </p>
                                 </td>
-                                @elseif ($item->status == 'ditolak')
+                                @elseif ($item->status == 'Di jadwalkan Ulang')
                                 <td class="d-flex ps-2 align-items-center">
                                     <p class="d-flex gap-2 align-items-center m-0">
-                                        <i class="bx bx-x text-danger fw-bold"></i>Decline
+                                        <i class="bx bx-check text-warning fw-bold"></i>Reschedule
                                     </p>
                                 </td>
                                 @else

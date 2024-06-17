@@ -125,8 +125,9 @@ class AdminController extends Controller
         $dospem = User::where('kategori', $daftarPengajuan->kategori)
             ->whereIn('nama', $dosen_dengan_pengajuan_diterima)
             ->get();
+            $usermahasiswa = User::where('role', 'mahasiswa')->get();
         // dd($daftarPengajuan);
-        return view('admin.updateDaftarPengajuanLomba', compact('nama', 'role', 'daftarPengajuan', 'dospem'));
+        return view('admin.updateDaftarPengajuanLomba', compact('nama', 'role', 'daftarPengajuan', 'dospem','usermahasiswa'));
     }
     public function updatedaftarPengajuanBimbingan($id)
     {
@@ -370,12 +371,18 @@ class AdminController extends Controller
 
     public function updateddaftarPengajuanLomba(Request $request, $id)
     {
+        // dd($request->all());
         $data = [
             'nama_ketua' => $request->nama_ketua ?? null,
             'identitas_number_ketua' => $request->identitas_number_ketua ?? null,
             'no_telp_ketua' => $request->no_telp_ketua ?? null,
             'email_ketua' => $request->email_ketua ?? null,
             'namadosen' => $request->namadosen ?? null,
+            'prodi' => $request->prodi ?? null,
+            'anggota_1' => $request->anggota_1 ?? null,
+            'anggota_2' => $request->anggota_2 ?? null,
+            'anggota_3' => $request->anggota_3 ?? null,
+            'anggota_4' => $request->anggota_4 ?? null,
             'status' => $request->status ?? null,
             'file_proposal_pengajuan' => $request->hasFile('file_proposal_pengajuan') ? $request->file('file_proposal_pengajuan') : null,
         ];
