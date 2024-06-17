@@ -12,7 +12,7 @@
                     <img src="{{ asset('images/logo-upn2.png') }}" alt="" height="28">
                 </div>
                 <div class="col-10 p-0">
-                    <h6 class=" text-left m-0">UNIVERSITAS VETERAN JAKARTA</h6>
+                    <h6 class=" text-left m-0">FAKULTAS ILMU KOMPUTER</h6>
                 </div>
             </div>
 

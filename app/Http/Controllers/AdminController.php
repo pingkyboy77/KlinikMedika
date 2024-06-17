@@ -297,6 +297,7 @@ class AdminController extends Controller
             'kategori' => 'required',
             'lokasi' => 'required',
             'tanggal' => 'required',
+            'tingkatan_lomba' => 'required',
         ]);
 
         $lomba = lomba::findOrFail($id);
@@ -306,6 +307,7 @@ class AdminController extends Controller
             'kategori' => $request->kategori,
             'lokasi' => $request->lokasi,
             'tanggal' => $request->tanggal,
+            'tingkatan_lomba' => $request->tingkatan_lomba,
         ];
 
         $lomba->update($data);

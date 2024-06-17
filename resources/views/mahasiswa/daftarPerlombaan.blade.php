@@ -13,7 +13,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Daftar Lomba</h5>
+                    <h5 class="card-title mb-0">Daftar Mahasiswa FIK Mengikuti Lomba dan Pengajuan Dosen Pembimbing</h5>
                 </div>
                 <div class="card-body">
 
@@ -35,7 +35,7 @@
                                         <a href="{{ route('mahasiswa.pengajuan-lomba') }}">
                                             <button type="button"
                                                 class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i
-                                                    class="mdi mdi-plus me-1"></i> Form Pendaftaran Lomba</button></a>
+                                                    class="mdi mdi-plus me-1"></i> Form Pengajuan Lomba</button></a>
                                     </div>
                                     {{-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".create-task"><i class="mdi mdi-plus me-1"></i> Daftar Lomba</button> --}}
                                 </div>
@@ -54,9 +54,11 @@
                                         <h5 class="text-dark font-size-14 m-0">Nama Perlombaan</h5>
                                     </td>
                                     <td>
+                                        <h5 class="text-dark font-size-14 m-0">Tingkatan Lomba</h5>
+                                    </td>
+                                    <td>
                                         <h5 class="text-dark font-size-14 m-0">Kategori</h5>
                                     </td>
-
                                     <td>
                                         <h5 class="text-dark font-size-14 m-0">Nama Ketua</h5>
                                     </td>
@@ -88,9 +90,11 @@
                                             <p class="mb-0">{{ $item->nama_lomba }}</p>
                                         </td>
                                         <td>
+                                            <p class="mb-0">{{ $item->tingkatan_lomba }}</p>
+                                        </td>
+                                        <td>
                                             <p class="mb-0">{{ $item->kategori }}</p>
                                         </td>
-
                                         <td>
                                             <p class="mb-0">{{ $item->nama_ketua }}</p>
                                         </td>
@@ -171,7 +175,7 @@
                     responsive: true,
                     "columnDefs": [{
                             "orderable": false,
-                            "targets": [6]
+                            "targets": [7]
                         } // Disable sorting for the third column (index 2)
                         // Add more entries as needed for other columns
                     ]

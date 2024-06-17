@@ -16,10 +16,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // Seeder untuk Dosen
-        $users = [
-            // ADMIN
-            [
+        DB::table('users')->insert([
             'nama' => 'Super Admin',
             'role' => 'admin',
             'identitas' => 123456,
@@ -28,11 +25,10 @@ class UsersTableSeeder extends Seeder
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now(),
-            ],
-
-            // -------------------------------------------------------------
-            // MAHASISWA
-            [
+        ]);
+        
+        $user_mahasiswa = [
+        [
             'nama' => 'Mutiara Dwi Jayanti',
             'role' => 'mahasiswa',
             'identitas' => 2110501007,
@@ -77,7 +73,7 @@ class UsersTableSeeder extends Seeder
             [
             'nama' => 'Herzita Saffana',
             'role' => 'mahasiswa',
-            'identitas' => 2110501010,
+            'identitas' => 2110501054,
             'password' => Hash::make('mahasiswa'),
             'kategori' => 'SBMPTN',
             'status' => 'active',
@@ -172,6 +168,10 @@ class UsersTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
             ],
+        ];
+
+        $users = [
+            
             // --------------------------------------------------------
             // DOSEN
             // Business Informatics
@@ -779,5 +779,6 @@ class UsersTableSeeder extends Seeder
         ];
 
         DB::table('users')->insert($users);
+        DB::table('users')->insert($user_mahasiswa);
     }
 }

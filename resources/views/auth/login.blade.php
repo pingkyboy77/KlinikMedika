@@ -12,14 +12,14 @@
                                 <img src="{{ asset('images/logo-upn2.png') }}" alt="" height="90" class="auth-logo-dark me-start">
                                 <img src="{{ asset('images/logo-upn2.png') }}" alt="" height="90" class="auth-logo-light me-start">
                             </a>
-                            <h3 class=" fw-bolder text-center" style="font-family: poppins, sans-serrif">UNIVERSITAS VETERAN JAKARTA</h3>
+                            <h3 class=" fw-bolder text-center" style="font-family: poppins, sans-serrif">FAKULTAS ILMU KOMPUTER</h3>
                         </div>
 
                         <div class="card">
                             <div class="card-body p-4"> 
                                 <div class="text-center mt-2">
                                     <h5>Welcome Back !</h5>
-                                    <p class="text-muted">Bimbingan Lomba UPN Website</p>
+                                    <p class="text-muted">Bimbingan Lomba FIK Website</p>
                                 </div>
                                 <div class="p-2 mt-4">
                                     <form action="{{ route('proses.login') }}" method="POST">

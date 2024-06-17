@@ -16,13 +16,19 @@
                             <input type="hidden" value="{{ $nama_akun }}" name="stored_by">
                             <input type="hidden" value="{{ $kategori }}" name="kategori"> --}}
                             <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="CreateTask-Task-Name">Nama Ketua Kelompok</label>
-                                    <input type="text" name="nama_ketua" class="form-control"
-                                        value="{{ isset($daftarPengajuan) ? $daftarPengajuan->nama_ketua : old('nama_ketua') }}"
-                                        placeholder="Enter Task Name" id="CreateTask-Task-Name">
-                                </div>
-
+                            <div class="mb-3">
+                                 <label class="form-label" for="CreateTask-Category">Tingkatan Lomba</label>
+                                 <select class="form-select" name="tingkatan_lomba" required>
+                                     <option selected disabled> Select Tingkatan </option>
+                                     <option value="Kota">Kota</option>
+                                     <option value="Provinsi">Provinsi</option>
+                                     <option value="Nasional">Nasional</option>
+                                     <option value="Internasional">Internasional</option>
+                                 </select>
+                                 @error('tingkatan_lomba')
+                                     <div class="text-danger">{{ $message }}</div>
+                                 @enderror
+                             </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">

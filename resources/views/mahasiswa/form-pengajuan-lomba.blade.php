@@ -14,7 +14,7 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Form Pendaftaran Lomba</h5>
+                        <h5 class="card-title mb-0">Form Daftar Mahasiswa FIK Mengikuti Lomba dan Pengajuan Dosen Pembimbing</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -25,6 +25,37 @@
                                         id="nama_lomba">
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                            <div class="mb-3">
+                                 <label class="form-label" for="CreateTask-Category">Tingkatan Lomba</label>
+                                 <select class="form-select" name="tingkatan_lomba" required>
+                                     <option selected disabled> Select Tingkatan </option>
+                                     <option value="Kota">Kota</option>
+                                     <option value="Provinsi">Provinsi</option>
+                                     <option value="Nasional">Nasional</option>
+                                     <option value="Internasional">Internasional</option>
+                                 </select>
+                                 @error('tingkatan_lomba')
+                                     <div class="text-danger">{{ $message }}</div>
+                                 @enderror
+                             </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                            <div class="mb-3">
+                                 <label class="form-label" for="CreateTask-Category">Program Studi</label>
+                                 <select class="form-select" name="program_studi" required>
+                                     <option selected disabled> Select Tingkatan </option>
+                                     <option value="S1 Informatika">S1 Informatika</option>
+                                     <option value="S1 Sistem Informasi">S1 Sistem Informasi</option>
+                                     <option value="D3 SIstem Informasi">D3 SIstem Informasi</option>
+                                 </select>
+                                 @error('program_studi')
+                                     <div class="text-danger">{{ $message }}</div>
+                                 @enderror
+                             </div>
+                            </div>
+                            
                             <!-- Tambahkan input lainnya di sini -->
                             <div class="col-md-6">
                                 <div class="mb-3">

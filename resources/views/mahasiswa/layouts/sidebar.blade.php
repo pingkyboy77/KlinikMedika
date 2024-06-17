@@ -12,7 +12,7 @@
                     <img src="{{ asset('images/logo-upn2.png') }}" alt="" height="28">
                 </div>
                 <div class="col-10 p-0">
-                    <h6 class=" text-left m-0">UNIVERSITAS VETERAN JAKARTA</h6>
+                    <h6 class=" text-left m-0">FAKULTAS ILMU KOMPUTER</h6>
                 </div>
             </div>
 
@@ -56,7 +56,7 @@
             <li>
                 <a href="{{ route('mahasiswa.daftarPerlombaan') }}">
                     <i class="bx bx-calendar-event icon nav-icon"></i>
-                    <span class="menu-item" data-key="t-dashboard">Daftar Perlombaan</span>
+                    <span class="menu-item" data-key="t-dashboard">Daftar Pengajuan Perlombaan</span>
                 </a>
             </li>
             <li>

@@ -108,6 +108,7 @@ class MahasiswaController extends Controller
                 'namadosen' => 'required',
                 'lokasi' => 'required',
                 'tanggal' => 'required',
+                'tingkatan_lomba' => 'required',
                 'file_proposal_pengajuan' => 'required|file',
             ]);
             // dd($data);

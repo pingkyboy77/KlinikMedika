@@ -45,6 +45,9 @@
                                     <td>
                                         <p class="mb-0">Nama Ketua Kelompok</p>
                                     </td>
+                                    <td>
+                                        <p class="mb-0">Tingkatan Lomba</p>
+                                    </td>
 
                                     <td>
                                         <p class="mb-0">Identitas Number Ketua</p>
@@ -81,6 +84,9 @@
                                             </td>
                                             <td>
                                                 <p class="mb-0">{{ $item->nama_ketua }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->tingkatan_lomba }}</p>
                                             </td>
                                             <td>
                                                 <p class="mb-0">{{ $item->identitas_number_ketua }}</p>
@@ -143,7 +149,7 @@
                     responsive: true,
                     "columnDefs": [{
                             "orderable": false,
-                            "targets": [8]
+                            "targets": [9]
                         } // Disable sorting for the third column (index 2)
                         // Add more entries as needed for other columns
                     ]
