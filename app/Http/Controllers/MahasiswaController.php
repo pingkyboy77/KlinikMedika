@@ -23,9 +23,9 @@ class MahasiswaController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $dospem_jumlah = User::where('role', 'dosen')->count();
-        $lomba_jumlah = Lomba::count();
-        $history_jumlah = DaftarPengajuan::get()->count();
-        $bimbingan_jumlah = DaftarBimbingan::get()->count();
+        $lomba_jumlah = DaftarPengajuan::Where('stored_by', $nama)->get()->count();
+        $history_jumlah = DaftarPengajuan::Where('stored_by', $nama)->get()->count();
+        $bimbingan_jumlah = DaftarBimbingan::Where('stored_by', $nama)->get()->count();
 
         return view('mahasiswa.dashboard', compact('role', 'nama', 'dospem_jumlah', 'lomba_jumlah', 'history_jumlah', 'bimbingan_jumlah'));
     }
