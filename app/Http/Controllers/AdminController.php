@@ -380,6 +380,7 @@ class AdminController extends Controller
             'email_ketua' => $request->email_ketua ?? null,
             'namadosen' => $request->namadosen ?? null,
             'prodi' => $request->prodi ?? null,
+            'penyelenggara' => $request->penyelenggara ?? null,
             'anggota_1' => $request->anggota_1 ?? null,
             'anggota_2' => $request->anggota_2 ?? null,
             'anggota_3' => $request->anggota_3 ?? null,

@@ -68,7 +68,7 @@
                                     </td>
 
                                     <td>
-                                        <h5 class="text-dark font-size-14 m-0">Jenis Pengajuan</h5>
+                                        <h5 class="text-dark font-size-14 m-0">Penyelenggara</h5>
                                     </td>
                                     <td>
                                         <h5 class="text-dark font-size-14 m-0">File Proposal Pengajuan</h5>
@@ -104,7 +104,7 @@
                                         </td>
 
                                         <td>
-                                            <p class="mb-0">{{ $item->jenis_pengajuan }}</p>
+                                            <p class="mb-0">{{ $item->penyelenggara }}</p>
                                         </td>
                                         <td>
                                             {{-- <p class="mb-0">{{ substr($item->file_proposal_pengajuan, 23) }}</p> --}}

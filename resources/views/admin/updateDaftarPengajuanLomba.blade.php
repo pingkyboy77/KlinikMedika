@@ -38,6 +38,14 @@
                                  @enderror
                              </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="penyelenggara">Penyelenggara</label>
+                                    <input type="text" name="penyelenggara" class="form-control" placeholder="Enter Penyelenggara"
+                                        id="penyelenggara">
+                                </div>
+                            </div>
                             <div class="col-md-6">
                             <div class="mb-3">
                                     <label class="form-label" for="CreateTask-Task-Name">Nim Ketua</label>
