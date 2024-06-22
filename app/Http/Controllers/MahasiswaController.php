@@ -112,6 +112,7 @@ class MahasiswaController extends Controller
                 'lokasi' => 'required',
                 'tanggal' => 'required',
                 'prodi' => 'required',
+                'penyelenggara' => 'required',
                 'tingkatan_lomba' => 'required',
                 'file_proposal_pengajuan' => 'required|file',
             ]);

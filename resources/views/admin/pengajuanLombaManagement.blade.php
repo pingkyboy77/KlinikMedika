@@ -46,6 +46,9 @@
                                         <p class="mb-0">Nama Ketua Kelompok</p>
                                     </td>
                                     <td>
+                                        <p class="mb-0">Dosen Pembimbing</p>
+                                    </td>
+                                    <td>
                                         <p class="mb-0">Tingkatan Lomba</p>
                                     </td>
 
@@ -54,6 +57,9 @@
                                     </td>
                                     <td>
                                         <p class="mb-0">Nama Lomba</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">Penyelenggara</p>
                                     </td>
                                     <td>
                                         <p class="mb-0">Kategori</p>
@@ -86,6 +92,9 @@
                                                 <p class="mb-0">{{ $item->nama_ketua }}</p>
                                             </td>
                                             <td>
+                                                <p class="mb-0">{{ $item->namadosen }}</p>
+                                            </td>
+                                            <td>
                                                 <p class="mb-0">{{ $item->tingkatan_lomba }}</p>
                                             </td>
                                             <td>
@@ -93,6 +102,9 @@
                                             </td>
                                             <td>
                                                 <p class="mb-0">{{ $item->nama_lomba }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->penyelenggara }}</p>
                                             </td>
                                             <td>
                                                 <p class="mb-0">{{ $item->kategori }}</p>
@@ -149,7 +161,7 @@
                     responsive: true,
                     "columnDefs": [{
                             "orderable": false,
-                            "targets": [9]
+                            "targets": [10]
                         } // Disable sorting for the third column (index 2)
                         // Add more entries as needed for other columns
                     ]

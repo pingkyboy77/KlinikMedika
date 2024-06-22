@@ -18,6 +18,7 @@
                         <h5 class="card-title mb-0">Form Daftar Mahasiswa FIK Mengikuti Lomba dan Pengajuan Dosen Pembimbing</h5>
                     </div>
                     <div class="card-body">
+                        <div class="section" style="margin-bottom: 10px; font-size: 20px; font-weight: 700; text-decoration: underline;" >Data Perlombaan</div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -41,23 +42,17 @@
                                  @enderror
                              </div>
                             </div>
-                            
                             <div class="col-md-6">
-                            <div class="mb-3">
-                                 <label class="form-label" for="CreateTask-Category">Program Studi</label>
-                                 <select class="form-select" name="prodi" required>
-                                     <option selected disabled> Select Tingkatan </option>
-                                     <option value="S1 Informatika">S1 Informatika</option>
-                                     <option value="S1 Sistem Informasi">S1 Sistem Informasi</option>
-                                     <option value="D3 SIstem Informasi">D3 SIstem Informasi</option>
-                                 </select>
-                                 @error('program_studi')
-                                     <div class="text-danger">{{ $message }}</div>
-                                 @enderror
-                             </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="penyelenggara">Penyelenggara</label>
+                                    <input type="text" name="penyelenggara" class="form-control" placeholder="Enter Penyelenggara"
+                                        id="penyelenggara">
+                                </div>
                             </div>
-                            
+                          
+
                             <!-- Tambahkan input lainnya di sini -->
+
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="CreateTask-Category">Kategori</label>
@@ -70,21 +65,38 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-5">
+                            <div class="col-md-6 mb-1">
                                 <div class="mb-3">
                                     <label class="form-label" for="lokasi">Lokasi</label>
                                     <input type="text" name="lokasi" class="form-control" placeholder="Enter Place"
                                         id="lokasi">
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-5">
+                            <div class="col-md-6 mb-1">
                                 <div class="mb-3">
                                     <label class="form-label" for="tanggal">Tanggal</label>
                                     <input type="date" name="tanggal" class="form-control" placeholder="Enter Place"
                                         id="tanggal">
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="namadosen">Dosen Pembimbing</label>
+                                    <select class="form-select" name="namadosen" id="namadosen">
+                                        <option selected disabled> Select Dosen </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-5">
+                                <div class="mb-3">
+                                    <label class="form-label" for="file_proposal_pengajuan">File Proposal
+                                        Pengajuan</label>
+                                    <input type="file" name="file_proposal_pengajuan" class="form-control">
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="section" style="margin-bottom: 10px; font-size: 20px; font-weight: 700; text-decoration: underline;" >Data Mahasiswa</div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -114,7 +126,6 @@
                                         <option value="S-1 Informatika">S-1 Informatika </option>
                                     </select>
                                 </div>
-
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -160,21 +171,7 @@
                                         placeholder="Enter Anggota 4" id="CreateTask-Task-Name">
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="namadosen">Dosen Pembimbing</label>
-                                    <select class="form-select" name="namadosen" id="namadosen">
-                                        <option selected disabled> Select Dosen </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="file_proposal_pengajuan">File Proposal
-                                        Pengajuan</label>
-                                    <input type="file" name="file_proposal_pengajuan" class="form-control">
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="row mt-2">
                             <div class="col-12 text-end">
