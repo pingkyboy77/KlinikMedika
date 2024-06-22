@@ -373,6 +373,7 @@ class AdminController extends Controller
     {
         // dd($request->all());
         $data = [
+            'nama_lomba' => $request->nama_lomba ?? null,
             'nama_ketua' => $request->nama_ketua ?? null,
             'identitas_number_ketua' => $request->identitas_number_ketua ?? null,
             'no_telp_ketua' => $request->no_telp_ketua ?? null,
