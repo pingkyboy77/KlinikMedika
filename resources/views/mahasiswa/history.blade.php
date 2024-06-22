@@ -64,9 +64,9 @@
                                     <h5 class="text-dark font-size-14 m-0">Nama Dosen</h5>
                                 </td>
 
-                                <td>
+                                {{-- <td>
                                     <h5 class="text-dark font-size-14 m-0">Lokasi Bimbingan</h5>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <h5 class="text-dark font-size-14 m-0">Tanggal Bimbingan</h5>
                                 </td>
@@ -99,9 +99,9 @@
                                 <td>
                                     <p class="mb-0">{{ $item->namadosen }}</p>
                                 </td>
-                                <td>
+                                {{-- <td>
                                     <p class="mb-0">{{ $item->lokasi_bimbingan }}</p>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <p class="mb-0">{{ $item->tanggal_bimbingan }}</p>
                                 </td>

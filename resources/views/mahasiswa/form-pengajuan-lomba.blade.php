@@ -118,13 +118,10 @@
                             
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label" for="CreateTask-Task-Name">Program Studi</label>
-                                    <select class="form-select" name="prodi">
-                                        <option selected disabled> Select Prodi </option>
-                                        <option value="D-3 Sistem Informasi">D-3 Sistem Informasi </option>
-                                        <option value="S-1 Sistem Informasi">S-1 Sistem Informasi </option>
-                                        <option value="S-1 Informatika">S-1 Informatika </option>
-                                    </select>
+                                    <label class="form-label" for="CreateTask-Task-Name">Prodi</label>
+                                    <input type="text" name="hidden_prodi" class="form-control"
+                                        placeholder="Enter Name" disabled id="hidden_prodi">
+                                        <input type="hidden" name="prodi" id="prodi">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -202,17 +199,21 @@
             $('#nim_ketua').on('input', function() {
                 var nim = $(this).val();
                 var nama_ketua = '';
+                var prodi = '';
 
                 // Cari nama berdasarkan nim yang diinput
                 usermahasiswa.forEach(function(mahasiswa) {
                     if (mahasiswa.identitas === nim) {
                         nama_ketua = mahasiswa.nama;
+                        prodi = mahasiswa.prodi;
                     }
                 });
 
                 // Update nilai nama_ketua berdasarkan hasil pencarian
                 $('#nama_ketua').val(nama_ketua);
                 $('#hidden_nama_ketua').val(nama_ketua);
+                $('#prodi').val(prodi);
+                $('#hidden_prodi').val(prodi);
             });
         });
         document.getElementById('kategori').addEventListener('change', function() {

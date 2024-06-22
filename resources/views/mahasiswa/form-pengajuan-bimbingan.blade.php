@@ -26,12 +26,16 @@
                                 <input type="hidden" name="namadosen" value="{{ $acc_lomba->namadosen }}">
                             </div>
                             <div class="col-md-6">
-                                <h5>Nomor Telp Dosen</h5>
-                                <p>{{ $data_dosen->no_hp }}</p>
+                                <h5>Email Dosen</h5>
+                                <p>{{ $data_dosen->email }}</p>
                             </div>
                             <div class="col-md-6">
                                 <h5>Hari Bimbingan Dosen</h5>
                                 <p>{{ $data_dosen->day_bimbingan }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Waktu Bimbingan</h5>
+                                <p>08.00 - 17.00 </p>
                             </div>
                             <div class="col-md-6">
                                 <h5>Akun Yang mengajukan</h5>
@@ -53,6 +57,15 @@
                                 <p>{{ $acc_lomba->nama_ketua }}</p>
                                 <input type="hidden" name="nama_ketua" value="{{ $acc_lomba->nama_ketua }}">
                             </div>
+                            <div class="col-md-6">
+                                <h5>NIM Ketua Kelompok</h5>
+                                <p>{{ $acc_lomba->identitas_number_ketua }}</p>
+                                <input type="hidden" name="identitas_number_ketua" value="{{ $acc_lomba->identitas_number_ketua }}">
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Prodi Ketua Kelompok</h5>
+                                <p>{{ $acc_lomba->prodi }}</p>
+                            </div>
                         </div>
                         <div class="row mt-4">
                             {{-- <div class="col-md-4">
@@ -61,15 +74,14 @@
                                 
                             </div> --}}
                             {{-- <div class="row mt-4"> --}}
-                                <div class="col-md-6">
-                                    <h5>Tanggal Bimbingan</h5>
-                                    <input type="date" name="tanggal_bimbingan" id="tanggal_bimbingan"
-                                        class="form-control">
-                                </div>
-                                <div class="col-md-6">
-                                    <h5>Waktu Bimbingan</h5>
-                                    <input type="time" name="waktu_bimbingan" class="form-control">
-                                </div>
+                            <div class="col-md-6">
+                                <h5>Tanggal Bimbingan</h5>
+                                <input type="date" name="tanggal_bimbingan" id="tanggal_bimbingan" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Waktu Bimbingan</h5>
+                                <input type="time" name="waktu_bimbingan" id="waktu_bimbingan" class="form-control">
+                            </div>
                             {{-- </div> --}}
                         </div>
                         <div class="row mt-2">
@@ -91,30 +103,57 @@
         </div>
     </form>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const tanggalBimbinganInput = document.getElementById('tanggal_bimbingan');
+            const waktuBimbinganInput = document.getElementById('waktu_bimbingan');
             const validDay = "{{ $data_dosen->day_bimbingan }}";
 
+            console.log(validDay);
             tanggalBimbinganInput.addEventListener('change', function() {
                 const selectedDate = new Date(tanggalBimbinganInput.value);
                 const currentDate = new Date();
 
                 // Check if the selected date is before today
                 if (selectedDate < currentDate.setHours(0, 0, 0, 0)) {
-                    alert('Tanggal tidak valid');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Tanggal tidak valid',
+                        text: 'Tanggal tidak boleh sebelum hari ini.',
+                    });
                     tanggalBimbinganInput.value = '';
                     return;
                 }
 
                 // Get the selected day of the week
-                const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+                const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
                 const selectedDay = days[selectedDate.getDay()];
 
                 // Check if the selected day matches the valid day
-                if (selectedDay !== validDay) {
-                    alert(`Dosen hanya bisa di hari ${validDay}`);
+                if (selectedDay != validDay) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hari tidak valid',
+                        text: `Dosen hanya bisa di hari ${validDay}.`,
+                    });
+
                     tanggalBimbinganInput.value = '';
+                }
+            });
+
+            waktuBimbinganInput.addEventListener('change', function() {
+                const selectedTime = waktuBimbinganInput.value;
+                const [hours, minutes] = selectedTime.split(':').map(Number);
+
+                // Check if the selected time is within 08:00 to 17:00
+                if (hours < 8 || (hours === 17 && minutes > 0) || hours > 17) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Waktu tidak valid',
+                        text: 'Waktu bimbingan harus antara jam 08:00 sampai 17:00.',
+                    });
+                    waktuBimbinganInput.value = '';
                 }
             });
         });

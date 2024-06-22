@@ -61,7 +61,7 @@ class DosenController extends Controller
     {
         // dd($status, $request->all());
         $daftar_lomba = DaftarBimbingan::find($id);
-        $daftar_lomba->lokasi_bimbingan = $request->lokasi_bimbingan;
+        // $daftar_lomba->lokasi_bimbingan = $request->lokasi_bimbingan;
         $daftar_lomba->tanggal_bimbingan = $request->tanggal_bimbingan;
         $daftar_lomba->waktu_bimbingan = $request->waktu_bimbingan;
         $daftar_lomba->status = $status;

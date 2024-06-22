@@ -58,9 +58,9 @@
                                         <h5 class="text-dark font-size-14 m-0">Nama Dosen</h5>
                                     </td>
 
-                                    <td>
+                                    {{-- <td>
                                         <h5 class="text-dark font-size-14 m-0">Lokasi Bimbingan</h5>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <h5 class="text-dark font-size-14 m-0">Tanggal Bimbingan</h5>
                                     </td>
@@ -93,9 +93,9 @@
                                             <td>
                                                 <p class="mb-0">{{ $item->namadosen }}</p>
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 <p class="mb-0">{{ $item->lokasi_bimbingan }}</p>
-                                            </td>
+                                            </td> --}}
                                             <td>
                                                 <p class="mb-0">{{ $item->tanggal_bimbingan }}</p>
                                             </td>
@@ -149,45 +149,41 @@
 
     </div>
     @if ($daftar_bimbingan_pengajuan->isNotEmpty())
-    <form action="{{ route('dosen.updatepengajuan.bimbingan', ['id' => $item->id, 'status' => 'Di jadwalkan Ulang']) }}"
-        method="POST">
-        @csrf
-        <div class="modal fade reschedule" tabindex="-1" role="dialog" aria-labelledby="modal_kategori"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modal_kategori">RESCHEDULE BIMBINGAN</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Isi formulir modal -->
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <h5 style="font-size:1rem">Lokasi Bimbingan</h5>
-                                <input type="text" name="lokasi_bimbingan" class="form-control">
-
-                            </div>
-                            <div class="col-md-4">
-                                <h5 style="font-size:1rem">Tanggal Bimbingan</h5>
-                                <input type="date" name="tanggal_bimbingan" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <h5 style="font-size:1rem">Waktu Bimbingan</h5>
-                                <input type="time" name="waktu_bimbingan" class="form-control">
-                            </div>
+        <form action="{{ route('dosen.updatepengajuan.bimbingan', ['id' => $item->id, 'status' => 'Di jadwalkan Ulang']) }}"
+            method="POST">
+            @csrf
+            <div class="modal fade reschedule" tabindex="-1" role="dialog" aria-labelledby="modal_kategori"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal_kategori">RESCHEDULE BIMBINGAN</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <!-- Tambahkan input lainnya di sini -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal"><i
-                                    class="bx bx-x me-1 align-middle"></i> Cancel</button>
-                            <button type="submit" class="btn btn-success"><i class="bx bx-check me-1 align-middle"></i>
-                                Confirm</button>
+                        <div class="modal-body">
+                            <!-- Isi formulir modal -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <h5>Tanggal Bimbingan</h5>
+                                    <input type="date" name="tanggal_bimbingan" id="tanggal_bimbingan"
+                                        class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Waktu Bimbingan</h5>
+                                    <input type="time" name="waktu_bimbingan" id="waktu_bimbingan" class="form-control">
+                                </div>
+                            </div>
+                            <!-- Tambahkan input lainnya di sini -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal"><i
+                                        class="bx bx-x me-1 align-middle"></i> Cancel</button>
+                                <button type="submit" class="btn btn-success"><i class="bx bx-check me-1 align-middle"></i>
+                                    Confirm</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-    </form>
+        </form>
     @endif
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -220,6 +216,45 @@
                     ]
                 });
             }, 100);
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tanggalBimbinganInput = document.getElementById('tanggal_bimbingan');
+            const waktuBimbinganInput = document.getElementById('waktu_bimbingan');
+
+            tanggalBimbinganInput.addEventListener('change', function() {
+                const selectedDate = new Date(tanggalBimbinganInput.value);
+                const currentDate = new Date();
+
+                // Check if the selected date is before today
+                if (selectedDate < currentDate.setHours(0, 0, 0, 0)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Tanggal tidak valid',
+                        text: 'Tanggal tidak boleh sebelum hari ini.',
+                    });
+                    tanggalBimbinganInput.value = '';
+                    return;
+                }
+
+            });
+
+            waktuBimbinganInput.addEventListener('change', function() {
+                const selectedTime = waktuBimbinganInput.value;
+                const [hours, minutes] = selectedTime.split(':').map(Number);
+
+                // Check if the selected time is within 08:00 to 17:00
+                if (hours < 8 || (hours === 17 && minutes > 0) || hours > 17) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Waktu tidak valid',
+                        text: 'Waktu bimbingan harus antara jam 08:00 sampai 17:00.',
+                    });
+                    waktuBimbinganInput.value = '';
+                }
+            });
         });
     </script>
 @endsection

@@ -47,6 +47,7 @@ class MahasiswaController extends Controller
         $role = $user->role;
         $daftar_lomba = Lomba::orderBy('created_at', 'desc')->get();
         $daftar_lomba_ikut = DB::table('daftar_pengajuans')->where('stored_by', $nama)->get();
+        // dd($daftar_lomba_ikut);
         $kategoriOptions = Kategori::pluck('kategori', 'id');
         // dd($daftar_lomba_ikut);
         return view('mahasiswa.daftarPerlombaan', compact('role', 'nama', 'daftar_lomba', 'daftar_lomba_ikut', 'kategoriOptions'));
@@ -170,6 +171,7 @@ class MahasiswaController extends Controller
     }
     public function pengajuanBimbinganStore(Request $request)
     {
+        // dd($request->all());
         $data = $request->validate([
             'stored_by' => 'required',
             'nama_ketua' => 'required',
@@ -177,10 +179,10 @@ class MahasiswaController extends Controller
             'identitas_number_ketua' => 'required',
             'kategori_lomba' => 'required',
             'namadosen' => 'required',
-            'lokasi_bimbingan' => 'required',
             'tanggal_bimbingan' => 'required',
             'waktu_bimbingan' => 'required',
         ]);
+        // dd('masuk');
         $data['jenis_pengajuan'] = 'Pengajuan Bimbingan';
         $data['status'] = 'Menunggu Persetujuan';
         Alert::success('Sukses', 'Data Berhasil Di Update');
