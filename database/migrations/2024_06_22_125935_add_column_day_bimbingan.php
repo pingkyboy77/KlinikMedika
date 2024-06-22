@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('day_bimbingan')->nullable();
         });
+        Schema::table('daftar_bimbingans', function (Blueprint $table) {
+            $table->dropColumn('lokasi_bimbingan');
+        });
     }
 
     /**

@@ -46,9 +46,7 @@ class MahasiswaController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $daftar_lomba = Lomba::orderBy('created_at', 'desc')->get();
-        $daftar_lomba_ikut = DB::table('daftar_pengajuans')
-            ->where('stored_by', $nama)
-            ->get();
+        $daftar_lomba_ikut = DB::table('daftar_pengajuans')->where('stored_by', $nama)->get();
         $kategoriOptions = Kategori::pluck('kategori', 'id');
         // dd($daftar_lomba_ikut);
         return view('mahasiswa.daftarPerlombaan', compact('role', 'nama', 'daftar_lomba', 'daftar_lomba_ikut', 'kategoriOptions'));
@@ -71,8 +69,7 @@ class MahasiswaController extends Controller
         $role = $user->role;
         $daftar_bimbingan = DaftarBimbingan::where('stored_by', $nama)
             ->where(function ($query) {
-                $query->where('status', 'diterima')
-                    ->orWhere('status', 'Di jadwalkan Ulang');
+                $query->where('status', 'diterima')->orWhere('status', 'Di jadwalkan Ulang');
             })
             ->orderBy('created_at', 'asc')
             ->get();
@@ -80,7 +77,6 @@ class MahasiswaController extends Controller
     }
     public function pengajuanLomba(Request $request)
     {
-
         // Get the authenticated user
         $user = Auth::user();
 
@@ -122,23 +118,23 @@ class MahasiswaController extends Controller
             if ($request->hasFile('file_proposal_pengajuan')) {
                 $file_proposal_pengajuan = $request->file('file_proposal_pengajuan');
                 $file_name = time() . '-' . $file_proposal_pengajuan->getClientOriginalName();
-                
+
                 $storage = 'uploads/file_pengajuan/';
                 $file_proposal_pengajuan->move($storage, $file_name);
                 $data['file_proposal_pengajuan'] = $storage . $file_name;
             } else {
                 $data['file_proposal_pengajuan'] = null;
             }
-            if ($request->has('anggota_1')){
+            if ($request->has('anggota_1')) {
                 $data['anggota_1'] = $request->anggota_1;
             }
-            if ($request->has('anggota_2')){
+            if ($request->has('anggota_2')) {
                 $data['anggota_2'] = $request->anggota_2;
             }
-            if ($request->has('anggota_3')){
+            if ($request->has('anggota_3')) {
                 $data['anggota_3'] = $request->anggota_3;
             }
-            if ($request->has('anggota_4')){
+            if ($request->has('anggota_4')) {
                 // dd("masuk 4");
                 $data['anggota_4'] = $request->anggota_4;
             }
@@ -167,8 +163,9 @@ class MahasiswaController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $acc_lomba = DaftarPengajuan::where('id', $id)->first();
-        // dd($acc_lomba);
-        return view('mahasiswa.form-pengajuan-bimbingan', compact('role', 'nama', 'acc_lomba'));
+        $data_dosen = User::where('nama', $acc_lomba->namadosen)->first();
+        // dd($data_dosen);
+        return view('mahasiswa.form-pengajuan-bimbingan', compact('role', 'nama', 'acc_lomba', 'data_dosen'));
     }
     public function pengajuanBimbinganStore(Request $request)
     {
