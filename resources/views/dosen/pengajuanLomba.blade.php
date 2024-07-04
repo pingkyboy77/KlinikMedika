@@ -59,6 +59,12 @@
                                         <p class="mb-0">Tanggal Pengajuan</p>
                                     </th>
                                     <th>
+                                        <p class="mb-0">Link Url Lomba</p>
+                                    </th>
+                                    <th>
+                                        <p class="mb-0">Flyer Lomba</p>
+                                    </th>
+                                    <th>
                                         <p class="mb-0">File Proposal</p>
                                     </th>
                                     <th>
@@ -68,57 +74,72 @@
                             </thead>
                             <tbody>
                                 @if ($daftar_lomba_pengajuan->isNotEmpty())
-                                @foreach ($daftar_lomba_pengajuan as $item)
-                                    <tr>
-                                        <td>
-                                            <p class="mb-0">{{ $loop->iteration }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->stored_by }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama_ketua }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->nama_lomba }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->kategori }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ $item->created_at }}</p>
-                                        </td>
-                                        <td>
-                                            <a href="/{{ $item->file_proposal_pengajuan }}" download="{{ substr($item->file_proposal_pengajuan, 23) }}">{{ substr($item->file_proposal_pengajuan, 23) }}</a>
-                                        </td>
-                                        @if ($item->status == 'diterima')
-                                            <td class="d-flex ps-2 align-items-center">
-                                                <p class="d-flex gap-2 align-items-center m-0">
-                                                    <i class="bx bx-check text-success fw-bold"></i>accepted
-                                                </p>
+                                    @foreach ($daftar_lomba_pengajuan as $item)
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">{{ $loop->iteration }}</p>
                                             </td>
-                                        @elseif ($item->status == 'ditolak')
-                                            <td class="d-flex ps-2 align-items-center">
-                                                <p class="d-flex gap-2 align-items-center m-0">
-                                                    <i class="bx bx-x text-danger fw-bold"></i>Decline
-                                                </p>
+                                            <td>
+                                                <p class="mb-0">{{ $item->stored_by }}</p>
                                             </td>
-                                        @else
-                                        <td class=" d-flex gap-2">
-                                            <form action="{{ route('dosen.updatepengajuan.lomba', ['id'=>$item->id, 'status' => 'diterima']) }}" method="POST">
-                                                @csrf
-                                            <button type="submit"
-                                                class="d-flex align-items-center btn btn-success btn-rounded waves-effect waves-light">
-                                                <i class="bx bx-check fw-bold"></i> Accept</button></form>
-                                                <form action="{{ route('dosen.updatepengajuan.lomba', ['id'=>$item->id, 'status' => 'ditolak']) }}" method="POST">
-                                                    @csrf
-                                            <button type="submit"
-                                                class="d-flex align-items-center btn btn-danger btn-rounded waves-effect waves-light">
-                                                <i class="bx bx-x fw-bold"></i> Decline</button></form>
+                                            <td>
+                                                <p class="mb-0">{{ $item->nama_ketua }}</p>
                                             </td>
-                                        @endif
-                                    </tr>
-                                @endforeach
+                                            <td>
+                                                <p class="mb-0">{{ $item->nama_lomba }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->kategori }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->created_at }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{ $item->url }}</p>
+                                            </td>
+                                            <!-- Existing Image Display -->
+                                            <td>
+                                                <img src="{{ asset($item->image_flyer) }}" alt="" width="100%"
+                                                    id="currentImage" style="cursor: pointer;">
+                                            </td>
+                                            <td>
+                                                <a href="/{{ $item->file_proposal_pengajuan }}"
+                                                    download="{{ substr($item->file_proposal_pengajuan, 23) }}">{{ substr($item->file_proposal_pengajuan, 23) }}</a>
+                                            </td>
+                                            @if ($item->status == 'diterima')
+                                                <td class="ps-2 align-items-center ">
+                                                    <p class="gap-2 align-items-center m-0 d-flex">
+                                                        <i class="bx bx-check text-success fw-bold m-0 p-0"></i>accepted
+                                                    </p>
+                                                </td>
+                                            @elseif ($item->status == 'ditolak')
+                                                <td class="ps-2 align-items-center">
+                                                    <p class="gap-2 align-items-center d-flex m-0">
+                                                        <i class="bx bx-x text-danger fw-bold"></i>Decline
+                                                    </p>
+                                                </td>
+                                            @else
+                                                <td class=" gap-2">
+                                                    <form
+                                                        action="{{ route('dosen.updatepengajuan.lomba', ['id' => $item->id, 'status' => 'diterima']) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="d-flex align-items-center btn btn-success btn-rounded waves-effect waves-light">
+                                                            <i class="bx bx-check fw-bold"></i> Accept</button>
+                                                    </form>
+                                                    <form
+                                                        action="{{ route('dosen.updatepengajuan.lomba', ['id' => $item->id, 'status' => 'ditolak']) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="d-flex align-items-center btn btn-danger btn-rounded waves-effect waves-light">
+                                                            <i class="bx bx-x fw-bold"></i> Decline</button>
+                                                    </form>
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
                                 @endif
                             </tbody>
 
@@ -133,11 +154,35 @@
 
     </div>
 
+    <!-- Modal for Image Preview -->
+    <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imagePreviewModalLabel">IMAGE FLYER</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="imagePreviewModalImg" src="" alt="Image Preview"
+                        style="max-width: 100%; height: auto;">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
+        document.getElementById('currentImage').addEventListener('click', function() {
+            var imgSrc = this.src;
+            var modalImg = document.getElementById('imagePreviewModalImg');
+            modalImg.src = imgSrc;
+            var imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+            imagePreviewModal.show();
+        });
         $(document).ready(function() {
             var dataTableExists = $.fn.DataTable.isDataTable('#pengajuan-lomba');
             if (dataTableExists) {

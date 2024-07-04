@@ -36,8 +36,6 @@ class AdminController extends Controller
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
-        // $nama = 'super admin';
-        // $role = 'super admin';
         $data_users = User::where('role', 'mahasiswa')->get();
         $data_users_dosen = User::where('role', 'dosen')->get();
         $kategori = Kategori::orderBy('created_at', 'desc')->pluck('kategori');
@@ -46,7 +44,7 @@ class AdminController extends Controller
     public function lombaManagement()
     {
         $user_role = 'Super Admin';
-        $lomba = Lomba::orderBy('created_at', 'desc')->get();
+        $lomba = DaftarPengajuan::where('status', 'diterima')->get();
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
@@ -162,11 +160,16 @@ class AdminController extends Controller
         }
     }
 
-    // public function editUser($id)
-    // {
-    //     $user = User::find($id);
-    //     return response()->json($user);
-    // }
+    public function updateHasil(Request $request , $id)
+    {
+        // dd($id);
+        $lomba = DaftarPengajuan::find($id);
+        // dd($lomba);
+        $lomba->progress_lomba = $request->progress_lomba;
+        $lomba->save();
+        Alert::success('Sukses', 'Data Berhasil di Update');
+        return redirect()->route('admin.lomba-Management');
+    }
     // public function updateUser(Request $request, $id)
     // {
     //     $user = User::find($id);

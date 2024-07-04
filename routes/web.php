@@ -11,7 +11,6 @@ use App\Http\Controllers\MahasiswaController;
 //     ->middleware('guest');
 // Route::get('/', [AdminAuthController::class, 'landing']);
 
-
 // Route::prefix('/beranda')
 //     ->middleware(['auth'])
 //     ->group(function () {
@@ -22,6 +21,10 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PengajuanController;
 
 Route::get('/get-dosen-pembimbing', [PengajuanController::class, 'getDosenPembimbing']);
+use App\Http\Controllers\PdfExportController;
+
+Route::get('/export-pdf', [PdfExportController::class, 'export'])->name('export.pdf');
+Route::get('/export-pdf/{month}/{year}/{progress}', [PdfExportController::class, 'exportFiltered'])->name('export.pdf.filter');
 
 Route::get('/', [AdminAuthController::class, 'index'])->name('login');
 Route::post('/proses', [AdminAuthController::class, 'doLogin'])->name('proses.login');
@@ -33,7 +36,6 @@ Route::prefix('mahasiswa')
     ->name('mahasiswa.')
     ->middleware(['auth', 'role:mahasiswa'])
     ->group(function () {
-        
         Route::get('beranda', [MahasiswaController::class, 'beranda'])->name('beranda');
         Route::get('daftarDosenPembimbing', [MahasiswaController::class, 'daftarDosenPembimbing'])->name('daftarDosenPembimbing');
         Route::get('daftarPerlombaan', [MahasiswaController::class, 'daftarPerlombaan'])->name('daftarPerlombaan');
@@ -71,7 +73,8 @@ Route::prefix('admin')
         Route::get('update-User/{id}/edit', [AdminController::class, 'updateUser'])->name('update-User');
         Route::post('update-User/{id}/edit', [AdminController::class, 'updatedUser'])->name('updated-User');
         Route::get('lomba-Management', [AdminController::class, 'lombaManagement'])->name('lomba-Management');
-        Route::post('lomba-Management', [AdminController::class, 'storelomba'])->name('lomba-Management.store');
+        // Route::post('lomba-Management', [AdminController::class, 'storelomba'])->name('lomba-Management.store');
+        Route::post('lomba-Management{id}', [AdminController::class, 'updateHasil'])->name('update.hasil');
         Route::delete('lomba-Management/{id}', [AdminController::class, 'destroylomba'])->name('lomba.delete');
         Route::get('update-Lomba/{id}/edit', [AdminController::class, 'updateLomba'])->name('update-Lomba');
         Route::post('update-Lomba/{id}/edit', [AdminController::class, 'updatedLomba'])->name('updated-Lomba');
@@ -81,7 +84,6 @@ Route::prefix('admin')
         Route::delete('kategori-Management/{id}', [AdminController::class, 'destroykategori'])->name('kategori.delete');
         Route::get('update-Kategori/{id}/edit', [AdminController::class, 'updateKategori'])->name('update-Kategori');
         Route::post('update-Kategori/{id}/edit', [AdminController::class, 'updatedKategori'])->name('updated-Kategori');
-
     });
 
 Route::prefix('dosen')

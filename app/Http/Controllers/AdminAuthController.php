@@ -48,12 +48,12 @@ class AdminAuthController extends Controller
         return back()->with('LoginError', 'Gagal Login, identitas atau password tidak ditemukan');
     }
 
-    function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('login'); // Pastikan rute login benar
     }
 }

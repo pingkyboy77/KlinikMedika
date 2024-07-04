@@ -16,9 +16,10 @@ class DosenController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $jumlah_lomba_pengajuan = DaftarPengajuan::where('namadosen', $nama)->get()->count();
+        $notif = DaftarPengajuan::where('namadosen', $nama)->where('status', 'menunggu persetujuan')->get()->count();
         $jumlah_daftar_bimbingan = DaftarBimbingan::where('namadosen', $nama)->where('status', 'diterima')->where('namadosen', $nama)->get()->count();
-        $jumlah_bimbingan_pengajuan = DaftarBimbingan::where('namadosen' , $nama)->where('status' , 'Menunggu Persetujuan')->get()->count();
-        return view('dosen.dashboard', compact('role','jumlah_lomba_pengajuan','nama', 'jumlah_daftar_bimbingan', 'jumlah_bimbingan_pengajuan'));
+        $jumlah_bimbingan_pengajuan = DaftarBimbingan::where('namadosen', $nama)->where('status', 'Menunggu Persetujuan')->get()->count();
+        return view('dosen.dashboard', compact('role', 'jumlah_lomba_pengajuan', 'nama', 'jumlah_daftar_bimbingan', 'jumlah_bimbingan_pengajuan', 'notif'));
     }
 
     public function daftarBimbingan()
@@ -26,11 +27,15 @@ class DosenController extends Controller
         $user = Auth::user();
         $nama = $user->nama;
         $role = $user->role;
-        $daftar_bimbingan = DaftarBimbingan::where('namadosen', $nama)->where(function ($query) {
-                $query->where('status', 'diterima')
-                    ->orWhere('status', 'Di jadwalkan Ulang');
-            })->orderBy('created_at', 'asc')->get();
-        return view('dosen.daftarBimbingan', compact('role','nama', 'daftar_bimbingan'));
+        $daftar_bimbingan = DaftarBimbingan::where('namadosen', $nama)
+            ->where(function ($query) {
+                $query->where('status', 'diterima')->orWhere('status', 'Di jadwalkan Ulang');
+            })
+            ->orderBy('created_at', 'asc')
+            ->get();
+        $notif = DaftarPengajuan::where('namadosen', $nama)->where('status', 'menunggu persetujuan')->get()->count();
+        $jumlah_daftar_bimbingan = DaftarBimbingan::where('namadosen', $nama)->where('status', 'diterima')->where('namadosen', $nama)->get()->count();
+        return view('dosen.daftarBimbingan', compact('role', 'nama', 'daftar_bimbingan', 'notif'));
     }
     public function pengajuanLomba()
     {
@@ -38,7 +43,9 @@ class DosenController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $daftar_lomba_pengajuan = DaftarPengajuan::where('namadosen', $nama)->orderBy('created_at', 'desc')->get();
-        return view('dosen.pengajuanLomba', compact('role','nama' , 'daftar_lomba_pengajuan'));
+        $notif = DaftarPengajuan::where('namadosen', $nama)->where('status', 'menunggu persetujuan')->get()->count();
+        $jumlah_daftar_bimbingan = DaftarBimbingan::where('namadosen', $nama)->where('status', 'diterima')->where('namadosen', $nama)->get()->count();
+        return view('dosen.pengajuanLomba', compact('role', 'nama', 'daftar_lomba_pengajuan', 'notif'));
     }
     public function jadwalBimbingan()
     {
@@ -46,9 +53,11 @@ class DosenController extends Controller
         $nama = $user->nama;
         $role = $user->role;
         $daftar_bimbingan_pengajuan = DaftarBimbingan::where('namadosen', $nama)->orderBy('created_at', 'asc')->get();
-        return view('dosen.jadwalBimbingan', compact('role','nama', 'daftar_bimbingan_pengajuan'));
+        $notif = DaftarPengajuan::where('namadosen', $nama)->where('status', 'menunggu persetujuan')->get()->count();
+        $jumlah_daftar_bimbingan = DaftarBimbingan::where('namadosen', $nama)->where('status', 'diterima')->where('namadosen', $nama)->get()->count();
+        return view('dosen.jadwalBimbingan', compact('role', 'nama', 'daftar_bimbingan_pengajuan', 'notif' ));
     }
-    public function updateStatusLomba(Request $request, $id , $status)
+    public function updateStatusLomba(Request $request, $id, $status)
     {
         // dd($status);
         $daftar_lomba = DaftarPengajuan::find($id);
@@ -57,7 +66,7 @@ class DosenController extends Controller
         Alert::success('Sukses', 'Data Berhasil Di Update');
         return redirect()->route('dosen.pengajuanLomba');
     }
-    public function updateStatusBimbingan(Request $request, $id , $status)
+    public function updateStatusBimbingan(Request $request, $id, $status)
     {
         // dd($status, $request->all());
         $daftar_lomba = DaftarBimbingan::find($id);
@@ -69,7 +78,7 @@ class DosenController extends Controller
         Alert::success('Sukses', 'Data Berhasil Di Update');
         return redirect()->route('dosen.jadwalBimbingan');
     }
-    public function updateStatusBimbinganACC(Request $request, $id , $status)
+    public function updateStatusBimbinganACC(Request $request, $id, $status)
     {
         // dd($status, $request->all());
         $daftar_lomba = DaftarBimbingan::find($id);

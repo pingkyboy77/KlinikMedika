@@ -113,6 +113,8 @@ class MahasiswaController extends Controller
                 'lokasi' => 'required',
                 'tanggal' => 'required',
                 'prodi' => 'required',
+                'url' => 'required',
+                'image_flyer' => 'required|file',
                 'penyelenggara' => 'required',
                 'tingkatan_lomba' => 'required',
                 'file_proposal_pengajuan' => 'required|file',
@@ -127,6 +129,17 @@ class MahasiswaController extends Controller
             } else {
                 $data['file_proposal_pengajuan'] = null;
             }
+            // Handle image flyer with encryption
+            if ($request->hasFile('image_flyer')) {
+                $image_flyer = $request->file('image_flyer');
+                $file_name = time() . '-' . $image_flyer->getClientOriginalName();
+                $image_storage = 'uploads/image_flyer/';
+                $image_flyer->move($image_storage, $file_name);
+                $data['image_flyer'] = $image_storage . $file_name;
+            } else {
+                $data['file_proposal_pengajuan'] = null;
+            }
+            // dd($data);
             if ($request->has('anggota_1')) {
                 $data['anggota_1'] = $request->anggota_1;
             }

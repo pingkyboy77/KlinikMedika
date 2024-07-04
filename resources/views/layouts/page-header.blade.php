@@ -1,3 +1,16 @@
+<style>
+    .noti-icon {
+        position: relative;
+    }
+
+    .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        font-size: 12px;
+        padding: 3px 6px;
+    }
+</style>
 <div class="navbar-header">
     <div class="d-flex">
         <!-- LOGO -->
@@ -46,7 +59,37 @@
 
     </div>
 
-    <div class="d-grid">
+    <div class="d-flex">
+        @if (auth()->check() && auth()->user()->role == 'dosen')
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item noti-icon" id="page-header-notification-dropdown"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="mdi mdi-bell-outline"></i>
+                    @if ($notif != 0)
+                        <span class="badge bg-success rounded-pill"
+                            id="notification-badge">{{ $notif ?? '0' }}</span>
+                    @endif
+                </button>
+                <div class="dropdown-menu dropdown-menu-end pt-0">
+                    <div class="p-3 border-bottom">
+                        <h6 class="mb-0">Notifications</h6>
+                    </div>
+                    <div class="p-3">
+                        @if ($notif != 0)
+                            <p class="mb-0">There are {{ $notif ?? '0' }} competition submissions
+                                pending
+                                your approval.</p>
+                        @else
+                        <p class="mb-0">There are no competition submissions
+                                pending
+                                your approval.</p>
+                        @endif
+
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="dropdown d-inline-block">
             <button type="button" class="btn header-item user text-start d-flex align-items-center"
                 id="page-header-user-dropdown-v" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

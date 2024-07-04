@@ -68,7 +68,7 @@
                                         <p class="mb-0">Status</p>
                                     </td>
                                     <td>
-                                        <p class="mb-0">Action</p>
+                                        <p class="mb-0">Kompetensi Dosen</p>
                                     </td>
                                 </tr>
                             </thead>
@@ -103,10 +103,8 @@
                                             <td>
                                                 <p class="mb-0">{{ $item->status }}</p>
                                             </td>
-                                            <td class="d-flex">
-                                                <a class="btn btn-success me-2 d-flex justify-content-center align-items-center gap-1" target="_blank"
-                                                    href="{{ url('https://new-fik.upnvj.ac.id/team-category/dosen-d3-sistem-informasi/') }}"><i
-                                                        class="bx bx-search"></i>Lihat Profil</a>
+                                            <td>
+                                                <p class="mb-0">{{ $item->kategori }}</p>
                                             </td>
                                         </tr>
                                     @endforeach
