@@ -4,12 +4,13 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Dashboard | Bimbingan Lomba UPN</title>
+    <title>Klinik Inova Medika</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('images/logo-upn2.png') }}">
+    <link rel="shortcut icon" href="{{ asset('images/logo-inovamedika.png') }}">
 
     <!-- Bootstrap Css -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -26,8 +27,42 @@
     <link href="{{ asset('assets/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
 
+    <style>
+        .invalid-feedback {
+            display: block;
+        }
 
+        .is-invalid {
+            border-color: #dc3545;
+        }
 
+        .select2-container--default .select2-selection--single {
+            height: auto;
+            /* padding: 0.375rem 0.75rem; */
+            border: none;
+            border-radius: 20px;
+            background-color: #fff;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #212529;
+            line-height: 1.5;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100%;
+            right: 0.75rem;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+    <!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 </head>
 
 
@@ -58,6 +93,7 @@
 
     </div>
     @include('layouts.footer')
+    
     <!-- Memuat jsPDF dari node_modules -->
     <script src="{{ asset('node_modules/jspdf/dist/jspdf.umd.min.js') }}"></script>
 
@@ -93,6 +129,15 @@
     </script>
     <script src="https://cdn.datatables.net/v/bs5/dt-2.0.6/datatables.min.js"></script>
 
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
+    @yield('scripts')
 </body>
 
+</html>
 </html>

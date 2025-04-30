@@ -17,22 +17,22 @@
         <div class="navbar-brand-box">
             <a href="#" class="logo logo-dark">
                 <span class="logo-sm mt-2">
-                    <img src="{{ asset('images/logo-upn2.png') }}" alt="" height="26">
+                    <img src="{{ asset('images/logo-inovamedika.png') }}" alt="" height="26">
 
                 </span>
                 <span class="logo-lg">
-                    {{-- <img src="{{ asset('images/logo-upn2.png') }}" alt="" height="28"> --}}
-                    <h6 class=" text-center m-4">UNIVERSITAS VETERAN JAKARTA</h6>
+                    {{-- <img src="{{ asset('images/logo-inovamedika.png') }}" alt="" height="28"> --}}
+                    <h6 class=" text-center m-4">Klinik Inova Medika</h6>
                     <hr class=" bg-yellow-50">
                 </span>
             </a>
 
             <a href="#" class="logo logo-light">
                 <span class="logo-lg">
-                    <img src="{{ asset('images/logo-upn2.png') }}" alt="" height="30">
+                    <img src="{{ asset('images/logo-inovamedika.png') }}" alt="" height="30">
                 </span>
                 <span class="logo-sm">
-                    <img src="{{ asset('images/logo-upn2.png') }}" alt="" height="26">
+                    <img src="{{ asset('images/logo-inovamedika.png') }}" alt="" height="26">
                 </span>
             </a>
         </div>

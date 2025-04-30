@@ -9,7 +9,7 @@
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesdesign" name="author" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('images/logo-upn2.png') }}">
+        <link rel="shortcut icon" href="{{ asset('images/logo-inovamedika.png') }}">
 
         <!-- Bootstrap Css -->
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -24,7 +24,7 @@
     <body>
         <style>
             .authentication-bg{
-                background: url("{{ asset('images/bg-login.svg') }}") center center;
+                background: url("{{ asset('images/bg-login.webp') }}") center center;
                 background-size: cover;
             }
         </style>

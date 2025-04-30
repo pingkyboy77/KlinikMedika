@@ -6,8 +6,10 @@ use App\Models\User;
 use App\Models\Lomba;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminAuthController extends Controller
 {
@@ -22,31 +24,34 @@ class AdminAuthController extends Controller
 
     public function doLogin(Request $request)
     {
-        // Validasi data yang diterima dari form login
         $data = $request->validate([
-            'identitas' => 'required',
+            'email' => 'required',
             'password' => 'required',
         ]);
 
-        // Coba melakukan proses login menggunakan Auth::attempt()
-        if (Auth::attempt($data)) {
-            // Jika berhasil, regenerasi session
-            $request->session()->regenerate();
+        $user = User::where('email', $data['email'])->first();
 
-            // Dapatkan informasi pengguna yang masuk
-            $user = User::where('identitas', $data['identitas'])->first();
-            $role = $user->role;
-
-            // Tentukan rute yang akan diarahkan
-            $routeName = $role . '.beranda';
-            // dd($routeName);
-            // Redirect ke rute yang sesuai dengan peran pengguna
-            return redirect()->route($routeName);
+        if (!$user) {
+            return back()->with('LoginError', 'Gagal Login, email tidak ditemukan');
         }
 
-        // Jika login gagal, kembali ke halaman login dengan pesan error
-        return back()->with('LoginError', 'Gagal Login, identitas atau password tidak ditemukan');
+        if (!Hash::check($data['password'], $user->password)) {
+            return back()->with('LoginError', 'Gagal Login, password salah');
+        }
+
+        if ($user->status != 1) {
+            return back()->with('LoginError', 'Gagal Login, akun Anda belum aktif');
+        }
+
+        if (Auth::attempt($data)) {
+            $request->session()->regenerate();
+
+            return redirect()->route('beranda');
+        }
+
+        return back()->with('LoginError', 'Gagal Login, email atau password tidak ditemukan');
     }
+
 
     public function logout(Request $request)
     {
@@ -54,6 +59,6 @@ class AdminAuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login'); // Pastikan rute login benar
+        return redirect()->route('login');
     }
 }

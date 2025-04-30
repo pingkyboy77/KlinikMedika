@@ -1,171 +1,143 @@
-@extends('admin.layouts.app')
-@section('content')
-<style>
-    .card-box:hover {
-        background-color: #f0f0f0; /* Ubah warna abu-abu di sini */
-    }
-</style>
+@extends('admin.layouts.app') 
+@section('title', 'Clinic Reports')  
+
+@section('content') 
+<div class="container-fluid m-0 p-0">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Dashboard</h3>
+        @if(auth()->user()->isAdmin())
+        <a href="{{ route('beranda.export.pdf') }}" class="btn btn-danger">Export PDF</a>
+        @endif
+    </div>
+    
     <div class="row">
-
-        <div class="col-xl-12">
-            <div class="row">
-                <div class="col-xl-4">
-                    <a href="{{ route('admin.user-Management') }}">
-                    <div class="card card-box">
-                        <div class="card-body">
-                            <div>
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar">
-                                        <div class="avatar-title rounded bg-soft-primary">
-                                            <i class="bx bx-user-circle font-size-24 mb-0 text-primary"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex-grow-1 ms-3">
-                                        <h6 class="mb-0 font-size-15">User Management</h6>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h4 class="mt-4 pt-1 mb-0 font-size-22">{{ $user_jumlah ?? '0' }} User<span
-                                            class="text-success fw-medium font-size-13 align-middle"> </h4>
-                                    <div class="d-flex mt-1 align-items-end overflow-hidden">
-                                        <div class="flex-grow-1">
-                                            <p class="text-muted mb-0 text-truncate">{{ date('Y-m-d H:i:s') }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                </div>
-                <div class="col-xl-4">
-                    <a href="{{ route('admin.daftarPengajuanLomba') }}">
-                    <div class="card card-box">
-                        <div class="card-body">
-                            <div>
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar">
-                                        <div class="avatar-title rounded bg-soft-primary">
-                                            <i class="bx bx-calendar-event font-size-24 mb-0 text-primary"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex-grow-1 ms-3">
-                                        <h6 class="mb-0 font-size-15">Daftar Pengajuan Lomba Management</h6>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h4 class="mt-4 pt-1 mb-0 font-size-22">{{ $pengajuan_jumlah }} Pengajuan<span
-                                            class="text-success fw-medium font-size-13 align-middle"> </h4>
-                                    <div class="d-flex mt-1 align-items-end overflow-hidden">
-                                        <div class="flex-grow-1">
-                                            <p class="text-muted mb-0 text-truncate">{{ date('Y-m-d H:i:s') }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                </div>
-                <div class="col-xl-4">
-                    <a href="{{ route('admin.daftarPengajuanLomba') }}">
-                    <div class="card card-box">
-                        <div class="card-body">
-                            <div>
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar">
-                                        <div class="avatar-title rounded bg-soft-primary">
-                                            <i class="bx bx-calendar-event font-size-24 mb-0 text-primary"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex-grow-1 ms-3">
-                                        <h6 class="mb-0 font-size-15">Daftar Pengajuan Bimbingan Management</h6>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h4 class="mt-4 pt-1 mb-0 font-size-22">{{ $jumlah_bimbingan }} Bimbingan<span
-                                            class="text-success fw-medium font-size-13 align-middle"> </h4>
-                                    <div class="d-flex mt-1 align-items-end overflow-hidden">
-                                        <div class="flex-grow-1">
-                                            <p class="text-muted mb-0 text-truncate">{{ date('Y-m-d H:i:s') }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                </div>
-                <div class="col-xl-4">
-                    <a href="{{ route('admin.lomba-Management') }}">
-                    <div class="card card-box">
-                        <div class="card-body">
-                            <div>
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar">
-                                        <div class="avatar-title rounded bg-soft-primary">
-                                            <i class="bx bx-line-chart font-size-24 mb-0 text-primary"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex-grow-1 ms-3">
-                                        <h6 class="mb-0 font-size-15">Perlombaan Management</h6>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h4 class="mt-4 pt-1 mb-0 font-size-22">{{ $lomba ?? '0' }} Perlombaan<span
-                                            class="text-success fw-medium font-size-13 align-middle"> </h4>
-                                    <div class="d-flex mt-1 align-items-end overflow-hidden">
-                                        <div class="flex-grow-1">
-                                            <p class="text-muted mb-0 text-truncate">{{ date('Y-m-d H:i:s') }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                </div>
-                <div class="col-xl-4">
-                    <a href="{{ route('admin.kategori-Management') }}">
-                    <div class="card card-box">
-                        <div class="card-body">
-                            <div>
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar">
-                                        <div class="avatar-title rounded bg-soft-primary">
-                                            <i class="bx bx-adjust font-size-24 mb-0 text-primary"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex-grow-1 ms-3">
-                                        <h6 class="mb-0 font-size-15">Kategori Management</h6>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h4 class="mt-4 pt-1 mb-0 font-size-22">{{ $kategori ?? '0' }} Kategori<span
-                                            class="text-success fw-medium font-size-13 align-middle"> </h4>
-                                    <div class="d-flex mt-1 align-items-end overflow-hidden">
-                                        <div class="flex-grow-1">
-                                            <p class="text-muted mb-0 text-truncate">{{ date('Y-m-d H:i:s') }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                </div>
+        <div class="col-md-6">
+            <div class="card card-info">
+                <div class="card-header"><h5 class="card-title">Monthly Visits</h5></div>
+                <div class="card-body"><div id="visitsChart"></div></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-success">
+                <div class="card-header"><h5 class="card-title">Top Services</h5></div>
+                <div class="card-body"><div id="servicesChart"></div></div>
+            </div>
+        </div>
+        <div class="col-md-12 mt-4">
+            <div class="card card-warning">
+                <div class="card-header"><h5 class="card-title">Most Prescribed Drugs</h5></div>
+                <div class="card-body"><div id="drugsChart"></div></div>
             </div>
         </div>
     </div>
-    <!-- end row -->
+</div>
+@endsection  
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.35.0/dist/apexcharts.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch("{{ route('beranda.data') }}")
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            
+            // Visits Chart
+            const visitsOptions = {
+                chart: { 
+                    type: 'bar', 
+                    height: 350,
+                    fontFamily: 'inherit',
+                    toolbar: {
+                        show: false
+                    }
+                },
+                series: [{
+                    name: 'Visits',
+                    data: data.visitsPerMonth.map(v => v?.count ?? 0)
+                }],
+                xaxis: {
+                    categories: data.visitsPerMonth.map(v => v?.month ?? '-')
+                },
+                stroke: {
+                    curve: 'smooth',
+                    width: 3
+                }
+            };
+            
+            const visitsChart = new ApexCharts(
+                document.querySelector("#visitsChart"), 
+                visitsOptions
+            );
+            visitsChart.render();
+            
+            // Services Chart
+            const servicesOptions = {
+                chart: { 
+                    type: 'bar', 
+                    height: 350,
+                    fontFamily: 'inherit',
+                    toolbar: {
+                        show: false
+                    }
+                },
+                series: [{
+                    name: 'Total',
+                    data: data.topServices.map(s => s?.total ?? 0)
+                }],
+                xaxis: {
+                    categories: data.topServices.map(s => s?.service?.ServiceName ?? 'Unknown')
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        borderRadius: 2
+                    },
+                }
+            };
+            
+            const servicesChart = new ApexCharts(
+                document.querySelector("#servicesChart"), 
+                servicesOptions
+            );
+            servicesChart.render();
+            
+            // Drugs Chart
+            const drugsOptions = {
+                chart: { 
+                    type: 'bar', 
+                    height: 350,
+                    fontFamily: 'inherit',
+                    toolbar: {
+                        show: false
+                    }
+                },
+                series: [{
+                    name: 'Qty',
+                    data: data.topDrugs.map(d => d?.total ?? 0)
+                }],
+                xaxis: {
+                    categories: data.topDrugs.map(d => d?.drug?.DrugName ?? 'Unknown')
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        borderRadius: 2
+                    },
+                }
+            };
+            
+            const drugsChart = new ApexCharts(
+                document.querySelector("#drugsChart"), 
+                drugsOptions
+            );
+            drugsChart.render();
+        })
+        .catch(err => console.error("Chart render error:", err));
+});
+</script>
 @endsection

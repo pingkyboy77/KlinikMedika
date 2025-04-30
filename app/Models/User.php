@@ -16,7 +16,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = ['nama', 'identitas', 'password', 'kategori', 'role', 'status'];
+    protected $fillable = ['nama', 'identitas', 'password', 'email', 'role', 'status'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -37,4 +37,25 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function isDoctor()
+    {
+        return $this->role === 'dokter';
+    }
+
+    public function isStaff()
+    {
+        return $this->role === 'staff';
+    }
+
+    public function isCashier()
+    {
+        return $this->role === 'kasir';
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
 }
